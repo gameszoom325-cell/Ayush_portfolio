@@ -56,36 +56,36 @@ export const HeroShader: React.FC = () => {
           vec2 mouse = u_mouse / u_resolution.xy;
           mouse.x *= u_resolution.x / u_resolution.y;
 
-          float t = u_time * 0.12;
+          float t = u_time * 0.15;
 
           vec2 delta = st - mouse;
           float dist = length(delta);
-          float mouseInfluence = smoothstep(0.65, 0.0, dist) * 0.25;
+          float mouseInfluence = smoothstep(0.75, 0.0, dist) * 0.35;
           vec2 distortedST = st + normalize(delta + 0.0001) * mouseInfluence;
 
-          float n1 = snoise(distortedST * 1.8 + vec2(t * 0.4, -t * 0.3));
-          float n2 = snoise(distortedST * 3.6 - vec2(-t * 0.2, t * 0.5) + vec2(n1 * 0.7));
+          float n1 = snoise(distortedST * 1.6 + vec2(t * 0.3, -t * 0.25));
+          float n2 = snoise(distortedST * 3.2 - vec2(-t * 0.18, t * 0.4) + vec2(n1 * 0.65));
 
-          float contour = abs(fract(n2 * 4.5 + t * 0.2) - 0.5);
-          float lines = smoothstep(0.07, 0.0, contour) * 0.35;
+          float contour = abs(fract(n2 * 4.0 + t * 0.18) - 0.5);
+          float lines = smoothstep(0.07, 0.0, contour) * 0.45;
 
-          vec2 gridST = fract(distortedST * 12.0) - 0.5;
-          float dots = smoothstep(0.04, 0.01, length(gridST)) * smoothstep(0.2, 0.8, n1 + 0.5) * 0.22;
+          vec2 gridST = fract(distortedST * 10.0) - 0.5;
+          float dots = smoothstep(0.05, 0.01, length(gridST)) * smoothstep(0.2, 0.8, n1 + 0.5) * 0.28;
 
-          vec3 bg = vec3(0.027, 0.027, 0.035);
-          vec3 latentGlow = mix(vec3(0.08, 0.12, 0.18), vec3(0.20, 0.10, 0.16), n2 * 0.5 + 0.5);
-          vec3 contourColor = mix(vec3(0.45, 0.58, 0.72), vec3(0.85, 0.90, 0.95), n1 * 0.5 + 0.5);
-          vec3 mouseGlowColor = vec3(0.26, 0.88, 0.80) * smoothstep(0.55, 0.0, dist);
+          vec3 bg = vec3(0.02, 0.02, 0.028);
+          vec3 latentGlow = mix(vec3(0.07, 0.11, 0.18), vec3(0.18, 0.09, 0.15), n2 * 0.5 + 0.5);
+          vec3 contourColor = mix(vec3(0.35, 0.75, 0.70), vec3(0.85, 0.92, 0.98), n1 * 0.5 + 0.5);
+          vec3 mouseGlowColor = vec3(0.25, 0.88, 0.78) * smoothstep(0.65, 0.0, dist);
 
           vec3 finalColor = bg;
-          finalColor += latentGlow * (0.35 + 0.4 * n1);
+          finalColor += latentGlow * (0.45 + 0.5 * n1);
           finalColor += contourColor * lines;
-          finalColor += dots * vec3(0.8, 0.85, 0.95);
-          finalColor += mouseGlowColor * 0.28;
+          finalColor += dots * vec3(0.75, 0.85, 0.95);
+          finalColor += mouseGlowColor * 0.35;
 
           vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-          float vignette = smoothstep(1.2, 0.2, length(uv - vec2(0.5, 0.45)));
-          finalColor *= vignette * 0.92;
+          float vignette = smoothstep(1.3, 0.2, length(uv - vec2(0.5, 0.45)));
+          finalColor *= vignette * 0.95;
 
           gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -129,12 +129,9 @@ export const HeroShader: React.FC = () => {
     let currentMouse = { x: 0.5, y: 0.5 };
 
     const resize = () => {
-      const parent = canvas.parentElement;
-      if (!parent) return;
-      const rect = parent.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.floor(rect.width * dpr);
-      const h = Math.floor(rect.height * dpr);
+      const w = Math.floor(window.innerWidth * dpr);
+      const h = Math.floor(window.innerHeight * dpr);
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
@@ -145,9 +142,8 @@ export const HeroShader: React.FC = () => {
     resize();
 
     const onMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      targetMouse.x = (e.clientX - rect.left) / rect.width;
-      targetMouse.y = 1.0 - (e.clientY - rect.top) / rect.height;
+      targetMouse.x = e.clientX / window.innerWidth;
+      targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
     };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -186,7 +182,7 @@ export const HeroShader: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-60 mix-blend-screen -z-10"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-70 mix-blend-screen"
       aria-hidden="true"
     />
   );
