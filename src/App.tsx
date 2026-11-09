@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
-import { SwarmCursor } from './components/SwarmCursor';
 import { AmbientBackground } from './components/AmbientBackground';
 import { AISwarmLoader } from './components/AISwarmLoader';
 
@@ -68,8 +67,6 @@ export const App: React.FC = () => {
         <AISwarmLoader onComplete={handleLoadingComplete} />
       )}
 
-      {/* Native Swarm Rebuild Cursor Experience */}
-      <SwarmCursor />
 
       {/* Dynamic Project World Ambient Atmosphere Glows */}
       <AmbientBackground theme={activeProject.theme} />
