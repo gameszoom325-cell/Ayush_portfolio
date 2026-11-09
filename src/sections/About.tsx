@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ProjectTheme } from '../data/projects';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface AboutProps {
   activeTheme?: ProjectTheme;
@@ -7,6 +11,58 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ activeTheme }) => {
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
+  const sectionRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger smooth reveal & image depth
+  useEffect(() => {
+    const section = sectionRef.current;
+    const portrait = portraitRef.current;
+    const textBlock = textRef.current;
+    if (!section || !portrait || !textBlock) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Portrait entrance & subtle parallax depth
+      gsap.fromTo(
+        portrait,
+        { opacity: 0, y: 50, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+
+      // 2. Editorial Text Block Stagger
+      const children = textBlock.children;
+      gsap.fromTo(
+        children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: textBlock,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   const userInterests = [
     { label: 'Gaming & Game Dev', icon: 'sports_esports', desc: 'Interactive graphics & mechanics' },
@@ -16,7 +72,11 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
   ];
 
   return (
-    <section className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center" id="about">
+    <section
+      ref={sectionRef}
+      className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center"
+      id="about"
+    >
       {/* Background ambient depth glow */}
       <div
         className="absolute top-1/2 left-0 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full blur-[180px] pointer-events-none -z-10"
@@ -42,7 +102,7 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left: Cinematic Portrait HUD */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          <div ref={portraitRef} className="lg:col-span-5 flex flex-col gap-6">
             <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden group p-2 border border-white/10 bg-white/[0.02] backdrop-blur-2xl shadow-2xl">
               <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-[#0A0A0E]">
                 <img
@@ -78,7 +138,7 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
               </div>
             </div>
 
-            {/* Passions Horizontal Strip (Architectural, not a boxed widget) */}
+            {/* Passions Horizontal Strip */}
             <div className="grid grid-cols-2 gap-3 pt-1">
               {userInterests.map((item, idx) => (
                 <div
@@ -105,7 +165,7 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
           </div>
 
           {/* Right: Editorial Narrative & Spatial Pillars */}
-          <div className="lg:col-span-7 flex flex-col gap-8">
+          <div ref={textRef} className="lg:col-span-7 flex flex-col gap-8">
             <div className="space-y-4">
               <span
                 className="font-label-mono-sm text-xs uppercase tracking-[0.2em] transition-colors duration-500 font-semibold"
@@ -130,7 +190,7 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
               </p>
             </div>
 
-            {/* Architectural Three Pillars (Divided with hairlines, not heavy box cards) */}
+            {/* Architectural Three Pillars */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-b border-white/10 py-6">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">

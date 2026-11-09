@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ProjectTheme } from '../data/projects';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface ContactProps {
   activeTheme?: ProjectTheme;
@@ -13,6 +17,39 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
   const linkedinUrl = 'https://www.linkedin.com/in/ayush-singh-705a63397';
 
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger entrance
+  useEffect(() => {
+    const section = sectionRef.current;
+    const content = contentRef.current;
+    if (!section || !content) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        content.children,
+        {
+          opacity: 0,
+          y: 40,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.12,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -24,7 +61,11 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
   };
 
   return (
-    <section className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center items-center overflow-hidden" id="contact">
+    <section
+      ref={sectionRef}
+      className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center items-center overflow-hidden"
+      id="contact"
+    >
       {/* Center Volumetric Vortex Atmosphere */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-full blur-[180px] pointer-events-none -z-10 transition-all duration-1000"
@@ -33,7 +74,10 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
         }}
       />
 
-      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 z-10 flex flex-col items-center text-center">
+      <div
+        ref={contentRef}
+        className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 z-10 flex flex-col items-center text-center"
+      >
         {/* Transmission Status Badge */}
         <div className="flex items-center gap-3 mb-8">
           <span

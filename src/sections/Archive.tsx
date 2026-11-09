@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { achievementsList, Achievement, archiveMetrics } from '../data/achievements';
 import { ProjectTheme } from '../data/projects';
 import { CertificateModal } from '../components/CertificateModal';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface ArchiveProps {
   activeTheme?: ProjectTheme;
@@ -10,6 +14,8 @@ interface ArchiveProps {
 export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'hackathon' | 'project'>('all');
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
@@ -24,8 +30,41 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
     { id: 'project', label: 'Deployed Platforms' },
   ] as const;
 
+  // Staggered reveal animation on scroll
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll('.archive-item-card');
+    gsap.fromTo(
+      cards,
+      {
+        opacity: 0,
+        y: 35,
+        scale: 0.97,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: grid,
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  }, [activeFilter]);
+
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="archive">
+    <section
+      ref={sectionRef}
+      className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative"
+      id="archive"
+    >
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div className="space-y-3">
@@ -96,13 +135,13 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
       </div>
 
       {/* Dossier Folders Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="archive-grid">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="archive-grid">
         {filteredItems.map((item) => {
           return (
             <div
               key={item.id}
               onClick={() => setSelectedAchievement(item)}
-              className="glass-dossier p-7 rounded-[2rem] flex flex-col justify-between transition-all duration-300 group cursor-pointer border border-white/[0.08] hover:border-white/20 hover:scale-[1.01]"
+              className="archive-item-card glass-dossier p-7 rounded-[2rem] flex flex-col justify-between transition-all duration-500 group cursor-pointer border border-white/[0.08] hover:border-white/25 hover:shadow-2xl hover:-translate-y-1"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -128,7 +167,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
                   <img
                     src={item.previewImage}
                     alt={item.title}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
@@ -148,7 +187,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
 
               <div className="flex items-center justify-between pt-5 border-t border-white/[0.06] mt-5 font-label-mono-sm text-xs text-white/40">
                 <span className="truncate max-w-[200px] text-white/60">{item.badge}</span>
-                <span className="text-white/80 font-medium flex items-center gap-1">
+                <span className="text-white/80 font-medium flex items-center gap-1 group-hover:text-white transition-colors">
                   <span>View Details</span>
                   <span className="material-symbols-outlined text-[14px]">visibility</span>
                 </span>

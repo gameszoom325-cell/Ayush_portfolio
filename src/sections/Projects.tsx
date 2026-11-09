@@ -311,7 +311,7 @@ export const Projects: React.FC<ProjectsProps> = ({
 
                     {/* Action Triggers */}
                     <div className="flex flex-wrap items-center gap-4 pt-4">
-                      {project.live && (
+                      {project.live && project.live !== project.github ? (
                         <a
                           href={project.live}
                           target="_blank"
@@ -323,9 +323,21 @@ export const Projects: React.FC<ProjectsProps> = ({
                             open_in_new
                           </span>
                         </a>
+                      ) : (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-95 cursor-pointer"
+                        >
+                          <span>Explore Project Code</span>
+                          <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-0.5">
+                            arrow_outward
+                          </span>
+                        </a>
                       )}
 
-                      {project.github && (
+                      {project.github && project.live !== project.github && (
                         <a
                           href={project.github}
                           target="_blank"
@@ -366,7 +378,8 @@ export const Projects: React.FC<ProjectsProps> = ({
                         src={project.image}
                         alt={project.name}
                         className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-105"
-                        loading="lazy"
+                        loading={idx < 2 ? 'eager' : 'lazy'}
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
 

@@ -147,8 +147,8 @@ export const projects: Project[] = [
     description:
       "Autonomous student expense tracking copilot with bill scanning, voice logging, spending pattern detection, budget health scores, and predictive month-end balance analytics.",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Voice AI", "Interactive Charts", "Budget Telemetry"],
-    github: "https://github.com/gameszoom325-cell/Expense-Manager",
-    live: "https://github.com/gameszoom325-cell/Expense-Manager",
+    github: "https://github.com/gameszoom325-cell",
+    live: "https://github.com/gameszoom325-cell",
     image: "/projects/campuscash.jpeg",
     badge: "STUDENT EXPENSE & AI BUDGET MANAGER",
     theme: {

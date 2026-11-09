@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { educationHistory } from '../data/education';
 import { ProjectTheme } from '../data/projects';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface TrajectoryProps {
   activeTheme?: ProjectTheme;
@@ -8,9 +12,70 @@ interface TrajectoryProps {
 
 export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
+  const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  // GSAP ScrollTrigger Entrance Animation
+  useEffect(() => {
+    const section = sectionRef.current;
+    const line = lineRef.current;
+    const cardsContainer = cardsRef.current;
+    if (!section || !cardsContainer) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Animate trace line downward as user scrolls into the section
+      if (line) {
+        gsap.fromTo(
+          line,
+          { scaleY: 0, transformOrigin: 'top center' },
+          {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 75%',
+              end: 'bottom 85%',
+              scrub: 0.8,
+            },
+          }
+        );
+      }
+
+      // 2. Animate each education dossier card with a smooth reveal
+      const cards = cardsContainer.querySelectorAll('.education-card');
+      gsap.fromTo(
+        cards,
+        {
+          opacity: 0,
+          y: 40,
+          scale: 0.98,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: 0.2,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: cardsContainer,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="trajectory">
+    <section
+      ref={sectionRef}
+      className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative"
+      id="trajectory"
+    >
       {/* Section Header */}
       <div className="flex items-center gap-4 mb-16">
         <span
@@ -25,17 +90,18 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
         </span>
       </div>
 
-      <div className="relative pl-6 sm:pl-12 space-y-12">
+      <div ref={cardsRef} className="relative pl-6 sm:pl-12 space-y-12">
         {/* Luminescent Trace Line */}
         <div
-          className="absolute left-2.5 sm:left-5 top-3 bottom-3 w-0.5 transition-all duration-1000"
+          ref={lineRef}
+          className="absolute left-2.5 sm:left-5 top-3 bottom-3 w-0.5 transition-colors duration-1000 origin-top"
           style={{
             background: `linear-gradient(to bottom, ${accentColor}, rgba(255,255,255,0.1) 80%, transparent 100%)`,
           }}
         />
 
         {educationHistory.map((item) => (
-          <div key={item.id} className="relative group">
+          <div key={item.id} className="education-card relative group">
             {/* Timeline node marker */}
             <div className="absolute -left-[27px] sm:-left-[39px] top-2 w-6 h-6 rounded-full bg-[#070709] border border-white/20 flex items-center justify-center transition-all group-hover:scale-110">
               <span
@@ -100,29 +166,28 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
                   {item.highlights.map((highlight, hIdx) => (
                     <span
                       key={hIdx}
-                      className="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs flex items-center gap-1.5"
+                      className="px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-white/75 font-label-mono-sm text-xs hover:border-white/20 transition-colors"
                     >
-                      <span className="w-1 h-1 rounded-full bg-white/40" />
                       {highlight}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Status Badge */}
-              <div className="flex md:flex-col items-center md:items-end justify-between gap-3 min-w-max">
-                <span className="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">
-                  STATUS
-                </span>
+              {/* Status Pill */}
+              <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
                 <span
-                  className="px-4 py-1.5 rounded-full font-label-mono-sm text-xs font-semibold uppercase border"
+                  className="px-3.5 py-1.5 rounded-full font-label-mono-sm text-xs font-semibold uppercase tracking-wider border shadow-sm"
                   style={{
-                    backgroundColor: item.statusType === 'active' ? `${accentColor}15` : 'rgba(255,255,255,0.08)',
-                    borderColor: item.statusType === 'active' ? `${accentColor}40` : 'rgba(255,255,255,0.15)',
-                    color: item.statusType === 'active' ? accentColor : '#FFFFFF',
+                    backgroundColor: item.statusType === 'active' ? `${accentColor}20` : 'rgba(255,255,255,0.04)',
+                    borderColor: item.statusType === 'active' ? `${accentColor}50` : 'rgba(255,255,255,0.1)',
+                    color: item.statusType === 'active' ? accentColor : '#94A3B8',
                   }}
                 >
                   {item.status}
+                </span>
+                <span className="font-label-mono-sm text-[11px] text-white/40">
+                  {item.subheading}
                 </span>
               </div>
             </div>

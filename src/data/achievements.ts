@@ -94,7 +94,6 @@ export const achievementsList: Achievement[] = [
       "Autonomous student expense tracking copilot with bill scanning (AI), voice logging, spending pattern detection, budget health scores, and predictive month-end balance analytics.",
     year: "2026",
     previewImage: "/projects/campuscash.jpeg",
-    liveUrl: "https://github.com/gameszoom325-cell/Expense-Manager",
-    githubUrl: "https://github.com/gameszoom325-cell/Expense-Manager",
+    githubUrl: "https://github.com/gameszoom325-cell",
   },
 ];
