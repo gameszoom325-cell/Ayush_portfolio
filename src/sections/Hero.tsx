@@ -22,7 +22,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
       {/* Main Content Area */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-28 sm:pt-32 pb-8 flex-1 flex flex-col justify-center">
         {/* Status Tag Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 md:pb-8">
+        <div className="pb-6 md:pb-8">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg w-max">
             <span className="flex h-2 w-2 relative">
               <span
@@ -44,16 +44,6 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
             <span className="font-label-mono-sm text-xs uppercase text-white/70 tracking-wider">
               B.TECH CSE (AI &amp; ML)
             </span>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] px-3.5 py-1.5 rounded-full text-white/70 font-label-mono-sm text-xs w-max">
-            <span
-              className="material-symbols-outlined text-[15px] transition-colors duration-500"
-              style={{ color: accentColor }}
-            >
-              location_on
-            </span>
-            <span className="text-white/80 tracking-wider uppercase">CHENNAI, INDIA</span>
           </div>
         </div>
 
