@@ -15,14 +15,14 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
       id="overview"
     >
       {/* Edge-to-Edge WebGL Shader Canvas extending behind all content */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+      <div data-intro="hero-visual" className="absolute inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
         <HeroShader />
       </div>
 
       {/* Main Content Area */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-28 sm:pt-36 pb-12 flex-1 flex flex-col justify-center">
         {/* Real Status Tag */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 md:pb-12">
+        <div data-intro="hero-status" className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 md:pb-12">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg w-max">
             <span className="flex h-2 w-2 relative">
               <span
@@ -59,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
 
         {/* Hero Title Spread */}
         <div className="flex flex-col gap-6 max-w-5xl">
-          <div className="flex items-center gap-4">
+          <div data-intro="hero-eyebrow" className="flex items-center gap-4">
             <span
               className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500 font-semibold"
               style={{ color: accentColor }}
@@ -72,11 +72,17 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
             </span>
           </div>
 
-          <h1 className="font-display-hero text-6xl sm:text-8xl lg:text-9xl font-bold text-white tracking-[-0.04em] leading-[0.9] uppercase select-none">
+          <h1
+            data-intro="hero-title"
+            className="font-display-hero text-6xl sm:text-8xl lg:text-9xl font-bold text-white tracking-[-0.04em] leading-[0.9] uppercase select-none"
+          >
             Ayush Singh
           </h1>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/70 font-label-mono-md text-xs sm:text-sm uppercase tracking-wider pt-2">
+          <div
+            data-intro="hero-subtitle"
+            className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/70 font-label-mono-md text-xs sm:text-sm uppercase tracking-wider pt-2"
+          >
             <span className="text-white font-medium">B.Tech CSE AI/ML</span>
             <span className="text-white/20">/</span>
             <span>Full-Stack Web Developer</span>
@@ -84,11 +90,14 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
             <span>Creative Technologist</span>
           </div>
 
-          <p className="font-body-lg text-lg sm:text-xl text-white/75 max-w-3xl mt-2 font-normal leading-relaxed">
+          <p
+            data-intro="hero-bio"
+            className="font-body-lg text-lg sm:text-xl text-white/75 max-w-3xl mt-2 font-normal leading-relaxed"
+          >
             Computer Science Engineering student specializing in Artificial Intelligence and Machine Learning at SRM Institute of Science and Technology. Crafting production-ready web platforms, intelligent tools, and interactive digital interfaces.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-6">
+          <div data-intro="hero-cta" className="flex flex-wrap items-center gap-4 pt-6">
             <a
               href="#projects"
               className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold tracking-wider uppercase transition-all shadow-[0_15px_30px_-5px_rgba(255,255,255,0.25)] hover:bg-[#C4C8D0] hover:scale-[1.02] active:scale-[0.98]"
@@ -145,7 +154,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
       </div>
 
       {/* Full-Bleed Architectural Telemetry Ribbon (Not a boxed card) */}
-      <div className="w-full border-t border-white/[0.08] bg-[#0A0A0E]/60 backdrop-blur-2xl z-20">
+      <div data-intro="hero-telemetry" className="w-full border-t border-white/[0.08] bg-[#0A0A0E]/60 backdrop-blur-2xl z-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-5 grid grid-cols-2 md:grid-cols-4 gap-6 font-label-mono-sm">
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
