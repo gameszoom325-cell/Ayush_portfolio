@@ -7,7 +7,7 @@ import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
 import { SwarmCursor } from './components/SwarmCursor';
 import { AmbientBackground } from './components/AmbientBackground';
-import { LoadingScreen } from './components/LoadingScreen';
+import { AISwarmLoader } from './components/AISwarmLoader';
 
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -63,9 +63,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-[#070709] text-[#F5F5F7] overflow-x-hidden film-grain selection:bg-[#44e2cd] selection:text-[#003731]">
-      {/* Cinematic Digital Construction Loading Sequence (Plays before site appears) */}
+      {/* Cinematic AI Swarm Reconstruction Sequence (Assembles site before reveal) */}
       {isLoading && (
-        <LoadingScreen onComplete={handleLoadingComplete} />
+        <AISwarmLoader onComplete={handleLoadingComplete} />
       )}
 
       {/* Native Swarm Rebuild Cursor Experience */}
