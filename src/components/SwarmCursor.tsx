@@ -1,112 +1,172 @@
 import React, { useEffect, useRef } from 'react';
 
-interface Particle {
+interface Agent {
+  id: number;
+  name: string;
+  color: string;
+  accentColor: string;
   x: number;
   y: number;
   vx: number;
   vy: number;
-  size: number;
-  color: string;
-  glowColor: string;
-  orbitAngle: number;
+  angle: number;
+  speed: number;
+  force: number;
   orbitRadius: number;
+  orbitAngle: number;
   orbitSpeed: number;
+  curl: number;
+  trail: { x: number; y: number }[];
+  el: HTMLDivElement | null;
+  svgEl: SVGElement | null;
 }
 
-type HoverMode = 'default' | 'button' | 'image' | 'link';
+type HoverState = 'default' | 'button' | 'image' | 'link';
+
+// Swarm Rebuild authentic Figma cursor arrow path (from swarm.js)
+const ARROW_PATH =
+  'M4.6 3.9 C4.2 3.1 4.9 2.4 5.7 2.8 L20.6 9.4 C21.5 9.8 21.4 11.1 20.4 11.3 L13.9 12.9 C13.4 13 13 13.4 12.9 13.9 L11.3 20.4 C11.1 21.4 9.8 21.5 9.4 20.6 Z';
 
 export const SwarmCursor: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!container || !canvas) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     let animId: number;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const updateCanvasSize = () => {
-      if (!canvas) return;
+    const onResize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = window.innerWidth;
       const h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
-      ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
-    updateCanvasSize();
-    window.addEventListener('resize', updateCanvasSize);
+    onResize();
+    window.addEventListener('resize', onResize);
 
-    // Initial mouse coordinates
+    // Mouse coordinates (client viewport)
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let prevMouseX = mouseX;
     let prevMouseY = mouseY;
+    let mouseVelocityX = 0;
+    let mouseVelocityY = 0;
     let mouseSpeed = 0;
-    let hasMoved = false;
 
-    // Leader position (smooth lerp)
+    let hoverState: HoverState = 'default';
+    let magneticCenterX = mouseX;
+    let magneticCenterY = mouseY;
+
+    // Leader cursor position (smooth spring)
     let leaderX = mouseX;
     let leaderY = mouseY;
+    let leaderAngle = 0;
 
-    // Hover state
-    let hoverMode: HoverMode = 'default';
-    let targetMagneticX = mouseX;
-    let targetMagneticY = mouseY;
-
-    // 14 Swarm follower particles
-    const PARTICLE_COUNT = 14;
-    const particles: Particle[] = [];
-
-    // Luminous Titanium & Platinum Palette with Cyan Highlights
-    const palette = [
-      { color: '#2dd4bf', glow: 'rgba(45, 212, 191, 0.8)' },   // Vibrant Cyan Leader Satellite
-      { color: '#FFFFFF', glow: 'rgba(255, 255, 255, 0.9)' },   // Radiant White Spark
-      { color: '#F1F5F9', glow: 'rgba(241, 245, 249, 0.7)' },   // Platinum Silver
-      { color: '#E2E8F0', glow: 'rgba(226, 232, 240, 0.6)' },   // Titanium
-      { color: '#CBD5E1', glow: 'rgba(203, 213, 225, 0.5)' },   // Slate Silver
+    // Portfolio-native Swarm agents (Black/Titanium/Cyan luxury palette)
+    const agentConfigs = [
+      { name: 'Ayush.AI', color: '#2dd4bf', accent: '#0f766e' },
+      { name: 'Architect', color: '#FFFFFF', accent: '#94A3B8' },
+      { name: 'Systems', color: '#38bdf8', accent: '#0284c7' },
+      { name: 'ML.Core', color: '#E2E8F0', accent: '#64748B' },
+      { name: 'Spatial.GIS', color: '#A855F7', accent: '#7E22CE' },
+      { name: 'Vercel.Ops', color: '#5EEAD4', accent: '#14B8A6' },
+      { name: 'Web.App', color: '#F1F5F9', accent: '#CBD5E1' },
+      { name: 'Neural', color: '#818CF8', accent: '#4F46E5' },
     ];
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const pColor = i === 0 ? palette[0] : palette[i % palette.length];
-      const baseSize = i === 0 ? 5.0 : Math.max(2.2, 4.5 - i * 0.18);
+    const agents: Agent[] = [];
 
-      particles.push({
-        x: mouseX,
-        y: mouseY,
+    // Instantiate DOM cursor agents inside the fixed container
+    container.innerHTML = '';
+
+    // Create Main Leader Cursor DOM element
+    const leaderEl = document.createElement('div');
+    leaderEl.style.position = 'absolute';
+    leaderEl.style.top = '0';
+    leaderEl.style.left = '0';
+    leaderEl.style.willChange = 'transform';
+    leaderEl.style.pointerEvents = 'none';
+    leaderEl.style.zIndex = '100';
+    leaderEl.innerHTML = `
+      <div style="position: relative; transform: translate3d(-5px, -3.5px, 0);">
+        <svg width="24" height="24" viewBox="0 0 24 24" style="overflow: visible; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));">
+          <path d="${ARROW_PATH}" fill="#FFFFFF" stroke="#070709" stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    `;
+    container.appendChild(leaderEl);
+
+    // Create Swarm Follower Agent DOM elements
+    agentConfigs.forEach((cfg, idx) => {
+      const el = document.createElement('div');
+      el.style.position = 'absolute';
+      el.style.top = '0';
+      el.style.left = '0';
+      el.style.willChange = 'transform';
+      el.style.pointerEvents = 'none';
+      el.style.zIndex = String(50 - idx);
+
+      el.innerHTML = `
+        <div class="agent-wrapper" style="position: relative; transform: translate3d(-5px, -3.5px, 0); display: flex; align-items: center;">
+          <svg class="agent-svg" width="22" height="22" viewBox="0 0 24 24" style="overflow: visible; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.7)); transform-origin: 5px 3.5px;">
+            <path d="${ARROW_PATH}" fill="${cfg.color}" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+          </svg>
+          <div class="agent-badge" style="margin-left: 2px; margin-top: 14px; background: rgba(10, 10, 14, 0.88); border: 1px solid rgba(255, 255, 255, 0.14); backdrop-filter: blur(8px); padding: 2px 6px; border-radius: 9999px; font-family: monospace; font-size: 9px; font-weight: 600; color: ${cfg.color}; letter-spacing: 0.05em; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.5); opacity: 0.85;">
+            ${cfg.name}
+          </div>
+        </div>
+      `;
+      container.appendChild(el);
+
+      const svgEl = el.querySelector('.agent-svg') as SVGElement | null;
+
+      agents.push({
+        id: idx,
+        name: cfg.name,
+        color: cfg.color,
+        accentColor: cfg.accent,
+        x: mouseX + (Math.random() - 0.5) * 60,
+        y: mouseY + (Math.random() - 0.5) * 60,
         vx: 0,
         vy: 0,
-        size: baseSize,
-        color: pColor.color,
-        glowColor: pColor.glow,
-        orbitAngle: (i * (Math.PI * 2)) / PARTICLE_COUNT,
-        orbitRadius: 12 + i * 2.2,
-        orbitSpeed: (0.025 + (i % 3) * 0.01) * (i % 2 === 0 ? 1 : -1),
+        angle: 0,
+        speed: 700 + Math.random() * 400,
+        force: 2000 + Math.random() * 1500,
+        orbitRadius: 40 + idx * 7,
+        orbitAngle: (idx * (Math.PI * 2)) / agentConfigs.length,
+        orbitSpeed: (0.025 + (idx % 3) * 0.012) * (idx % 2 === 0 ? 1 : -1),
+        curl: (Math.random() - 0.5) * 1.5,
+        trail: [],
+        el,
+        svgEl,
       });
-    }
+    });
 
-    // Trail history for leader
-    const trailLength = 8;
-    const leaderTrail: { x: number; y: number }[] = [];
-
-    // Mouse Tracking (Global window capture)
+    // Real mouse tracking
     const onMouseMove = (e: MouseEvent) => {
-      hasMoved = true;
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      const dx = mouseX - prevMouseX;
-      const dy = mouseY - prevMouseY;
-      mouseSpeed = Math.hypot(dx, dy);
+      mouseVelocityX = mouseX - prevMouseX;
+      mouseVelocityY = mouseY - prevMouseY;
+      mouseSpeed = Math.hypot(mouseVelocityX, mouseVelocityY);
+
       prevMouseX = mouseX;
       prevMouseY = mouseY;
     };
 
-    // Hover Target Detection
+    // Contextual Hover Detection
     const onMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
@@ -116,16 +176,16 @@ export const SwarmCursor: React.FC = () => {
       const linkEl = target.closest('a, [role="link"], .interactive');
 
       if (buttonEl) {
-        hoverMode = 'button';
+        hoverState = 'button';
         const rect = buttonEl.getBoundingClientRect();
-        targetMagneticX = rect.left + rect.width / 2;
-        targetMagneticY = rect.top + rect.height / 2;
+        magneticCenterX = rect.left + rect.width / 2;
+        magneticCenterY = rect.top + rect.height / 2;
       } else if (imageEl) {
-        hoverMode = 'image';
+        hoverState = 'image';
       } else if (linkEl) {
-        hoverMode = 'link';
+        hoverState = 'link';
       } else {
-        hoverMode = 'default';
+        hoverState = 'default';
       }
     };
 
@@ -133,209 +193,249 @@ export const SwarmCursor: React.FC = () => {
     document.addEventListener('mouseover', onMouseOver, { passive: true, capture: true });
 
     let t = 0;
+    let lastTime = performance.now();
 
-    // Render loop (60+ FPS)
-    const render = () => {
-      t += 0.04;
+    // 60-120 FPS Physics Render Loop
+    const tick = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.05); // delta time clamped
+      lastTime = now;
+      t += dt * 2;
+
       const w = window.innerWidth;
       const h = window.innerHeight;
 
       ctx.clearRect(0, 0, w, h);
 
-      // Magnetic blending when over buttons
-      if (hoverMode === 'button') {
-        leaderX += (targetMagneticX * 0.35 + mouseX * 0.65 - leaderX) * 0.25;
-        leaderY += (targetMagneticY * 0.35 + mouseY * 0.65 - leaderY) * 0.25;
+      // 1. Update Leader Cursor (Spring toward target)
+      let targetX = mouseX;
+      let targetY = mouseY;
+
+      if (hoverState === 'button') {
+        // Magnetic pull toward button center
+        targetX = magneticCenterX * 0.4 + mouseX * 0.6;
+        targetY = magneticCenterY * 0.4 + mouseY * 0.6;
+      }
+
+      leaderX += (targetX - leaderX) * 0.45;
+      leaderY += (targetY - leaderY) * 0.45;
+
+      // Leader orientation angle based on velocity
+      if (mouseSpeed > 1) {
+        const targetAngle = (Math.atan2(mouseVelocityY, mouseVelocityX) * 180) / Math.PI - 45;
+        let diff = targetAngle - leaderAngle;
+        while (diff < -180) diff += 360;
+        while (diff > 180) diff -= 360;
+        leaderAngle += diff * 0.25;
       } else {
-        leaderX += (mouseX - leaderX) * 0.35;
-        leaderY += (mouseY - leaderY) * 0.35;
+        leaderAngle += (0 - leaderAngle) * 0.1;
       }
 
-      // Record leader trail
-      leaderTrail.unshift({ x: leaderX, y: leaderY });
-      if (leaderTrail.length > trailLength) leaderTrail.pop();
+      // Update Leader DOM position with translate3d
+      leaderEl.style.transform = `translate3d(${leaderX}px, ${leaderY}px, 0) rotate(${leaderAngle}deg)`;
 
-      // 1. Draw Flowing Leader Trail Ribbon
-      if (leaderTrail.length > 2) {
-        ctx.beginPath();
-        ctx.moveTo(leaderTrail[0].x, leaderTrail[0].y);
-        for (let i = 1; i < leaderTrail.length; i++) {
-          ctx.lineTo(leaderTrail[i].x, leaderTrail[i].y);
-        }
-        ctx.strokeStyle = hoverMode === 'button'
-          ? 'rgba(45, 212, 191, 0.25)'
-          : 'rgba(255, 255, 255, 0.18)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
+      // 2. Swarm Flocking Physics (Adapted from Swarm Rebuild Boids algorithm)
+      // Radius scaling based on state
+      let scale = 1.0;
+      if (hoverState === 'button') scale = 0.55; // Tightly gathered orbit around button
+      if (hoverState === 'image') scale = 1.7;  // Wide observational perimeter around image
 
-      // 2. Draw Main Leader Reticle & Core
-      // Main Center Core
-      ctx.beginPath();
-      ctx.arc(leaderX, leaderY, hoverMode === 'image' ? 4.5 : 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.shadowColor = '#2dd4bf';
-      ctx.shadowBlur = 10;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      const R = 75 * scale * (1 + 0.15 * Math.sin(t * 1.8));
+      const swirl = Math.tanh(Math.cos(t * 0.8) * 3);
 
-      // Leader Precision Outer Ring
-      let ringRadius = 14;
-      if (hoverMode === 'button') ringRadius = 24;
-      if (hoverMode === 'image') ringRadius = 32;
-      if (hoverMode === 'link') ringRadius = 18;
+      for (let i = 0; i < agents.length; i++) {
+        const c = agents[i];
+        c.orbitAngle += c.orbitSpeed;
 
-      ctx.beginPath();
-      ctx.arc(leaderX, leaderY, ringRadius, 0, Math.PI * 2);
-      ctx.strokeStyle = hoverMode === 'button'
-        ? 'rgba(45, 212, 191, 0.65)'
-        : hoverMode === 'image'
-        ? 'rgba(226, 232, 240, 0.55)'
-        : 'rgba(226, 232, 240, 0.35)';
-      ctx.lineWidth = 1.0;
-      ctx.stroke();
+        // Vector from target to agent
+        const vx = c.x - leaderX;
+        const vy = c.y - leaderY;
+        const dist = Math.hypot(vx, vy) || 0.01;
+        const nx = vx / dist;
+        const ny = vy / dist;
+        const ang = Math.atan2(vy, vx);
 
-      // Viewfinder ticks for Image Inspection Mode
-      if (hoverMode === 'image') {
-        const tick = 7;
-        ctx.strokeStyle = '#2dd4bf';
-        ctx.lineWidth = 1.25;
-        ctx.beginPath();
-        // Top-left
-        ctx.moveTo(leaderX - ringRadius - tick, leaderY - ringRadius);
-        ctx.lineTo(leaderX - ringRadius, leaderY - ringRadius);
-        ctx.lineTo(leaderX - ringRadius, leaderY - ringRadius - tick);
-        // Top-right
-        ctx.moveTo(leaderX + ringRadius + tick, leaderY - ringRadius);
-        ctx.lineTo(leaderX + ringRadius, leaderY - ringRadius);
-        ctx.lineTo(leaderX + ringRadius, leaderY - ringRadius - tick);
-        // Bottom-left
-        ctx.moveTo(leaderX - ringRadius - tick, leaderY + ringRadius);
-        ctx.lineTo(leaderX - ringRadius, leaderY + ringRadius);
-        ctx.lineTo(leaderX - ringRadius, leaderY + ringRadius + tick);
-        // Bottom-right
-        ctx.moveTo(leaderX + ringRadius + tick, leaderY + ringRadius);
-        ctx.lineTo(leaderX + ringRadius, leaderY + ringRadius);
-        ctx.lineTo(leaderX + ringRadius, leaderY + ringRadius + tick);
-        ctx.stroke();
-      }
+        // Desired orbital radius
+        const offset = (c.orbitRadius - 60) * 0.6 * scale;
+        const rr = R * (1 + 0.25 * Math.sin(3 * ang + t * 1.5)) + offset;
 
-      // 3. Update Swarm Particles with Elastic Following & Flocking
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.orbitAngle += p.orbitSpeed;
+        // Tangential swirl & radial spring forces
+        const tang = 280 * (0.8 + (i % 3) * 0.2) * swirl;
+        const rad = Math.min(Math.max((rr - dist) * 4.5, -2200), 1200);
 
-        // Radius & Dispersion adaptation
-        let currentRadius = p.orbitRadius;
-        if (hoverMode === 'image') {
-          currentRadius = 35 + i * 3.0; // Wide expansive constellation
-        } else if (hoverMode === 'button') {
-          currentRadius = 16 + (i % 3) * 3.5; // Tightly gathered orbit around button
-        } else if (hoverMode === 'link') {
-          currentRadius = 10 + (i % 2) * 4;
+        // Slipstream trail offset when mouse is moving fast
+        const isTrailing = mouseSpeed > 2;
+        const trailBackX = isTrailing ? -mouseVelocityX * (1.5 + i * 0.8) : 0;
+        const trailBackY = isTrailing ? -mouseVelocityY * (1.5 + i * 0.8) : 0;
+
+        let fx = -ny * tang + nx * rad + trailBackX * 18;
+        let fy = nx * tang + ny * rad + trailBackY * 18;
+
+        // Separation force from other agents
+        for (let j = 0; j < agents.length; j++) {
+          if (j === i) continue;
+          const other = agents[j];
+          const od = Math.hypot(other.x - c.x, other.y - c.y);
+          if (od < 42 && od > 0.01) {
+            const repulse = (1 - od / 42) * 350;
+            fx -= ((other.x - c.x) / od) * repulse;
+            fy -= ((other.y - c.y) / od) * repulse;
+          }
         }
 
-        // Parent target: particle follows the previous particle or leader for smooth chain/swarm effect
-        const parentX = i === 0 ? leaderX : particles[i - 1].x;
-        const parentY = i === 0 ? leaderY : particles[i - 1].y;
+        // Apply Acceleration & Max Speed limits
+        const maxV = (c.speed * (1.1 + Math.min(2.5, dist / 80))) * (hoverState === 'button' ? 1.4 : 1.0);
+        const forceLen = Math.hypot(fx, fy);
+        if (forceLen > maxV) {
+          fx *= maxV / forceLen;
+          fy *= maxV / forceLen;
+        }
 
-        // Organic harmonic breathing offset
-        const breathX = Math.cos(p.orbitAngle + t) * currentRadius;
-        const breathY = Math.sin(p.orbitAngle + t) * currentRadius;
+        let gx = (fx - c.vx) * 7.5;
+        let gy = (fy - c.vy) * 7.5;
 
-        // Velocity-based slipstream drag
-        const isFast = mouseSpeed > 2;
-        const lagX = isFast ? (mouseX - prevMouseX) * -2.5 : 0;
-        const lagY = isFast ? (mouseY - prevMouseY) * -2.5 : 0;
+        const maxF = c.force * (1.2 + Math.min(3.5, dist / 40));
+        const gLen = Math.hypot(gx, gy);
+        if (gLen > maxF) {
+          gx *= maxF / gLen;
+          gy *= maxF / gLen;
+        }
 
-        const targetX = parentX * 0.7 + leaderX * 0.3 + breathX + lagX;
-        const targetY = parentY * 0.7 + leaderY * 0.3 + breathY + lagY;
+        c.vx += gx * dt;
+        c.vy += gy * dt;
 
-        // Smooth physics spring/lerp
-        const spring = hoverMode === 'button' ? 0.22 : 0.16 - i * 0.006;
-        p.vx = (targetX - p.x) * spring;
-        p.vy = (targetY - p.y) * spring;
+        c.x += c.vx * dt;
+        c.y += c.vy * dt;
 
-        p.x += p.vx;
-        p.y += p.vy;
+        // Dynamic Agent Orientation Angle (Facing velocity vector)
+        const agentSpeed = Math.hypot(c.vx, c.vy);
+        if (agentSpeed > 15) {
+          const targetAng = (Math.atan2(c.vy, c.vx) * 180) / Math.PI - 45;
+          let diff = targetAng - c.angle;
+          while (diff < -180) diff += 360;
+          while (diff > 180) diff -= 360;
+          c.angle += diff * 0.2;
+        } else {
+          c.angle += (0 - c.angle) * 0.08;
+        }
+
+        // Update DOM transform: translate3d for GPU acceleration
+        if (c.el) {
+          c.el.style.transform = `translate3d(${c.x}px, ${c.y}px, 0)`;
+        }
+        if (c.svgEl) {
+          c.svgEl.style.transform = `rotate(${c.angle}deg)`;
+        }
+
+        // Push trail
+        c.trail.unshift({ x: c.x, y: c.y });
+        if (c.trail.length > 6) c.trail.pop();
       }
 
-      // 4. Draw Connecting Micro-Mesh Filaments (Swarm Rebuild signature)
+      // 3. Draw Connecting Swarm Filaments (The Canvas Mesh)
       ctx.beginPath();
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const p1 = particles[i];
-          const p2 = particles[j];
-          const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+      for (let i = 0; i < agents.length; i++) {
+        for (let j = i + 1; j < agents.length; j++) {
+          const a1 = agents[i];
+          const a2 = agents[j];
+          const dist = Math.hypot(a2.x - a1.x, a2.y - a1.y);
 
-          const maxDist = hoverMode === 'image' ? 55 : 42;
+          const maxDist = hoverState === 'image' ? 95 : 65;
           if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.35;
-            ctx.strokeStyle = hoverMode === 'button'
+            const alpha = (1 - dist / maxDist) * 0.28;
+            ctx.strokeStyle = hoverState === 'button'
               ? `rgba(45, 212, 191, ${alpha * 1.5})`
               : `rgba(226, 232, 240, ${alpha})`;
             ctx.lineWidth = 0.65;
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
+            ctx.moveTo(a1.x, a1.y);
+            ctx.lineTo(a2.x, a2.y);
           }
         }
       }
       ctx.stroke();
 
-      // 5. Connecting Filaments to Leader
+      // 4. Draw Connecting Filaments from Agents to Leader
       ctx.beginPath();
-      for (let i = 0; i < Math.min(5, particles.length); i++) {
-        const p = particles[i];
-        const dist = Math.hypot(leaderX - p.x, leaderY - p.y);
-        if (dist < 50) {
-          const alpha = (1 - dist / 50) * 0.4;
-          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+      for (let i = 0; i < agents.length; i++) {
+        const c = agents[i];
+        const dist = Math.hypot(leaderX - c.x, leaderY - c.y);
+        if (dist < 85) {
+          const alpha = (1 - dist / 85) * 0.32;
+          ctx.strokeStyle = hoverState === 'button'
+            ? `rgba(45, 212, 191, ${alpha * 1.4})`
+            : `rgba(255, 255, 255, ${alpha})`;
           ctx.lineWidth = 0.75;
           ctx.moveTo(leaderX, leaderY);
-          ctx.lineTo(p.x, p.y);
+          ctx.lineTo(c.x, c.y);
         }
       }
       ctx.stroke();
 
-      // 6. Draw Individual Swarm Particle Nodes
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.glowColor;
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.shadowBlur = 0;
+      // 5. Draw Faint Particle Sparks along Agent Trails
+      for (let i = 0; i < agents.length; i++) {
+        const c = agents[i];
+        for (let k = 1; k < c.trail.length; k++) {
+          const pt = c.trail[k];
+          const alpha = (1 - k / c.trail.length) * 0.22;
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = c.color;
+          ctx.globalAlpha = alpha;
+          ctx.fill();
+        }
       }
+      ctx.globalAlpha = 1.0;
 
-      mouseSpeed *= 0.9;
-      animId = requestAnimationFrame(render);
+      // Velocity decay
+      mouseSpeed *= 0.92;
+      animId = requestAnimationFrame(tick);
     };
 
-    animId = requestAnimationFrame(render);
+    animId = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove, { capture: true });
       document.removeEventListener('mouseover', onMouseOver, { capture: true });
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
+    <div
       style={{
         position: 'fixed',
-        top: 0,
-        left: 0,
+        inset: 0,
         width: '100vw',
         height: '100vh',
         pointerEvents: 'none',
         zIndex: 999999,
+        overflow: 'hidden',
       }}
       aria-hidden="true"
-    />
+    >
+      {/* Background Canvas for connecting filaments and particle sparks */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Hardware-Accelerated DOM Container for Multiplayer Cursor Agents */}
+      <div
+        ref={containerRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+        }}
+      />
+    </div>
   );
 };
