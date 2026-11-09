@@ -1,0 +1,99 @@
+import React, { useEffect } from 'react';
+import { Achievement } from '../data/achievements';
+
+interface CertificateModalProps {
+  achievement: Achievement | null;
+  onClose: () => void;
+}
+
+export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement, onClose }) => {
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (achievement) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', onKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [achievement, onClose]);
+
+  if (!achievement) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200">
+      <div
+        className="relative w-full max-w-3xl rounded-[2.5rem] glass-dossier p-6 sm:p-8 md:p-10 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col gap-6 max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header with Close */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <span className="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">
+                {achievement.organization}
+              </span>
+              <span className="px-3 py-1 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-[11px] uppercase">
+                {achievement.badge}
+              </span>
+            </div>
+            <h3 className="font-headline-sm text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              {achievement.title}
+            </h3>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/15 transition-all"
+            aria-label="Close dialog"
+          >
+            <span className="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        {/* Preview image */}
+        {achievement.previewImage && (
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-inner">
+            <img
+              src={achievement.previewImage}
+              alt={achievement.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-label-mono-sm text-xs text-white/70 bg-black/70 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
+              <span>SECURITY HASH: #{achievement.verifiedHash}</span>
+              <span className="text-[#44e2cd]">ACCREDITED {achievement.year}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Narrative Description */}
+        <p className="font-body-md text-base text-white/80 leading-relaxed">
+          {achievement.description}
+        </p>
+
+        {/* Footer Meta & Direct Link */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 font-label-mono-sm text-xs">
+          <div className="flex items-center gap-2 text-white/50">
+            <span className="material-symbols-outlined text-[16px] text-[#44e2cd]">verified</span>
+            <span>OFFICIAL RECORD VERIFIED</span>
+          </div>
+
+          {achievement.credentialUrl && (
+            <a
+              href={achievement.credentialUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all"
+            >
+              <span>Visit Authority</span>
+              <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

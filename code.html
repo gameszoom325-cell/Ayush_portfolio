@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Ayush Singh — Systems Architect &amp; Cognitive AI Practitioner</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #070709;
+        color: #F5F5F7;
+      }
+      ::-webkit-scrollbar { display: none; }
+      * { -ms-overflow-style: none; scrollbar-width: none; }
+    }
+    
+    /* Noise grain filter */
+    .film-grain {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+    
+    /* Glass card metallic hairline */
+    .glass-dossier {
+      background: linear-gradient(135deg, rgba(25, 25, 30, 0.72) 0%, rgba(12, 12, 16, 0.85) 100%);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-pill {
+      background: rgba(22, 22, 28, 0.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "obsidian": "#070709",
+            "surface-slate": "#131317",
+            "crimson-glow": "#5C1322",
+            "crimson-deep": "#2D0A12",
+            "silver-hairline": "#C4C8D0",
+            "jade-accent": "#1A3D32",
+            "secondary": "#44e2cd",
+            "primary": "#F5F5F7",
+            "on-surface-variant": "#9EA2AA",
+            "outline-variant": "rgba(255, 255, 255, 0.08)"
+          },
+          fontFamily: {
+            "display-hero": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "label-mono-sm": ["Space Grotesk", "monospace"],
+            "label-mono-md": ["Space Grotesk", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#070709] font-body-md text-[#F5F5F7] antialiased min-h-screen selection:bg-[#44e2cd] selection:text-[#003731] relative overflow-x-hidden film-grain">
+<!-- Dynamic World Ambient Glow Engine (Shifts dynamically on project changes) -->
+<div class="fixed top-[-150px] left-1/2 -translate-x-1/2 w-[1100px] h-[750px] bg-gradient-to-b from-[#5C1322]/20 via-[#2D0A12]/15 to-transparent rounded-full blur-[160px] pointer-events-none z-0 transition-all duration-1000" id="ambient-glow-burgundy"></div>
+<div class="fixed top-[45%] -right-48 w-[800px] h-[800px] bg-[#44e2cd]/[0.04] rounded-full blur-[180px] pointer-events-none z-0 transition-all duration-1000" id="ambient-glow-accent"></div>
+<div class="fixed bottom-[-100px] -left-48 w-[700px] h-[700px] bg-[#5C1322]/15 rounded-full blur-[180px] pointer-events-none z-0 transition-all duration-1000" id="ambient-glow-bottom"></div>
+<!-- NAVIGATION CHROMIUM -->
+<header class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-12 py-4 transition-all duration-500">
+<div class="h-16 w-full max-w-7xl mx-auto rounded-full bg-[#0E0E12]/80 backdrop-blur-2xl border border-white/[0.08] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85)] px-4 sm:px-6 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 min-w-max">
+<a class="flex items-center gap-3 group" href="#overview">
+<div class="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-xs font-label-mono-md tracking-tighter text-white group-hover:scale-105 transition-transform">
+            AS
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm sm:text-base font-semibold text-white tracking-tight leading-none">Ayush Singh</span>
+<div class="hidden xl:flex items-center gap-2 mt-0.5">
+<span class="relative flex h-1.5 w-1.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44e2cd] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#44e2cd]"></span>
+</span>
+<span class="font-label-mono-sm text-[10px] text-white/50 uppercase tracking-widest">SRM IST 2024–2028 • COGNITIVE SYSTEMS</span>
+</div>
+</div>
+</a>
+</div>
+<nav class="hidden lg:flex items-center bg-white/[0.03] border border-white/[0.06] rounded-full p-1 shadow-inner">
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white bg-white/[0.08] rounded-full border border-white/[0.08] shadow-sm transition-all" href="#overview">Overview</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#about">Dossier</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#trajectory">Trajectory</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#projects">Systems</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#archive">Archive</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#stack">Apparatus</a>
+<a class="px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.05] transition-all rounded-full" href="#contact">Contact</a>
+</nav>
+<div class="flex items-center gap-3 min-w-max">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.07]">
+<span class="font-label-mono-sm text-[11px] text-[#44e2cd] uppercase">IST</span>
+<span class="font-label-mono-sm text-[11px] text-white/70" id="ist-clock">17:16:08</span>
+</div>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] active:scale-95" href="#contact">
+<span>Get in Touch</span>
+<span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</header>
+<main class="relative z-10 w-full pt-20">
+<!-- 1. HERO SECTION (Atmospheric Lusion / Apple calibre) -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-16 pb-24 md:pt-24 md:pb-36 flex flex-col justify-between relative overflow-hidden" id="overview">
+<!-- Interactive WebGL Shader Canvas Background with Subtle Screen Blend -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none opacity-60 mix-blend-screen -z-10" id="hero-shader-canvas"></canvas>
+<div class="relative z-10 flex flex-col justify-between w-full h-full">
+<!-- Telemetry Status Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12">
+<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg w-max">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44e2cd] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#44e2cd]"></span>
+</span>
+<span class="font-label-mono-sm text-xs uppercase text-[#44e2cd] tracking-widest">SRM IST 2024–2028</span>
+<span class="text-white/20 font-label-mono-sm text-xs">•</span>
+<span class="font-label-mono-sm text-xs uppercase text-white/70 tracking-wider">1ST YEAR B.TECH CSE (AI &amp; ML)</span>
+</div>
+<div class="flex flex-wrap items-center gap-3 text-white/60 font-label-mono-sm text-xs">
+<div class="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] px-3.5 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-[#44e2cd] text-[15px]">satellite_alt</span>
+<span class="text-white/80 tracking-wider">12.8230° N, 80.0444° E</span>
+<span class="text-white/40">KATTANKULATHUR</span>
+</div>
+<div class="hidden sm:flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] px-3.5 py-1.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd]"></span>
+<span class="text-white/70 tracking-wider uppercase">STATE: EXPLORING NEURAL LATENTS</span>
+</div>
+</div>
+</div>
+<!-- Hero Title Spread -->
+<div class="flex flex-col gap-6 py-6 md:py-10 max-w-5xl">
+<div class="flex items-center gap-4">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">[ DIGITAL ARTIFACT 01 ]</span>
+<div class="h-[1px] w-24 bg-gradient-to-r from-white/20 to-transparent"></div>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">SYSTEMS &amp; ARCHITECTURE</span>
+</div>
+<h1 class="font-display-hero text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-[-0.035em] leading-[0.95] uppercase select-none">
+            Ayush Singh
+          </h1>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/60 font-label-mono-md text-xs sm:text-sm uppercase tracking-wider pt-2">
+<span class="text-white font-medium">AI/ML Practitioner</span>
+<span class="text-white/20">/</span>
+<span>Cognitive Systems Architect</span>
+<span class="text-white/20">/</span>
+<span>Interactive Graphics</span>
+</div>
+<p class="font-body-lg text-lg sm:text-xl text-white/70 max-w-3xl mt-3 font-normal leading-relaxed">
+            Engineering high-precision digital artifacts at the nexus of high-dimensional neural computation, robust micro-architectures, and kinetic sensory design.
+          </p>
+<div class="flex flex-wrap items-center gap-4 pt-6">
+<a class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold tracking-wider uppercase transition-all shadow-[0_15px_30px_-5px_rgba(255,255,255,0.25)] hover:bg-[#C4C8D0] hover:scale-[1.02] active:scale-[0.98]" href="#projects">
+<span>Explore Projects</span>
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.05] border border-white/[0.1] backdrop-blur-2xl text-white font-label-mono-md text-xs tracking-wider uppercase transition-all hover:bg-white/[0.1] active:scale-[0.98]" href="#about">
+<span class="material-symbols-outlined text-[18px] text-[#44e2cd]">fingerprint</span>
+<span>Inspect Dossier</span>
+</a>
+<div class="flex items-center gap-2 sm:ml-auto pt-4 sm:pt-0">
+<a class="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all" href="https://github.com" rel="noreferrer" target="_blank" title="GitHub">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</a>
+<a class="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all" href="https://linkedin.com" rel="noreferrer" target="_blank" title="LinkedIn">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</a>
+<a class="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all" href="https://huggingface.co" rel="noreferrer" target="_blank" title="HuggingFace">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</a>
+<a class="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all" href="mailto:ayush.singh@srmist.edu.in" title="Email">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Metric Telemetry Ribbon -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 glass-dossier rounded-3xl p-6 md:p-8">
+<div class="flex flex-col gap-1 border-r border-white/[0.06] pr-4">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">ACADEMIC METRIC</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-2xl md:text-3xl font-bold text-white">9.60</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-xs font-semibold">CGPA</span>
+</div>
+<span class="font-body-sm text-xs text-white/60">B.Tech CSE (AI &amp; ML)</span>
+</div>
+<div class="flex flex-col gap-1 md:border-r border-white/[0.06] pr-4">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">PROJECT PRODUCTION</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-2xl md:text-3xl font-bold text-white">07</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-xs font-semibold">SYSTEMS</span>
+</div>
+<span class="font-body-sm text-xs text-white/60">4D Vision to Agentic Core</span>
+</div>
+<div class="flex flex-col gap-1 border-r border-white/[0.06] pr-4 mt-4 md:mt-0">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">CERTIFIED MERIT</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-2xl md:text-3xl font-bold text-white">05+</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-xs font-semibold">ELITE</span>
+</div>
+<span class="font-body-sm text-xs text-white/60">IIT Madras, Stanford, AWS</span>
+</div>
+<div class="flex flex-col gap-1 pr-4 mt-4 md:mt-0">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">HARDWARE DISCIPLINE</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-2xl md:text-3xl font-bold text-white">RTX</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-xs font-semibold">CUDA</span>
+</div>
+<span class="font-body-sm text-xs text-white/60">Low-Latency Tensor Pipelines</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. ABOUT ME — EDITORIAL STORYTELLING -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 md:py-32 relative" id="about">
+<div class="flex items-center gap-4 mb-16">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">02 / BIOGRAPHY</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">KINETIC INTELLIGENCE</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+<!-- Left: Portrait Biometric HUD -->
+<div class="lg:col-span-5 flex flex-col gap-5">
+<div class="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden glass-dossier group p-2">
+<div class="relative w-full h-full rounded-[1.6rem] overflow-hidden">
+<img class="w-full h-full object-cover grayscale contrast-125 transition-transform duration-1000 group-hover:scale-105" data-alt="Cinematic atmospheric portrait of Ayush Singh" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPVg5pXMtTL0K4sVlGNe1iJapG1QN2yZHbRgAjYilolyStNmRhX1zqOiFH78u5fJLZco-wrDdjyhqWhqgw0Sbm7nJGoJ57AEGip18TZGLLly8NWk1cwgu07VJLVQqUfSsTZ-QhWCjiMZweRP5oBqrCnu0YKkdTL8LcvO78kC-HXYIJk1cuEvqHbFO-ult1snIzTlFjWktDfXXy4_bW60mjfr0KSzJHt_iEXOEwCRTz"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709] via-transparent to-transparent opacity-90"></div>
+<!-- Floating HUD Markers -->
+<div class="absolute top-4 left-4 right-4 flex items-center justify-between">
+<span class="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#44e2cd] font-label-mono-sm text-[11px] uppercase tracking-widest flex items-center gap-2 border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd] animate-pulse"></span>
+                  ACTIVE OPERATOR
+                </span>
+<span class="text-white/70 font-label-mono-sm text-[11px] bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                  SRM-CSE-28
+                </span>
+</div>
+<!-- HUD Bottom Info -->
+<div class="absolute bottom-6 left-6 right-6 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-xl font-bold text-white">Ayush Singh</span>
+<span class="font-label-mono-sm text-xs text-[#44e2cd]">SYS_ID: 9402-A</span>
+</div>
+<p class="font-body-sm text-xs text-white/60 line-clamp-2">
+                  Pursuing B.Tech Computer Science Engineering with specialization in Artificial Intelligence and Machine Learning.
+                </p>
+<div class="flex items-center gap-1 mt-2 pt-2 border-t border-white/10">
+<svg class="w-full h-6 text-[#44e2cd]/80" fill="none" preserveaspectratio="none" viewbox="0 0 200 24">
+<path d="M0 12 Q 10 2, 20 12 T 40 12 T 60 4 T 80 20 T 100 8 T 120 16 T 140 2 T 160 22 T 180 12 T 200 12" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactile Interests Pill -->
+<div class="glass-dossier p-5 rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#44e2cd]">
+<span class="material-symbols-outlined text-[20px]">interests</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-wider">TACTILE SPECIALTY</span>
+<span class="font-body-sm text-sm text-white font-medium">Speedcubing &amp; Analog Synths</span>
+</div>
+</div>
+<span class="font-label-mono-sm text-xs text-[#44e2cd] px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">SUB-15 SEC</span>
+</div>
+</div>
+<!-- Right: Editorial Narrative -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<div class="space-y-4">
+<span class="font-label-mono-sm text-xs uppercase text-[#44e2cd] tracking-[0.2em]">PHILOSOPHY OF KINETIC INTELLIGENCE</span>
+<h2 class="font-headline-lg text-3xl sm:text-4xl lg:text-5xl text-white font-bold tracking-tight leading-[1.15]">
+              Software is no longer static instructions. It is living cognitive topology.
+            </h2>
+</div>
+<div class="space-y-4 font-body-lg text-base sm:text-lg text-white/70 leading-relaxed">
+<p>
+              I am an undergraduate AI researcher and systems architect at SRM Institute of Science &amp; Technology, Chennai. My work oscillates between the rigorous math of high-dimensional vector spaces and the visceral spatial tactility of real-time renderers.
+            </p>
+<p>
+              Rather than assembling superficial wrappers around black-box APIs, I dissect deep learning architectures from the tensor level up: optimizing backpropagation passes, designing memory-frugal attention kernels, and streaming volumetric inference into interactive browser spaces.
+            </p>
+</div>
+<!-- Pillars Bento Grid with Metallic Accents -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+<div class="p-6 rounded-2xl glass-dossier flex flex-col gap-3 group hover:border-[#44e2cd]/40 transition-colors">
+<div class="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#44e2cd]">
+<span class="material-symbols-outlined text-[20px]">model_training</span>
+</div>
+<span class="font-headline-sm text-base font-semibold text-white">Latent Spaces</span>
+<p class="font-body-sm text-xs text-white/50 leading-normal">Generative diffusion, vector embeddings, and multi-modal alignment models.</p>
+</div>
+<div class="p-6 rounded-2xl glass-dossier flex flex-col gap-3 group hover:border-[#44e2cd]/40 transition-colors">
+<div class="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#44e2cd]">
+<span class="material-symbols-outlined text-[20px]">developer_board</span>
+</div>
+<span class="font-headline-sm text-base font-semibold text-white">Edge Compute</span>
+<p class="font-body-sm text-xs text-white/50 leading-normal">Quantized INT8 inference on constrained hardware with custom CUDA kernels.</p>
+</div>
+<div class="p-6 rounded-2xl glass-dossier flex flex-col gap-3 group hover:border-[#44e2cd]/40 transition-colors">
+<div class="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#44e2cd]">
+<span class="material-symbols-outlined text-[20px]">view_in_ar</span>
+</div>
+<span class="font-headline-sm text-base font-semibold text-white">Spatial Systems</span>
+<p class="font-body-sm text-xs text-white/50 leading-normal">WebGL, GPU-driven shaders, and ergonomic tactile design languages.</p>
+</div>
+</div>
+<!-- Micro Details Tag Cloud -->
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">SRM IST Class of 2028</span>
+<span class="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">SRM HackerSpace</span>
+<span class="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">Lead Web Architect</span>
+<span class="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">Competitive Coder</span>
+<span class="px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">Open-Source Core</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. TRAJECTORY — CINEMATIC LUMINESCENT PATH -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="trajectory">
+<div class="flex items-center gap-4 mb-16">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">03 / TRAJECTORY</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">ACADEMIC &amp; RESEARCH PATH</span>
+</div>
+<div class="relative pl-6 sm:pl-12 space-y-12">
+<!-- Luminescent Trace Line -->
+<div class="absolute left-2.5 sm:left-5 top-3 bottom-3 w-0.5 bg-gradient-to-b from-[#44e2cd] via-[#5C1322] to-transparent"></div>
+<!-- Node 1: Present SRM IST -->
+<div class="relative group">
+<div class="absolute -left-[27px] sm:-left-[39px] top-2 w-6 h-6 rounded-full bg-[#070709] border border-white/20 flex items-center justify-center">
+<span class="w-2.5 h-2.5 rounded-full bg-[#44e2cd] shadow-[0_0_12px_#44e2cd]"></span>
+</div>
+<div class="glass-dossier p-8 md:p-10 rounded-[2rem] flex flex-col md:flex-row justify-between md:items-start gap-8 hover:border-[#44e2cd]/30 transition-all">
+<div class="space-y-4 max-w-3xl">
+<div class="flex flex-wrap items-center gap-3">
+<span class="px-3.5 py-1 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-xs uppercase tracking-wider">2024 — 2028 (IN PROGRESS)</span>
+<span class="text-white/40 font-label-mono-sm text-xs uppercase">CHENNAI, INDIA</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl font-bold text-white">SRM Institute of Science and Technology</h3>
+<p class="font-body-md text-base text-[#44e2cd] font-medium">B.Tech in Computer Science and Engineering (Artificial Intelligence &amp; Machine Learning)</p>
+<p class="font-body-md text-white/70 leading-relaxed text-sm sm:text-base">
+                Focusing on Tensor Algebra, Neuromorphic Architectures, Distributed Machine Learning Systems, and Spatial Human-Computer Interaction. First semester attained an exceptional academic standing.
+              </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs">CGPA: 9.60 / 10.0</span>
+<span class="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs">Core Member: AI Society</span>
+<span class="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs">Symposium Hackathon Finalist</span>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between gap-3 min-w-max">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">STATUS</span>
+<span class="px-4 py-1.5 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-xs font-semibold uppercase">ACTIVE COHORT</span>
+</div>
+</div>
+</div>
+<!-- Node 2: Senior Secondary -->
+<div class="relative group">
+<div class="absolute -left-[27px] sm:-left-[39px] top-2 w-6 h-6 rounded-full bg-[#070709] border border-white/20 flex items-center justify-center">
+<span class="w-2.5 h-2.5 rounded-full bg-white/40"></span>
+</div>
+<div class="glass-dossier p-8 md:p-10 rounded-[2rem] flex flex-col md:flex-row justify-between md:items-start gap-8 hover:border-white/20 transition-all">
+<div class="space-y-4 max-w-3xl">
+<div class="flex flex-wrap items-center gap-3">
+<span class="px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-white/80 font-label-mono-sm text-xs uppercase tracking-wider">2022 — 2024</span>
+<span class="text-white/40 font-label-mono-sm text-xs uppercase">SENIOR SECONDARY</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl font-bold text-white">Senior Secondary Science &amp; Mathematics</h3>
+<p class="font-body-md text-base text-white/70 font-medium">Physics, Chemistry, Pure Mathematics &amp; Computer Science Track</p>
+<p class="font-body-md text-white/70 leading-relaxed text-sm sm:text-base">
+                Ranked in the 99th percentile across regional science exhibitions and algorithmic problem-solving contests. Built early procedural graphics engines in native C++ using OpenGL 3.3.
+              </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs">Informatics Olympiad State Round</span>
+<span class="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/80 font-label-mono-sm text-xs">Top 1% Academic Distinction</span>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between gap-3 min-w-max">
+<span class="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">RESULT</span>
+<span class="px-4 py-1.5 rounded-full bg-white/[0.08] text-white font-label-mono-sm text-xs font-semibold uppercase">COMPLETED</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. HORIZONTAL FULL-SCREEN PROJECT WORLD SHOWCASE (FLAGSHIP) -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 md:py-32 relative" id="projects">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">04 / FLAGSHIP PROJECTS</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd]"></span>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">07 ARTIFACTS</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-5xl font-bold text-white tracking-tight">Interactive Systems Showcase</h2>
+</div>
+<!-- Controls: Slides indicator and directional buttons -->
+<div class="flex items-center gap-4">
+<div class="px-4 py-2 rounded-full glass-dossier font-label-mono-md text-xs text-white/60">
+<span class="text-white font-semibold" id="carousel-current-index">01</span>
+<span class="text-white/20"> / </span>
+<span>07</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Previous Project" class="w-12 h-12 rounded-full glass-dossier text-white flex items-center justify-center hover:bg-white/[0.1] transition-all active:scale-95 shadow-md" id="carousel-prev">
+<span class="material-symbols-outlined text-[20px]">west</span>
+</button>
+<button aria-label="Next Project" class="w-12 h-12 rounded-full glass-dossier text-white flex items-center justify-center hover:bg-white/[0.1] transition-all active:scale-95 shadow-md" id="carousel-next">
+<span class="material-symbols-outlined text-[20px]">east</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Project Quick Navigation Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8">
+<button class="project-tab-btn active px-4 py-2 rounded-full bg-white/[0.1] border border-white/20 text-[#44e2cd] font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="0">01. TERRA-SAT 4D</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="1">02. AETHEL CAPITAL</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="2">03. NEO-NEXUS VR</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="3">04. SYNAPSE BIO-MED</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="4">05. AURA STUDIO</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="5">06. KRONOS CLOUD</button>
+<button class="project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all" data-target="6">07. AGENTIC CORE</button>
+</div>
+<!-- CAROUSEL WRAPPER WITH WORLD CONTAINER -->
+<div class="relative w-full overflow-hidden rounded-[2.5rem] glass-dossier p-3 md:p-6 shadow-2xl" id="project-slider-wrapper">
+<div class="flex transition-transform duration-700 ease-out" id="project-carousel-track" style="transform: translateX(0%);">
+<!-- SLIDE 1: TERRA-SAT 4D (Featuring requested https://lh3.googleusercontent.com/aida/ALJJyrAB7BC1HxIgxK4eKxhWNDlBHKqV4JcsTIibh71lmEj3DIb0UjquelOMTcY-bHJAi6JtBl81w3qF5o4fDYBtrJlwT4TiSh6A64QeBj7DqNnUgnk3IuKQ3GAQCfpfUPj1-a2FNG4UWcCiKLhVT8f0IDByNQuM22e446acJfxHo1dUcu2gOgYE7jVQYKvb_VJ00bsdwd-HKbWgPGekScoMfarp85sC3pA-KvmjzGnXbMHW) -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<img class="w-full h-full object-cover" data-alt="Satellite thermal terrain HUD monitor titled TERRA-SAT Alps Region" src="https://lh3.googleusercontent.com/aida/ALJJyrAB7BC1HxIgxK4eKxhWNDlBHKqV4JcsTIibh71lmEj3DIb0UjquelOMTcY-bHJAi6JtBl81w3qF5o4fDYBtrJlwT4TiSh6A64QeBj7DqNnUgnk3IuKQ3GAQCfpfUPj1-a2FNG4UWcCiKLhVT8f0IDByNQuM22e446acJfxHo1dUcu2gOgYE7jVQYKvb_VJ00bsdwd-HKbWgPGekScoMfarp85sC3pA-KvmjzGnXbMHW"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+<!-- In-Image HUD Telemetry Chips -->
+<div class="absolute top-4 left-4 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#44e2cd] font-label-mono-sm text-[11px] flex items-center gap-1.5 border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd] animate-pulse"></span>
+                  TERRA-SAT 4D • LIVE ORBIT
+                </span>
+<span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-white/70 font-label-mono-sm text-[11px] border border-white/10">
+                  ALT: 785 KM
+                </span>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white/70 font-label-mono-sm text-xs bg-black/80 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10">
+<span>LAT: 45.5° N | LON: 7.1° E</span>
+<span class="text-[#44e2cd] font-medium">SCAN RES: 0.18M / PX</span>
+</div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 01 / GEOSPATIAL INTELLIGENCE</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">TERRA-SAT 4D</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Real-time orbital satellite vision platform running neural change detection algorithms across alpine glaciers and hydrological reservoirs. Built with custom WebGL shader pipelines to stream multi-spectral thermal rasters with 14ms client-side latency.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">PyTorch</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">WebGL 2.0</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">FastAPI</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">GeoTIFF</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">CUDA</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Launch Live Matrix</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 2: AETHEL CAPITAL -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAIszN2TLrD6OU2qUojyvlMhy1S9YicbGXUJOJtANes6F8kYGOFBmgYYd5BEdZvJrp-_WP80qozqZdqu0ylnbV8OVpbBWHvpq_x9l0Fm2B3WSterESRw3yNZsBslhcQFf5Am4HrNf_wtzV_wOrtUAuqo3azvKkNNWIVmuwTJUkLEZp2V8B7AHvlnqCaAiD4lAv3gl7qAVNkOtUHD2k2w_OKkmRaaXyvqqkeTkeg-0cB')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+<div class="absolute top-4 left-4 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#44e2cd] font-label-mono-sm text-[11px] flex items-center gap-1.5 border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd]"></span>
+                  ORDER BOOK: REALTIME L3 (350μs)
+                </span>
+</div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 02 / QUANTITATIVE FINANCE</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">AETHEL CAPITAL</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Autonomous high-frequency algorithmic liquidity terminal using recurrent transformer models for limit order book prediction. Backtested with microsecond timestamp fidelity across major distributed exchanges.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">C++20</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Python</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">ZeroMQ</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Next.js 15</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>View Backtests</span>
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 3: NEO-NEXUS VR -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnVQ5hd15dRlXjNcfdEUKgNqXsBmHCEdRjiVljVgz7ATvgMJHmfAqJMG6ahnGEnrIC0TLLxu2WQV2CJ1jeZ9-ce9vx30dxBUmGQaoHQ0Fo7E6QxlC0WfBaHmt-jCq1uG3eMEImf4QMhd1lTQY9MjMcllN4pE83bu3J1ExEX4d9ML8qsssxEDABU_AXk6K49FnZHc-J2_SE96CiNHllGtxZF8E3hJQ3IFCTYxqcmvA5')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 03 / SPATIAL GRAPHICS</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">NEO-NEXUS VR</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Browser-native spatial computing playground featuring WebXR 6DoF interaction, physical audio reverberation, and GPU point clouds calculated via compute shaders.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Three.js</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">WebAudio API</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">GLSL</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">TypeScript</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Enter Space</span>
+<span class="material-symbols-outlined text-[16px]">view_in_ar</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 4: SYNAPSE BIO-MED -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGGwkxHSR4XSfLonmVjYmSmus3WEGcuruu1pQ-4ZfC71DKYkZxnHNOQsomhtjK7XA4pb-qR0qUmr3Re7UkXXYUee-kza3kRgFJ5tP_Ia8NS1gnQaz7gVt9Tmpcv33RYWAjpuwCeOtx7YVYfpbXuBn04evRQ5Xngks0zvFq5qHX-NM16kWjKxhDO9Dhq885zYI1gMMxq9WxUX5BDPUUoIBxWmI5zrc2AJWDM_Qhp5Tu')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 04 / HEALTHCARE AI</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">SYNAPSE BIO-MED</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Deep neural segmentation suite for radiological scans. Employs 3D U-Net architectures with Grad-CAM visual interpretability to deliver clinician-in-the-loop diagnostic assistance with 98.4% validation accuracy.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">PyTorch</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">MONAI</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">OpenCV</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Docker</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Interactive Case Study</span>
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 5: AURA STUDIO -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrhicff1MTcaXTERxGNctxW2IZg1k0wlXC05w8xGafdynpZu5-8nqFXk9CcCWgFqW5wO6mTJrxifo6LQsSp0TYM3XDjxcJSeROC1AHcIHkrRrlXtGo7vSE4mvF2Fb-VEvzjIVTpfJxGMLJH84vrBcW79Ukb40BhuDj1euMDRFLdLnda9lJJPcf7w5F7GyySd_r2vs-kTSRmx6ifmd25f-LLAggxIvCRGUvp6KA2r1F')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 05 / DIGITAL CRAFT</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">AURA STUDIO</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Experimental kinetic fashion and industrial showcase leveraging Apple-grade kinetic physics, bespoke DOM rasterization shaders, and magnetic tactile interactions.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">GSAP</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Lenis Scroll</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Tailwind</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">React</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Explore Exhibition</span>
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 6: KRONOS CLOUD -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9jZT3j9sJpXv4q7Kpx4TJq5Ba3lCGphGL9bnqcwsagYXf3DQoW4wHzoCFOPN6B8h4gcJtDKJ1-r7aNwiJQLmU4qER-ANbclVSMO9UacZbOjmUlnojPaicRJE6V42bGqFzwknPaPIoXN29oLAJIxYVNyHp7ZmMQjXqIoB_bTi4dC7mpt6B5AdnYQkhJRmaInqU11sgM7EzInJglY0Tc-XX9nNN7yod8Qbcu2aP7fV3')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 06 / INFRASTRUCTURE</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">KRONOS CLOUD</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Low-footprint edge container orchestrator written in Rust. Distributes lightweight WASM micro-daemons across geographically separated nodes with instant P2P state synchronization.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Rust</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">WASM</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">gRPC</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">Docker</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Telemetry Mesh</span>
+<span class="material-symbols-outlined text-[16px]">hub</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SLIDE 7: AGENTIC CORE -->
+<div class="min-w-full p-4 md:p-8 flex flex-col lg:flex-row gap-8 items-stretch">
+<div class="w-full lg:w-7/12 relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpk0cnuLWtSrZqm-aWMgHvxA07oyNyTAvw0qSQe7uy1DfdZyYnpF4LW0snYEgyp5NBbZiA5vOn96MY1-ERmMbfsUvvC_iJ1pY_DhK8C1qDynB-JvGkj6pnCZTF_tKPfoOxx8G5SHssqM5PLOVR_cxqdU2seHqXMIgoRP6RSrGMCbWRGJBRhwUUChK33w7lADC3eyqR8TcKGZxYGkUS72FzSy37CjliVNsNJntQe_Uy')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none"></div>
+</div>
+<div class="w-full lg:w-5/12 flex flex-col justify-between py-2">
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">PROJECT 07 / REASONING ARCHITECTURE</span>
+</div>
+<h3 class="font-headline-lg text-3xl font-bold text-white leading-tight">AGENTIC CORE</h3>
+<p class="font-body-md text-sm sm:text-base text-white/70 leading-relaxed">
+                  Autonomous Multi-Model Workflow Orchestrator. Coordinates specialized LLM agents through a cyclic reasoning loop with persistent vector memory and verifiable sandboxed tool execution.
+                </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">LangGraph</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">FastAPI</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">ChromaDB</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white font-label-mono-sm text-xs">TypeScript</span>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-8">
+<a class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-md active:scale-95" href="#">
+<span>Graph Inspector</span>
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+</a>
+<a class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[16px]">code</span>
+<span>Source</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. ACHIEVEMENT ARCHIVE — LUXURY FOLIO COLLECTION -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="archive">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">05 / MERIT ARCHIVE</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#44e2cd]"></span>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">VERIFIED CREDENTIALS</span>
+</div>
+<h2 class="font-headline-lg text-3xl sm:text-5xl font-bold text-white tracking-tight">Accreditations &amp; Honors</h2>
+</div>
+<!-- Filter Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-2">
+<button class="archive-filter active px-4 py-1.5 rounded-full bg-white/[0.1] border border-white/20 text-[#44e2cd] font-label-mono-sm text-xs uppercase tracking-wider transition-all" data-filter="all">All (18)</button>
+<button class="archive-filter px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs uppercase tracking-wider transition-all" data-filter="cert">Certifications</button>
+<button class="archive-filter px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs uppercase tracking-wider transition-all" data-filter="comp">Competitions</button>
+<button class="archive-filter px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs uppercase tracking-wider transition-all" data-filter="course">IIT Courses</button>
+</div>
+</div>
+<!-- Dossier Folders Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="archive-grid">
+<!-- Card 1 -->
+<div class="archive-item cert course glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">NPTEL / IIT MADRAS</span>
+<span class="px-3 py-1 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-[11px] uppercase">ELITE + GOLD</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">Deep Learning Specialization</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              Comprehensive mathematical rigor covering Backprop, CNNs, Sequence Modeling, Autoencoders, and Generative Adversarial Networks. Top 1% nationally.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>ISSUED: 2024</span>
+<span class="text-white font-medium">VERIFIED HASH: #NPTEL-DL-942</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="archive-item comp glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">HACKSRM '24</span>
+<span class="px-3 py-1 rounded-full bg-white text-black font-label-mono-sm text-[11px] font-semibold uppercase">BEST AI PROTOTYPE</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">HackSRM Annual Hackathon</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              Engineered an edge-based cognitive vision assistant within 36 straight hours. Awarded Best Prototype among 250+ collegiate teams.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>SRM UNIVERSITY</span>
+<span class="text-white font-medium">1ST RUNNER UP</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="archive-item comp glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">MINISTRY OF EDUCATION</span>
+<span class="px-3 py-1 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-[11px] uppercase">INTERNAL RANK 1</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">Smart India Hackathon Qualifier</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              Led the internal university qualifier round designing a distributed anomaly detector for institutional energy smart grids.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>GOVT. OF INDIA</span>
+<span class="text-white font-medium">TEAM LEAD</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="archive-item cert course glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">DEEPLEARNING.AI / STANFORD</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.08] border border-white/10 text-white font-label-mono-sm text-[11px] uppercase">DISTINCTION</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">Machine Learning Specialization</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              Supervised, Unsupervised learning algorithms, Recommender systems, and Deep Reinforcement Learning foundations instructed by Andrew Ng.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>COURSERA</span>
+<span class="text-white font-medium">100% EXAM SCORE</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="archive-item cert glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">AMAZON WEB SERVICES</span>
+<span class="px-3 py-1 rounded-full bg-white/[0.08] border border-white/10 text-white font-label-mono-sm text-[11px] uppercase">SCHOLAR</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">AWS Cloud Foundations</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              Elastic compute orchestration, S3 data pipelines, DynamoDB partitioning, and serverless compute triggers through AWS Lambda.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>CLOUD ACADEMY</span>
+<span class="text-white font-medium">ACCREDITED</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="archive-item comp glass-dossier p-7 rounded-[2rem] flex flex-col justify-between hover:border-[#44e2cd]/40 transition-all group">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-widest">SRM CODE ENIGMA</span>
+<span class="px-3 py-1 rounded-full bg-[#44e2cd]/10 border border-[#44e2cd]/30 text-[#44e2cd] font-label-mono-sm text-[11px] uppercase">GOLD MEDAL</span>
+</div>
+<h4 class="font-headline-sm text-xl font-bold text-white group-hover:text-[#44e2cd] transition-colors">Speed Algorithmic Contest</h4>
+<p class="font-body-sm text-sm text-white/60 leading-relaxed">
+              1st place in fast-paced competitive programming solving graph traversal, bitmask dynamic programming, and binary search trees under time limits.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
+<span>INTRA-SRM</span>
+<span class="text-white font-medium">SOLVED 6/6 IN 42M</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. SKILLS — APPARATUS (FLOATING ARCHITECTURAL TAGS) -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="stack">
+<div class="flex items-center gap-4 mb-16">
+<span class="font-label-mono-md text-xs text-[#44e2cd] tracking-[0.2em] uppercase">06 / APPARATUS</span>
+<div class="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+<span class="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">HARDWARE &amp; SOFTWARE STACK</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Domain 1: Systems & Core -->
+<div class="glass-dossier p-7 rounded-[2rem] flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-wider">TIER 01 / CORE</span>
+<span class="material-symbols-outlined text-[20px] text-white/30">terminal</span>
+</div>
+<h3 class="font-headline-sm text-xl font-bold text-white">Systems &amp; Core</h3>
+<div class="flex flex-col gap-2.5 font-label-mono-md text-xs">
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">C / C++20</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-[10px]">HIGH PERF</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Python</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">RESEARCH &amp; ML</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Rust</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">EDGE RUNTIME</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Java</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">ENTERPRISE OOP</span>
+</div>
+</div>
+</div>
+<!-- Domain 2: AI / ML & Mathematical Modeling -->
+<div class="glass-dossier p-7 rounded-[2rem] flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-wider">TIER 02 / COGNITIVE</span>
+<span class="material-symbols-outlined text-[20px] text-white/30">neurology</span>
+</div>
+<h3 class="font-headline-sm text-xl font-bold text-white">AI &amp; Data Math</h3>
+<div class="flex flex-col gap-2.5 font-label-mono-md text-xs">
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">PyTorch</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-[10px]">PRIMARY NATIVE</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Hugging Face</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">TRANSFORMERS</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">OpenCV &amp; MONAI</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">VISION</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Scikit-Learn</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">STATS &amp; SVM</span>
+</div>
+</div>
+</div>
+<!-- Domain 3: WebGL & Modern Web Architecture -->
+<div class="glass-dossier p-7 rounded-[2rem] flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-wider">TIER 03 / SPATIAL</span>
+<span class="material-symbols-outlined text-[20px] text-white/30">token</span>
+</div>
+<h3 class="font-headline-sm text-xl font-bold text-white">Web &amp; Spatial</h3>
+<div class="flex flex-col gap-2.5 font-label-mono-md text-xs">
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">TypeScript / React</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-[10px]">NEXT.JS 15</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">WebGL / Three.js</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">SHADERS</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Tailwind CSS</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">ENGINEERED UI</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">HTML5 Semantic</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">ACCESSIBLE</span>
+</div>
+</div>
+</div>
+<!-- Domain 4: Infrastructure & Cloud -->
+<div class="glass-dossier p-7 rounded-[2rem] flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-mono-sm text-xs text-[#44e2cd] uppercase tracking-wider">TIER 04 / INFRA</span>
+<span class="material-symbols-outlined text-[20px] text-white/30">dns</span>
+</div>
+<h3 class="font-headline-sm text-xl font-bold text-white">Cloud &amp; Ops</h3>
+<div class="flex flex-col gap-2.5 font-label-mono-md text-xs">
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Docker / Linux</span>
+<span class="text-[#44e2cd] font-label-mono-sm text-[10px]">ROOT / POSIX</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Git &amp; GitHub CI</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">AUTOMATION</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Supabase / Mongo</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">DATA LAYERS</span>
+</div>
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+<span class="text-white font-medium">Figma UI/UX</span>
+<span class="text-white/40 font-label-mono-sm text-[10px]">DESIGN SYSTEMS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. CONTACT & CINEMATIC CLOSING SECTION -->
+<section class="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 md:py-36 relative" id="contact">
+<div class="glass-dossier rounded-[3rem] p-8 md:p-20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] flex flex-col items-center text-center relative overflow-hidden">
+<!-- Deep Ambient Radial Glow Spot -->
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#5C1322]/40 to-transparent rounded-full blur-[100px] pointer-events-none"></div>
+<div class="flex items-center gap-3 mb-6 relative z-10">
+<span class="w-2 h-2 rounded-full bg-[#44e2cd] animate-pulse"></span>
+<span class="font-label-mono-sm text-xs uppercase text-[#44e2cd] tracking-[0.2em]">TRANSMISSION FREQUENCY OPEN</span>
+</div>
+<h2 class="font-display-hero text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-[-0.03em] leading-[1.05] uppercase max-w-4xl relative z-10">
+          Let’s Construct Something Extraordinary.
+        </h2>
+<p class="font-body-lg text-base sm:text-lg text-white/70 max-w-2xl mt-6 leading-relaxed relative z-10">
+          Always receptive to collaborative AI research experiments, ambitious software architecture, and high-performance digital projects.
+        </p>
+<!-- Interactive Email Action Buttons -->
+<div class="mt-10 flex flex-col sm:flex-row items-center gap-4 relative z-10">
+<button class="group flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_30px_rgba(255,255,255,0.2)] hover:bg-[#C4C8D0] transition-all active:scale-95" id="copy-email-btn">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+<span id="copy-email-text">ayush.singh@srmist.edu.in</span>
+</button>
+<a class="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.1] transition-all" href="mailto:ayush.singh@srmist.edu.in">
+<span>Direct Dispatch</span>
+<span class="material-symbols-outlined text-[18px] text-[#44e2cd]">send</span>
+</a>
+</div>
+<!-- Social Connectivity Strip -->
+<div class="flex flex-wrap items-center justify-center gap-3 mt-14 pt-8 border-t border-white/[0.08] w-full max-w-2xl font-label-mono-sm text-xs relative z-10">
+<a class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all" href="https://github.com" rel="noreferrer" target="_blank">
+            GITHUB
+          </a>
+<a class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all" href="https://linkedin.com" rel="noreferrer" target="_blank">
+            LINKEDIN
+          </a>
+<a class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all" href="https://huggingface.co" rel="noreferrer" target="_blank">
+            HUGGINGFACE
+          </a>
+<a class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all" href="https://x.com" rel="noreferrer" target="_blank">
+            X / TWITTER
+          </a>
+<a class="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all" href="https://discord.com" rel="noreferrer" target="_blank">
+            DISCORD
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- DIAGNOSTIC FOOTER -->
+<footer class="relative z-20 w-full bg-[#070709]/90 backdrop-blur-xl border-t border-white/[0.06]">
+<div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4 font-label-mono-sm text-xs text-white/50">
+<div class="flex items-center gap-4 flex-wrap justify-center">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#44e2cd]"></span>
+<span class="uppercase tracking-widest text-white/70">LATENCY: 14MS</span>
+</div>
+<span class="text-white/20">•</span>
+<div class="flex items-center gap-2">
+<span class="uppercase tracking-widest text-white/70">CORE: NEURAL RUNTIME 4.2</span>
+</div>
+<span class="text-white/20">•</span>
+<div class="flex items-center gap-2">
+<span class="uppercase tracking-widest text-[#44e2cd]">INFERENCE: LIVE</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-white/50">
+<span class="text-white font-semibold">01</span>
+<span class="text-white/20">/</span>
+<span>07</span>
+<span class="ml-2 uppercase tracking-wider text-white/40">INDEX SCROLL</span>
+</div>
+<div class="text-center md:text-right uppercase tracking-wider text-white/40">
+        © 2025 AYUSH SINGH. ALL RIGHTS RESERVED.
+      </div>
+</div>
+</footer>
+<!-- Vanilla JS Engine for WebGL, Project World Shifting, and Controls -->
+<script>
+    (function () {
+      // 1. HERO WEBGL SHADER ENGINE (Preserved & Enhanced)
+      const heroSection = document.getElementById('overview');
+      const canvas = document.getElementById('hero-shader-canvas');
+      if (canvas && heroSection) {
+        const gl = canvas.getContext('webgl');
+        if (gl) {
+          const vsSource = `
+            attribute vec2 position;
+            void main() {
+              gl_Position = vec4(position, 0.0, 1.0);
+            }
+          `;
+          const fsSource = `
+            precision highp float;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+            float snoise(vec2 v) {
+                const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                vec2 i  = floor(v + dot(v, C.yy));
+                vec2 x0 = v - i + dot(i, C.xx);
+                vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                vec4 x12 = x0.xyxy + C.xxzz;
+                x12.xy -= i1;
+                i = mod289(i);
+                vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+                vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                m = m*m; m = m*m;
+                vec3 x = 2.0 * fract(p * C.www) - 1.0;
+                vec3 h = abs(x) - 0.5;
+                vec3 ox = floor(x + 0.5);
+                vec3 a0 = x - ox;
+                m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+                vec3 g;
+                g.x  = a0.x  * x0.x  + h.x  * x0.y;
+                g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                return 130.0 * dot(m, g);
+            }
+
+            void main() {
+                vec2 st = gl_FragCoord.xy / u_resolution.xy;
+                st.x *= u_resolution.x / u_resolution.y;
+
+                vec2 mouse = u_mouse / u_resolution.xy;
+                mouse.x *= u_resolution.x / u_resolution.y;
+
+                float t = u_time * 0.12;
+
+                vec2 delta = st - mouse;
+                float dist = length(delta);
+                float mouseInfluence = smoothstep(0.65, 0.0, dist) * 0.25;
+                vec2 distortedST = st + normalize(delta + 0.0001) * mouseInfluence;
+
+                float n1 = snoise(distortedST * 1.8 + vec2(t * 0.4, -t * 0.3));
+                float n2 = snoise(distortedST * 3.6 - vec2(-t * 0.2, t * 0.5) + vec2(n1 * 0.7));
+
+                float contour = abs(fract(n2 * 4.5 + t * 0.2) - 0.5);
+                float lines = smoothstep(0.07, 0.0, contour) * 0.35;
+
+                vec2 gridST = fract(distortedST * 12.0) - 0.5;
+                float dots = smoothstep(0.04, 0.01, length(gridST)) * smoothstep(0.2, 0.8, n1 + 0.5) * 0.22;
+
+                vec3 bg = vec3(0.027, 0.027, 0.035);
+                vec3 latentGlow = mix(vec3(0.08, 0.12, 0.18), vec3(0.20, 0.10, 0.16), n2 * 0.5 + 0.5);
+                vec3 contourColor = mix(vec3(0.45, 0.58, 0.72), vec3(0.85, 0.90, 0.95), n1 * 0.5 + 0.5);
+                vec3 mouseGlowColor = vec3(0.26, 0.88, 0.80) * smoothstep(0.55, 0.0, dist);
+
+                vec3 finalColor = bg;
+                finalColor += latentGlow * (0.35 + 0.4 * n1);
+                finalColor += contourColor * lines;
+                finalColor += dots * vec3(0.8, 0.85, 0.95);
+                finalColor += mouseGlowColor * 0.28;
+
+                vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+                float vignette = smoothstep(1.2, 0.2, length(uv - vec2(0.5, 0.45)));
+                finalColor *= vignette * 0.92;
+
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+          `;
+
+          function compileShader(src, type) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return s;
+          }
+
+          const program = gl.createProgram();
+          gl.attachShader(program, compileShader(vsSource, gl.VERTEX_SHADER));
+          gl.attachShader(program, compileShader(fsSource, gl.FRAGMENT_SHADER));
+          gl.linkProgram(program);
+
+          const positionBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            -1, -1,  1, -1, -1,  1,
+            -1,  1,  1, -1,  1,  1
+          ]), gl.STATIC_DRAW);
+
+          const posAttr = gl.getAttribLocation(program, 'position');
+          const uTimeLoc = gl.getUniformLocation(program, 'u_time');
+          const uResLoc = gl.getUniformLocation(program, 'u_resolution');
+          const uMouseLoc = gl.getUniformLocation(program, 'u_mouse');
+
+          let targetMouse = { x: 0.5, y: 0.5 };
+          let currentMouse = { x: 0.5, y: 0.5 };
+
+          function resize() {
+            const rect = heroSection.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const w = Math.floor(rect.width * dpr);
+            const h = Math.floor(rect.height * dpr);
+            if (canvas.width !== w || canvas.height !== h) {
+              canvas.width = w;
+              canvas.height = h;
+            }
+          }
+          window.addEventListener('resize', resize);
+          resize();
+
+          heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            targetMouse.x = (e.clientX - rect.left) / rect.width;
+            targetMouse.y = 1.0 - (e.clientY - rect.top) / rect.height;
+          });
+
+          const startTime = performance.now();
+          function render(now) {
+            resize();
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.useProgram(program);
+
+            currentMouse.x += (targetMouse.x - currentMouse.x) * 0.08;
+            currentMouse.y += (targetMouse.y - currentMouse.y) * 0.08;
+
+            gl.enableVertexAttribArray(posAttr);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
+
+            gl.uniform1f(uTimeLoc, (now - startTime) * 0.001);
+            gl.uniform2f(uResLoc, canvas.width, canvas.height);
+            gl.uniform2f(uMouseLoc, currentMouse.x * canvas.width, currentMouse.y * canvas.height);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+            requestAnimationFrame(render);
+          }
+          requestAnimationFrame(render);
+        }
+      }
+
+      // 2. PROJECT CAROUSEL ENGINE & DYNAMIC WORLD THEMES
+      const track = document.getElementById('project-carousel-track');
+      const prevBtn = document.getElementById('carousel-prev');
+      const nextBtn = document.getElementById('carousel-next');
+      const indexDisplay = document.getElementById('carousel-current-index');
+      const tabs = document.querySelectorAll('.project-tab-btn');
+      const totalSlides = 7;
+      let currentSlide = 0;
+
+      // Project theme ambient glows (Satellite Jade, Office Amber, VR Indigo, Medical Cobalt, Studio Crimson)
+      const projectThemes = [
+        { accent: 'rgba(68, 226, 205, 0.08)', burgundy: 'rgba(92, 19, 34, 0.22)' }, // Terra-Sat
+        { accent: 'rgba(245, 158, 11, 0.07)', burgundy: 'rgba(60, 20, 10, 0.2)' },  // Aethel
+        { accent: 'rgba(99, 102, 241, 0.09)', burgundy: 'rgba(76, 29, 149, 0.2)' }, // Neo-Nexus
+        { accent: 'rgba(14, 165, 233, 0.08)', burgundy: 'rgba(15, 23, 42, 0.3)' },  // Synapse
+        { accent: 'rgba(244, 63, 94, 0.08)', burgundy: 'rgba(136, 19, 55, 0.25)' }, // Aura Studio
+        { accent: 'rgba(16, 185, 129, 0.08)', burgundy: 'rgba(4, 47, 46, 0.2)' },   // Kronos
+        { accent: 'rgba(68, 226, 205, 0.08)', burgundy: 'rgba(92, 19, 34, 0.22)' }  // Agentic Core
+      ];
+
+      const ambientGlowBurgundy = document.getElementById('ambient-glow-burgundy');
+      const ambientGlowAccent = document.getElementById('ambient-glow-accent');
+
+      function updateSlide(index) {
+        if (index < 0) currentSlide = totalSlides - 1;
+        else if (index >= totalSlides) currentSlide = 0;
+        else currentSlide = index;
+
+        if (track) {
+          track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        if (indexDisplay) {
+          indexDisplay.textContent = String(currentSlide + 1).padStart(2, '0');
+        }
+
+        // Apply theme color shifts smoothly
+        const theme = projectThemes[currentSlide] || projectThemes[0];
+        if (ambientGlowAccent) ambientGlowAccent.style.backgroundColor = theme.accent;
+        if (ambientGlowBurgundy) ambientGlowBurgundy.style.backgroundColor = theme.burgundy;
+
+        // Update active quick tab
+        tabs.forEach((tab, i) => {
+          if (i === currentSlide) {
+            tab.className = 'project-tab-btn active px-4 py-2 rounded-full bg-white/[0.1] border border-white/20 text-[#44e2cd] font-label-mono-sm text-xs whitespace-nowrap transition-all';
+          } else {
+            tab.className = 'project-tab-btn px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs whitespace-nowrap transition-all';
+          }
+        });
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const targetIndex = parseInt(tab.getAttribute('data-target'), 10);
+          updateSlide(targetIndex);
+        });
+      });
+
+      // Keyboard Arrow navigation
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') updateSlide(currentSlide + 1);
+        if (e.key === 'ArrowLeft') updateSlide(currentSlide - 1);
+      });
+
+      // 3. DOSSIER ARCHIVE FILTERING
+      const filterButtons = document.querySelectorAll('.archive-filter');
+      const archiveItems = document.querySelectorAll('.archive-item');
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach((b) => {
+            b.className = 'archive-filter px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white font-label-mono-sm text-xs uppercase tracking-wider transition-all';
+          });
+          btn.className = 'archive-filter active px-4 py-1.5 rounded-full bg-white/[0.1] border border-white/20 text-[#44e2cd] font-label-mono-sm text-xs uppercase tracking-wider transition-all';
+
+          const filter = btn.getAttribute('data-filter');
+          archiveItems.forEach((item) => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+              item.style.display = 'flex';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // 4. COPY EMAIL TO CLIPBOARD
+      const copyBtn = document.getElementById('copy-email-btn');
+      const copyText = document.getElementById('copy-email-text');
+      if (copyBtn && copyText) {
+        copyBtn.addEventListener('click', () => {
+          const email = 'ayush.singh@srmist.edu.in';
+          navigator.clipboard.writeText(email).then(() => {
+            const original = copyText.textContent;
+            copyText.textContent = 'COPIED TO CLIPBOARD';
+            setTimeout(() => {
+              copyText.textContent = original;
+            }, 2000);
+          });
+        });
+      }
+
+      // 5. LIVE IST CLOCK
+      function updateClock() {
+        const clockEl = document.getElementById('ist-clock');
+        if (clockEl) {
+          const now = new Date();
+          const options = { timeZone: 'Asia/Kolkata', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+          clockEl.textContent = new Intl.DateTimeFormat('en-GB', options).format(now);
+        }
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+    })();
+  </script>
+</body></html>
