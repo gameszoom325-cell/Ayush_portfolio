@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,6 +7,7 @@ import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
 import { CustomCursor } from './components/CustomCursor';
 import { AmbientBackground } from './components/AmbientBackground';
+import { LoadingScreen } from './components/LoadingScreen';
 
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -21,6 +22,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const App: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project>(projects[0]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const lenisRef = useRef<Lenis | null>(null);
 
   // Initialize Lenis smooth scroll and connect with GSAP ScrollTrigger
   useEffect(() => {
@@ -33,6 +36,7 @@ export const App: React.FC = () => {
       wheelMultiplier: 1,
       touchMultiplier: 2,
     });
+    lenisRef.current = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -49,8 +53,21 @@ export const App: React.FC = () => {
     };
   }, []);
 
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    // Refresh ScrollTrigger to ensure all horizontal pin positions and triggers are accurately aligned
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+  };
+
   return (
     <div className="relative min-h-screen bg-[#070709] text-[#F5F5F7] overflow-x-hidden film-grain selection:bg-[#44e2cd] selection:text-[#003731]">
+      {/* Cinematic Digital Construction Loading Sequence (Plays before site appears) */}
+      {isLoading && (
+        <LoadingScreen onComplete={handleLoadingComplete} />
+      )}
+
       {/* Interactive Custom Magnetic Cursor */}
       <CustomCursor />
 
@@ -60,7 +77,7 @@ export const App: React.FC = () => {
       {/* Chromium Dynamic Navigation Bar */}
       <Navbar activeTheme={activeProject.theme} />
 
-      {/* Main Sections */}
+      {/* Main Sections - Existing GSAP, ScrollTrigger, and animations completely preserved */}
       <main className="relative z-10 w-full pt-20">
         <Hero activeTheme={activeProject.theme} />
         <About activeTheme={activeProject.theme} />
