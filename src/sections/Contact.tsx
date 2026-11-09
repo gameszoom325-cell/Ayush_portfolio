@@ -7,16 +7,17 @@ interface ContactProps {
 
 export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
   const [copied, setCopied] = useState(false);
-  
-  // Easily editable contact details
-  const emailPlaceholder = "ayushsingh.work@example.com"; 
+  const email = '090109ayush@gmail.com';
+  const mailtoLink = `mailto:${email}`;
   const githubUrl = 'https://github.com/gameszoom325-cell';
   const linkedinUrl = 'https://www.linkedin.com/in/ayush-singh-705a63397';
 
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(emailPlaceholder).then(() => {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(email).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     });
@@ -57,17 +58,31 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
           Open to ambitious software architecture, full-stack web platforms, hackathon collaborations, and innovative technology exploration.
         </p>
 
-        {/* Three Action Buttons: Email, GitHub, LinkedIn */}
+        {/* Action Buttons: Direct Mailto, Copy, GitHub, LinkedIn */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 relative z-10">
-          {/* Email Copy Button */}
+          {/* Primary Mailto Button: Directly opens default mail client with recipient pre-filled */}
+          <a
+            href={mailtoLink}
+            className="group flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_30px_rgba(255,255,255,0.2)] hover:bg-[#C4C8D0] transition-all active:scale-95 cursor-pointer"
+            title={`Compose email to ${email}`}
+          >
+            <span className="material-symbols-outlined text-[18px]">mail</span>
+            <span>{email}</span>
+            <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5">
+              arrow_outward
+            </span>
+          </a>
+
+          {/* One-click Copy Button */}
           <button
             onClick={handleCopy}
-            className="group flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_30px_rgba(255,255,255,0.2)] hover:bg-[#C4C8D0] transition-all active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-all active:scale-95 cursor-pointer"
+            title="Copy email to clipboard"
           >
             <span className="material-symbols-outlined text-[18px]">
               {copied ? 'check_circle' : 'content_copy'}
             </span>
-            <span>{copied ? 'COPIED TO CLIPBOARD' : 'Copy Email Address'}</span>
+            <span>{copied ? 'COPIED' : 'COPY'}</span>
           </button>
 
           {/* GitHub Button */}
@@ -97,6 +112,14 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
 
         {/* Social Connectivity Strip */}
         <div className="flex flex-wrap items-center justify-center gap-3 mt-14 pt-8 border-t border-white/[0.08] w-full max-w-2xl font-label-mono-sm text-xs relative z-10">
+          <a
+            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all flex items-center gap-1.5"
+            href={mailtoLink}
+            title="Direct email dispatch"
+          >
+            <span className="material-symbols-outlined text-[14px]">mail</span>
+            <span>{email}</span>
+          </a>
           <a
             className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
             href={githubUrl}

@@ -8,11 +8,12 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ activeTheme, activeProjectNum = '01' }) => {
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
+  const email = '090109ayush@gmail.com';
 
   return (
     <footer className="relative z-20 w-full bg-[#070709]/90 backdrop-blur-xl border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4 font-label-mono-sm text-xs text-white/50">
-        {/* Left: Verified Status */}
+        {/* Left: Verified Status & Direct Email */}
         <div className="flex items-center gap-4 flex-wrap justify-center">
           <div className="flex items-center gap-2">
             <span
@@ -26,14 +27,20 @@ export const Footer: React.FC<FooterProps> = ({ activeTheme, activeProjectNum = 
             <span className="uppercase tracking-widest text-white/70">B.TECH CSE (AI &amp; ML)</span>
           </div>
           <span className="text-white/20">•</span>
-          <div className="flex items-center gap-2">
+          {/* Direct Email Action Link */}
+          <a
+            href={`mailto:${email}`}
+            title={`Compose email to ${email}`}
+            className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer group"
+          >
             <span
-              className="uppercase tracking-widest font-semibold transition-colors duration-500"
+              className="material-symbols-outlined text-[14px] transition-colors duration-500"
               style={{ color: accentColor }}
             >
-              PORTFOLIO ACTIVE
+              mail
             </span>
-          </div>
+            <span className="text-white/80 group-hover:underline">{email}</span>
+          </a>
         </div>
 
         {/* Center: Real Project index indicator */}

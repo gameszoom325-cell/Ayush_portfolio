@@ -141,8 +141,8 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 <span className="material-symbols-outlined text-[18px]">share</span>
               </a>
               <a
-                href="#contact"
-                title="Contact Section"
+                href="mailto:090109ayush@gmail.com"
+                title="Email: 090109ayush@gmail.com"
                 className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all"
               >
                 <span className="material-symbols-outlined text-[18px]">mail</span>
