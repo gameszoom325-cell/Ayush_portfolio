@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
 import { AmbientBackground } from './components/AmbientBackground';
-import { AIIntroSequence } from './components/AIIntroSequence';
 
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -21,7 +20,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const App: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project>(projects[0]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const lenisRef = useRef<Lenis | null>(null);
 
   // Initialize Lenis smooth scroll and connect with GSAP ScrollTrigger
@@ -46,36 +44,28 @@ export const App: React.FC = () => {
     gsap.ticker.add(tickerCb);
     gsap.ticker.lagSmoothing(0);
 
+    // Initial ScrollTrigger alignment
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     return () => {
+      clearTimeout(timer);
       gsap.ticker.remove(tickerCb);
       lenis.destroy();
     };
   }, []);
 
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    // Refresh ScrollTrigger to ensure all horizontal pin positions and triggers are accurately aligned
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 150);
-  };
-
   return (
     <div className="relative min-h-screen bg-[#070709] text-[#F5F5F7] overflow-x-hidden film-grain selection:bg-[#44e2cd] selection:text-[#003731]">
-      {/* Cinematic AI Intro Sequence: Autonomous AI Design Team Opening */}
-      {isLoading && (
-        <AIIntroSequence onComplete={handleLoadingComplete} />
-      )}
-
-
       {/* Dynamic Project World Ambient Atmosphere Glows */}
       <AmbientBackground theme={activeProject.theme} />
 
       {/* Chromium Dynamic Navigation Bar */}
       <Navbar activeTheme={activeProject.theme} />
 
-      {/* Main Sections - Existing GSAP, ScrollTrigger, and animations completely preserved */}
-      <main className="relative z-10 w-full pt-20">
+      {/* Main Sections - Opened directly with clean layout & spacing */}
+      <main className="relative z-10 w-full">
         <Hero activeTheme={activeProject.theme} />
         <About activeTheme={activeProject.theme} />
         <Trajectory activeTheme={activeProject.theme} />

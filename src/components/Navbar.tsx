@@ -53,7 +53,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-12 py-4 transition-all duration-500">
       <div
-        data-intro="nav"
         className={`h-16 w-full max-w-7xl mx-auto rounded-full bg-[#0E0E12]/85 backdrop-blur-2xl border transition-all duration-300 px-4 sm:px-6 flex items-center justify-between gap-4 ${
           scrolled
             ? 'border-white/15 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.95)]'
@@ -62,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
       >
         {/* Left: Minimal Titanium Logo */}
         <div className="flex items-center gap-3 min-w-max">
-          <a data-intro="logo" className="flex items-center gap-3 group" href="#overview">
+          <a className="flex items-center gap-3 group" href="#overview">
             <div
               className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 flex items-center justify-center font-headline-sm text-sm font-bold tracking-widest text-white group-hover:border-white/30 transition-all shadow-inner"
               style={{ borderColor: scrolled ? `${accentColor}40` : undefined }}
