@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
-import { CustomCursor } from './components/CustomCursor';
+import { SwarmCursor } from './components/SwarmCursor';
 import { AmbientBackground } from './components/AmbientBackground';
 import { LoadingScreen } from './components/LoadingScreen';
 
@@ -68,8 +68,8 @@ export const App: React.FC = () => {
         <LoadingScreen onComplete={handleLoadingComplete} />
       )}
 
-      {/* Interactive Custom Magnetic Cursor */}
-      <CustomCursor />
+      {/* Native Swarm Rebuild Cursor Experience */}
+      <SwarmCursor />
 
       {/* Dynamic Project World Ambient Atmosphere Glows */}
       <AmbientBackground theme={activeProject.theme} />
