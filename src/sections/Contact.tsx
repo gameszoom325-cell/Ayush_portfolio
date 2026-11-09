@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Mail, ArrowUpRight, Check, Copy } from 'lucide-react';
+import { LinkedinIcon, GithubIcon } from '../components/Icons';
 import { ProjectTheme } from '../data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -111,25 +113,24 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
           {/* Primary Mailto Action */}
           <a
             href={mailtoLink}
-            className="group flex items-center gap-3 px-9 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-[#C4C8D0] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,box-shadow] duration-200 cursor-pointer"
+            data-magnetic="true"
+            className="relative group flex items-center gap-3 px-9 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-[#E2E8F0] active:scale-[0.97] transition-all cursor-pointer overflow-hidden"
             title={`Compose email to ${email}`}
           >
-            <span className="material-symbols-outlined text-[18px]">mail</span>
-            <span>{email}</span>
-            <span className="material-symbols-outlined text-[14px] transition-transform duration-200 group-hover:translate-x-0.5">
-              arrow_outward
-            </span>
+            <Mail className="w-4 h-4 relative z-10" />
+            <span className="relative z-10">{email}</span>
+            <ArrowUpRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/10 to-transparent transition-transform duration-700 ease-out pointer-events-none" />
           </a>
 
           {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
+            data-magnetic="true"
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] active:scale-[0.97] transition-all cursor-pointer"
             title="Copy email to clipboard"
           >
-            <span className="material-symbols-outlined text-[18px]">
-              {copied ? 'check_circle' : 'content_copy'}
-            </span>
+            {copied ? <Check className="w-4 h-4 text-[#2dd4bf]" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'COPIED' : 'COPY'}</span>
           </button>
 
@@ -138,11 +139,12 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             href={githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
+            data-magnetic="true"
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] active:scale-[0.97] transition-all cursor-pointer"
+            title="Explore GitHub Repositories"
           >
-            <span className="material-symbols-outlined text-[18px]">terminal</span>
-            <span>GitHub Profile</span>
-            <span className="material-symbols-outlined text-[14px] text-white/40">arrow_outward</span>
+            <GithubIcon className="w-4 h-4" />
+            <span>GITHUB</span>
           </a>
 
           {/* LinkedIn Button */}
@@ -150,43 +152,25 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             href={linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
+            data-magnetic="true"
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] active:scale-[0.97] transition-all cursor-pointer"
+            title="Connect on LinkedIn"
           >
-            <span className="material-symbols-outlined text-[18px]">share</span>
-            <span>LinkedIn Profile</span>
-            <span className="material-symbols-outlined text-[14px] text-white/40">arrow_outward</span>
+            <LinkedinIcon className="w-4 h-4" />
+            <span>LINKEDIN</span>
           </a>
         </div>
 
-        {/* Social Connectivity Strip */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-16 pt-8 border-t border-white/[0.08] w-full max-w-2xl font-label-mono-sm text-xs">
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200 flex items-center gap-1.5"
-            href={mailtoLink}
-            title="Direct email dispatch"
-          >
-            <span className="material-symbols-outlined text-[14px]">mail</span>
-            <span>{email}</span>
-          </a>
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200"
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            GITHUB: @gameszoom325-cell
-          </a>
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200"
-            href={linkedinUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LINKEDIN: Ayush Singh
-          </a>
-          <span className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/50">
-            SRM IST • CHENNAI, INDIA
-          </span>
+        {/* Telemetry Node Footnote */}
+        <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-wrap items-center justify-center gap-6 text-white/40 font-label-mono-sm text-xs">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf]" />
+            <span>PRIMARY INBOX ACTIVE</span>
+          </div>
+          <span>•</span>
+          <span>SRM IST KATTANKULATHUR, TAMIL NADU</span>
+          <span>•</span>
+          <span>COGNITIVE AI &amp; WEB PLATFORMS</span>
         </div>
       </div>
     </section>

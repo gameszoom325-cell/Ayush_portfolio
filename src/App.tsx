@@ -39,6 +39,7 @@ export const App: React.FC = () => {
       touchMultiplier: 2,
     });
     lenisRef.current = lenis;
+    (window as any).lenis = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -52,7 +53,7 @@ export const App: React.FC = () => {
     // Initial ScrollTrigger alignment
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 150);
+    }, 200);
 
     // Dynamic section tracking for background evolution
     const sectionIds = ['overview', 'about', 'trajectory', 'projects', 'archive', 'stack', 'contact'];
@@ -101,7 +102,14 @@ export const App: React.FC = () => {
     <div className="relative min-h-screen bg-[#070709] text-[#F5F5F7] overflow-x-hidden film-grain selection:bg-[#44e2cd] selection:text-[#003731]">
       {/* 1. Cinematic Loading & Shutter Entrance Sequence */}
       {isIntroActive && (
-        <CinematicIntro onComplete={() => setIsIntroActive(false)} />
+        <CinematicIntro
+          onComplete={() => {
+            setIsIntroActive(false);
+            setTimeout(() => {
+              ScrollTrigger.refresh();
+            }, 100);
+          }}
+        />
       )}
 
       {/* 2. Premium Desktop Magnetic Cursor with Morphing States */}
@@ -121,7 +129,7 @@ export const App: React.FC = () => {
 
       {/* 6. Continuous Scene-to-Scene Architectural Portfolio Sections */}
       <main className="relative z-10 w-full">
-        <Hero activeTheme={activeProject.theme} />
+        <Hero activeTheme={activeProject.theme} isIntroActive={isIntroActive} />
         <About activeTheme={activeProject.theme} />
         <Trajectory activeTheme={activeProject.theme} />
         <Projects

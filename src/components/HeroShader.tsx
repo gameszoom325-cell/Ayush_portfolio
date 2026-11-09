@@ -8,7 +8,16 @@ export const HeroShader: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl');
+    // Detect low-performance / reduced motion environments
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+    const gl = canvas.getContext('webgl', {
+      powerPreference: 'high-performance',
+      alpha: true,
+      antialias: false,
+      depth: false,
+    });
     if (!gl) return;
 
     const vsSource = `
@@ -21,6 +30,7 @@ export const HeroShader: React.FC = () => {
     const fsSource = `
       precision highp float;
       uniform float u_time;
+      uniform float u_wake;
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
 
@@ -57,36 +67,44 @@ export const HeroShader: React.FC = () => {
           vec2 mouse = u_mouse / u_resolution.xy;
           mouse.x *= u_resolution.x / u_resolution.y;
 
-          float t = u_time * 0.15;
+          // Slow, hypnotic, Apple-keynote velocity
+          float t = u_time * 0.12;
 
           vec2 delta = st - mouse;
           float dist = length(delta);
-          float mouseInfluence = smoothstep(0.75, 0.0, dist) * 0.35;
+          float mouseInfluence = smoothstep(0.7, 0.0, dist) * 0.32;
           vec2 distortedST = st + normalize(delta + 0.0001) * mouseInfluence;
 
-          float n1 = snoise(distortedST * 1.6 + vec2(t * 0.3, -t * 0.25));
-          float n2 = snoise(distortedST * 3.2 - vec2(-t * 0.18, t * 0.4) + vec2(n1 * 0.65));
+          float n1 = snoise(distortedST * 1.5 + vec2(t * 0.25, -t * 0.2));
+          float n2 = snoise(distortedST * 3.0 - vec2(-t * 0.15, t * 0.3) + vec2(n1 * 0.6));
 
-          float contour = abs(fract(n2 * 4.0 + t * 0.18) - 0.5);
-          float lines = smoothstep(0.07, 0.0, contour) * 0.45;
+          // Architectural topography isolines
+          float contour = abs(fract(n2 * 4.0 + t * 0.15) - 0.5);
+          float lines = smoothstep(0.065, 0.0, contour) * 0.5;
 
-          vec2 gridST = fract(distortedST * 10.0) - 0.5;
-          float dots = smoothstep(0.05, 0.01, length(gridST)) * smoothstep(0.2, 0.8, n1 + 0.5) * 0.28;
+          // Subtle coordinate dot matrix
+          vec2 gridST = fract(distortedST * 12.0) - 0.5;
+          float dots = smoothstep(0.045, 0.01, length(gridST)) * smoothstep(0.2, 0.8, n1 + 0.5) * 0.25;
 
-          vec3 bg = vec3(0.02, 0.02, 0.028);
-          vec3 latentGlow = mix(vec3(0.07, 0.11, 0.18), vec3(0.18, 0.09, 0.15), n2 * 0.5 + 0.5);
-          vec3 contourColor = mix(vec3(0.35, 0.75, 0.70), vec3(0.85, 0.92, 0.98), n1 * 0.5 + 0.5);
-          vec3 mouseGlowColor = vec3(0.25, 0.88, 0.78) * smoothstep(0.65, 0.0, dist);
+          // Color palette: deep obsidian base + luminous teal / electric cyan highlights
+          vec3 bg = vec3(0.015, 0.016, 0.022);
+          vec3 latentGlow = mix(vec3(0.04, 0.08, 0.12), vec3(0.12, 0.06, 0.11), n2 * 0.5 + 0.5);
+          vec3 contourColor = mix(vec3(0.25, 0.82, 0.72), vec3(0.70, 0.88, 0.98), n1 * 0.5 + 0.5);
+          vec3 mouseGlowColor = vec3(0.22, 0.85, 0.75) * smoothstep(0.65, 0.0, dist);
 
           vec3 finalColor = bg;
-          finalColor += latentGlow * (0.45 + 0.5 * n1);
+          finalColor += latentGlow * (0.4 + 0.5 * n1);
           finalColor += contourColor * lines;
-          finalColor += dots * vec3(0.75, 0.85, 0.95);
-          finalColor += mouseGlowColor * 0.35;
+          finalColor += dots * vec3(0.7, 0.85, 0.95);
+          finalColor += mouseGlowColor * 0.3;
 
+          // Vignette mask to keep focus on center typography
           vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-          float vignette = smoothstep(1.3, 0.2, length(uv - vec2(0.5, 0.45)));
-          finalColor *= vignette * 0.95;
+          float vignette = smoothstep(1.25, 0.18, length(uv - vec2(0.5, 0.45)));
+          finalColor *= vignette * 0.92;
+
+          // Seamless cinematic wake-up bloom
+          finalColor *= smoothstep(0.0, 1.0, u_wake);
 
           gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -123,6 +141,7 @@ export const HeroShader: React.FC = () => {
 
     const posAttr = gl.getAttribLocation(program, 'position');
     const uTimeLoc = gl.getUniformLocation(program, 'u_time');
+    const uWakeLoc = gl.getUniformLocation(program, 'u_wake');
     const uResLoc = gl.getUniformLocation(program, 'u_resolution');
     const uMouseLoc = gl.getUniformLocation(program, 'u_mouse');
 
@@ -130,7 +149,7 @@ export const HeroShader: React.FC = () => {
     let currentMouse = { x: 0.5, y: 0.5 };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // Bound DPR for guaranteed 60fps
       const w = Math.floor(window.innerWidth * dpr);
       const h = Math.floor(window.innerHeight * dpr);
       if (canvas.width !== w || canvas.height !== h) {
@@ -147,28 +166,41 @@ export const HeroShader: React.FC = () => {
       targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
     };
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    if (!isTouchOnly) {
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+    }
 
     let animationFrameId: number;
     const startTime = performance.now();
+    let wakeVal = prefersReducedMotion ? 1.0 : 0.0;
 
     const render = (now: number) => {
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(program);
 
-      currentMouse.x += (targetMouse.x - currentMouse.x) * 0.08;
-      currentMouse.y += (targetMouse.y - currentMouse.y) * 0.08;
+      // Smooth wake-up transition over ~1.8s
+      if (wakeVal < 1.0) {
+        wakeVal = Math.min(1.0, (now - startTime) / 1800);
+      }
+
+      currentMouse.x += (targetMouse.x - currentMouse.x) * 0.06;
+      currentMouse.y += (targetMouse.y - currentMouse.y) * 0.06;
 
       gl.enableVertexAttribArray(posAttr);
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
       gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
 
       gl.uniform1f(uTimeLoc, (now - startTime) * 0.001);
+      gl.uniform1f(uWakeLoc, wakeVal);
       gl.uniform2f(uResLoc, canvas.width, canvas.height);
       gl.uniform2f(uMouseLoc, currentMouse.x * canvas.width, currentMouse.y * canvas.height);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      animationFrameId = requestAnimationFrame(render);
+
+      // If user prefers reduced motion, draw once and pause render loop
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
     animationFrameId = requestAnimationFrame(render);
@@ -185,7 +217,7 @@ export const HeroShader: React.FC = () => {
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 w-full h-full pointer-events-none mix-blend-screen transition-opacity duration-1000 ease-out ${
-        isReady ? 'opacity-65' : 'opacity-0'
+        isReady ? 'opacity-70' : 'opacity-0'
       }`}
       aria-hidden="true"
     />

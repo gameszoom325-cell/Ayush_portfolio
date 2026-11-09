@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { ProjectTheme } from '../data/projects';
 
 interface NavbarProps {
@@ -75,9 +76,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
       >
         {/* Left: Minimal Titanium Logo with Tactile Spring Interaction */}
         <div className="flex items-center gap-3 min-w-max">
-          <a className="flex items-center gap-3 group" href="#overview">
+          <a className="btn-magnetic flex items-center gap-3 group" href="#overview">
             <div
-              className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 flex items-center justify-center font-headline-sm text-sm font-bold tracking-widest text-white group-hover:border-white/35 group-hover:scale-[1.04] active:scale-[0.96] transition-[transform,border-color,background-color] duration-200 shadow-inner"
+              className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 flex items-center justify-center font-headline-sm text-sm font-bold tracking-widest text-white group-hover:border-white/35 group-hover:scale-[1.04] active:scale-[0.96] transition-all duration-200 shadow-inner"
               style={{ borderColor: scrolled ? `${accentColor}40` : undefined }}
             >
               AS
@@ -113,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.96] ${
+                className={`relative px-4 py-1.5 font-label-mono-sm text-xs uppercase tracking-wider rounded-full transition-all duration-200 active:scale-[0.96] ${
                   isActive
                     ? 'text-white bg-white/[0.1] font-semibold shadow-sm'
                     : 'text-white/60 hover:text-white hover:bg-white/[0.05]'
@@ -147,12 +148,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
 
           <a
             href="#contact"
-            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,box-shadow] duration-200 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            className="btn-magnetic group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] active:scale-[0.97] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
           >
             <span>Get in Touch</span>
-            <span className="material-symbols-outlined text-[14px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-              arrow_outward
-            </span>
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
 
           {/* Mobile Menu Button with Tactile Feedback */}
@@ -161,9 +160,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
             className="lg:hidden w-9 h-9 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center text-white focus:outline-none active:scale-[0.92] transition-transform duration-150"
             aria-label="Toggle navigation menu"
           >
-            <span className="material-symbols-outlined text-[20px]">
-              {isMobileMenuOpen ? 'close' : 'menu'}
-            </span>
+            {isMobileMenuOpen ? (
+              <X className="w-4 h-4" />
+            ) : (
+              <Menu className="w-4 h-4" />
+            )}
           </button>
         </div>
       </div>
@@ -186,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-4 py-2.5 rounded-xl border font-label-mono-sm text-xs uppercase tracking-wider transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.97] ${
+                  className={`px-4 py-2.5 rounded-xl border font-label-mono-sm text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.97] ${
                     isActive
                       ? 'bg-white/[0.09] border-white/20 text-white font-semibold'
                       : 'bg-white/[0.03] border-white/[0.06] text-white/80 hover:text-white hover:bg-white/[0.08]'

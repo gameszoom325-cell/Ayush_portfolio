@@ -1,4 +1,5 @@
 import React from 'react';
+import { Mail } from 'lucide-react';
 import { ProjectTheme } from '../data/projects';
 
 interface FooterProps {
@@ -33,12 +34,10 @@ export const Footer: React.FC<FooterProps> = ({ activeTheme, activeProjectNum = 
             title={`Compose email to ${email}`}
             className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer group"
           >
-            <span
-              className="material-symbols-outlined text-[14px] transition-colors duration-500"
+            <Mail
+              className="w-3.5 h-3.5 transition-colors duration-500"
               style={{ color: accentColor }}
-            >
-              mail
-            </span>
+            />
             <span className="text-white/80 group-hover:underline">{email}</span>
           </a>
         </div>

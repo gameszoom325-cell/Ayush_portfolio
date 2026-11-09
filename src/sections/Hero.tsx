@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight, User, Mail } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '../components/Icons';
 import { HeroShader } from '../components/HeroShader';
 import { ProjectTheme } from '../data/projects';
 
@@ -8,9 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface HeroProps {
   activeTheme?: ProjectTheme;
+  isIntroActive?: boolean;
 }
 
-export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
+export const Hero: React.FC<HeroProps> = ({ activeTheme, isIntroActive = false }) => {
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,97 +21,105 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
   const statusRef = useRef<HTMLDivElement>(null);
   const eyebrowRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const titleInnerRef = useRef<HTMLSpanElement>(null);
+  const titleMask1Ref = useRef<HTMLSpanElement>(null);
+  const titleMask2Ref = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLDivElement>(null);
   const bioRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const telemetryRef = useRef<HTMLDivElement>(null);
 
-  // 1. Cinematic Entrance Sequence
+  // 1. Cinematic Entrance Sequence Orchestration
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const ctx = gsap.context(() => {
       if (prefersReducedMotion) {
-        // Immediate clean static reveal without motion
         gsap.set(
           [
             statusRef.current,
             eyebrowRef.current,
             lineRef.current,
-            titleRef.current,
+            titleMask1Ref.current,
+            titleMask2Ref.current,
             subRef.current,
             bioRef.current,
-            ctaRef.current,
+            ctaRef.current ? ctaRef.current.children : [],
             telemetryRef.current,
           ],
-          { opacity: 1, y: 0, scaleX: 1 }
+          { opacity: 1, y: 0, scaleX: 1, yPercent: 0, rotateX: 0 }
         );
         return;
       }
 
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-      // Step 0: Status Pill & Eyebrow Tag Bar arrive together
+      // Step 0: Status Pill & Eyebrow Tag Bar arrive with crisp spring
       tl.fromTo(
         statusRef.current,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.65, delay: 0.1 }
+        { opacity: 0, y: 24, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 0.2 }
       )
         .fromTo(
           eyebrowRef.current,
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.55 },
-          '-=0.45'
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.7 },
+          '-=0.6'
         )
         .fromTo(
           lineRef.current,
           { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 0.7, ease: 'power2.inOut' },
-          '-=0.4'
+          { scaleX: 1, duration: 0.9, ease: 'expo.inOut' },
+          '-=0.5'
         )
-        // Step 1: Main Title - Masked upward reveal with strong editorial presence
+        // Step 1: Main Title - Masked editorial upward wipe with slight perspective rotation
         .fromTo(
-          titleInnerRef.current,
-          { yPercent: 115, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 1.05, ease: 'power4.out' },
-          '-=0.45'
+          [titleMask1Ref.current, titleMask2Ref.current],
+          { yPercent: 125, rotateX: 25, opacity: 0 },
+          {
+            yPercent: 0,
+            rotateX: 0,
+            opacity: 1,
+            duration: 1.25,
+            stagger: 0.12,
+            ease: 'power4.out',
+          },
+          '-=0.6'
         )
         // Step 2: Discipline Subtitle
         .fromTo(
           subRef.current,
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.65 },
-          '-=0.6'
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          '-=0.8'
         )
         // Step 3: Bio Statement
         .fromTo(
           bioRef.current,
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          '-=0.5'
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.85 },
+          '-=0.65'
         )
-        // Step 4: CTAs and Social Links Row
+        // Step 4: CTAs and Social Links Row with Staggered Emergence
         .fromTo(
           ctaRef.current ? ctaRef.current.children : [],
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.55, stagger: 0.06 },
-          '-=0.45'
+          { opacity: 0, y: 20, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.08, ease: 'back.out(1.2)' },
+          '-=0.6'
         )
         // Step 5: Architectural Telemetry Ribbon at Fold
         .fromTo(
           telemetryRef.current,
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          '-=0.3'
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.85 },
+          '-=0.4'
         );
 
       // Scroll-driven departure parallax
       if (parallaxLayerRef.current) {
         gsap.to(parallaxLayerRef.current, {
-          y: -45,
-          opacity: 0.85,
+          y: -80,
+          opacity: 0.75,
+          scale: 0.98,
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -118,18 +129,18 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
           },
         });
       }
-    }, sectionRef);
+    }, sectionRef.current || undefined);
 
     return () => ctx.revert();
   }, []);
 
-  // 2. Interactive Low-Frequency Mouse Parallax (Apple-grade spatial depth)
+  // 2. Interactive Spatial Mouse Parallax (Low frequency luxury depth)
   useEffect(() => {
     const layer = parallaxLayerRef.current;
     if (!layer) return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 1024) return; // Desktop only
+    if (window.innerWidth < 1024) return;
 
     let targetX = 0;
     let targetY = 0;
@@ -139,13 +150,13 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
 
     const onMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
-      targetX = ((e.clientX / innerWidth) - 0.5) * 16;
-      targetY = ((e.clientY / innerHeight) - 0.5) * 12;
+      targetX = ((e.clientX / innerWidth) - 0.5) * 22;
+      targetY = ((e.clientY / innerHeight) - 0.5) * 16;
     };
 
     const updateParallax = () => {
-      currentX += (targetX - currentX) * 0.06;
-      currentY += (targetY - currentY) * 0.06;
+      currentX += (targetX - currentX) * 0.07;
+      currentY += (targetY - currentY) * 0.07;
 
       if (layer) {
         layer.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
@@ -164,84 +175,109 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
   }, []);
 
   return (
-    <section
+    <header
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col justify-between pt-28 sm:pt-36 pb-0 overflow-hidden"
       id="overview"
     >
-      {/* Edge-to-Edge WebGL Shader Canvas extending behind all content */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+      {/* Dynamic Living WebGL Shader Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-85">
         <HeroShader />
       </div>
 
-      {/* Main Content Area with Smooth Parallax Depth */}
+      {/* Atmospheric Subtle Architectural Coordinate Crosshairs */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <div className="absolute top-1/4 left-8 sm:left-16 text-white/[0.12] font-label-mono-sm text-[10px] tracking-widest hidden md:block">
+          SYS.LOC // 13.0827°N 80.2707°E
+        </div>
+        <div className="absolute top-1/3 right-8 sm:right-16 text-white/[0.12] font-label-mono-sm text-[10px] tracking-widest hidden md:block">
+          AI_KERNEL // LOADED
+        </div>
+        <div className="absolute top-1/2 left-6 w-3 h-[1px] bg-white/20 hidden md:block" />
+        <div className="absolute top-1/2 right-6 w-3 h-[1px] bg-white/20 hidden md:block" />
+      </div>
+
+      {/* Main Content Area */}
       <div
         ref={parallaxLayerRef}
-        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-28 sm:pt-32 pb-8 flex-1 flex flex-col justify-center will-change-transform"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10 flex-1 flex flex-col justify-center will-change-transform"
       >
-        {/* Status Tag Bar */}
-        <div ref={statusRef} className="pb-6 md:pb-8">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg w-max">
-            <span className="flex h-2 w-2 relative">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                style={{ backgroundColor: accentColor }}
-              />
-              <span
-                className="relative inline-flex rounded-full h-2 w-2"
-                style={{ backgroundColor: accentColor }}
-              />
-            </span>
-            <span
-              className="font-label-mono-sm text-xs uppercase tracking-widest font-semibold transition-colors duration-500"
-              style={{ color: accentColor }}
-            >
-              SRM IST CHENNAI
-            </span>
-            <span className="text-white/20 font-label-mono-sm text-xs">•</span>
-            <span className="font-label-mono-sm text-xs uppercase text-white/70 tracking-wider">
-              B.TECH CSE (AI &amp; ML)
-            </span>
-          </div>
-        </div>
-
-        {/* Hero Title & Identity Spread */}
-        <div className="flex flex-col gap-5 max-w-5xl">
-          <div ref={eyebrowRef} className="flex items-center gap-4">
-            <span
-              className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500 font-semibold"
-              style={{ color: accentColor }}
-            >
-              [ PERSONAL PORTFOLIO ]
-            </span>
-            <div ref={lineRef} className="h-[1px] w-20 bg-gradient-to-r from-white/20 to-transparent" />
-            <span className="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">
-              AI/ML &amp; SYSTEMS
-            </span>
-          </div>
-
-          <h1
-            ref={titleRef}
-            className="font-display-hero text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-extrabold text-white tracking-[-0.035em] leading-[0.98] uppercase select-none"
+        <div className="max-w-4xl space-y-6 sm:space-y-8">
+          {/* 1. Academic Affiliation & Availability Badge */}
+          <div
+            ref={statusRef}
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl shadow-lg"
           >
-            <span className="block overflow-hidden py-1">
-              <span ref={titleInnerRef} className="block will-change-transform">
-                Ayush Singh
-              </span>
+            <span
+              className="w-2 h-2 rounded-full animate-ping"
+              style={{ backgroundColor: accentColor }}
+            />
+            <span className="font-label-mono-sm text-xs text-white/90 uppercase tracking-widest font-medium">
+              SRM IST Chennai
             </span>
-          </h1>
+            <span className="text-white/20">•</span>
+            <span className="font-label-mono-sm text-xs text-white/60 tracking-wider">
+              B.Tech CSE (AI &amp; ML)
+            </span>
+          </div>
 
+          {/* 2. Technical Scope Dossier Eyebrow & Hairline Rule */}
+          <div className="space-y-3">
+            <div
+              ref={eyebrowRef}
+              className="flex items-center gap-4 text-xs font-label-mono-sm tracking-[0.25em] text-white/50 uppercase"
+            >
+              <span
+                className="font-bold tracking-[0.3em] transition-colors duration-500"
+                style={{ color: accentColor }}
+              >
+                [ PERSONAL PORTFOLIO ]
+              </span>
+              <div
+                ref={lineRef}
+                className="h-[1px] flex-1 bg-gradient-to-r from-white/25 via-white/10 to-transparent"
+              />
+              <span className="hidden sm:inline text-white/30 tracking-widest">
+                AI/ML &amp; SYSTEMS
+              </span>
+            </div>
+
+            {/* 3. Hero Identity Name with Masked Stagger */}
+            <div className="overflow-hidden mb-4 sm:mb-6 perspective-[1000px]">
+              <h1 className="font-display-hero text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[0.95] uppercase select-none">
+                <span className="inline-block overflow-hidden mr-3 sm:mr-5">
+                  <span
+                    ref={titleMask1Ref}
+                    className="inline-block will-change-transform bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/80"
+                  >
+                    AYUSH
+                  </span>
+                </span>
+                <span className="inline-block overflow-hidden">
+                  <span
+                    ref={titleMask2Ref}
+                    className="inline-block will-change-transform bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/60"
+                  >
+                    SINGH
+                  </span>
+                </span>
+              </h1>
+            </div>
+          </div>
+
+          {/* 4. Architectural Discipline Tags */}
           <div
             ref={subRef}
-            className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/80 font-label-mono-md text-xs sm:text-sm uppercase tracking-wider pt-1"
+            className="flex flex-wrap items-center gap-x-3 gap-y-2 font-label-mono-sm text-xs sm:text-sm text-white/80 uppercase tracking-wider"
           >
-            <span className="text-white font-medium">B.Tech CSE AI/ML</span>
+            <span className="font-semibold text-white">B.Tech CSE AI/ML</span>
             <span className="text-white/25">/</span>
             <span>Full-Stack Web Developer</span>
             <span className="text-white/25">/</span>
             <span>Creative Technologist</span>
           </div>
 
+          {/* 5. Editorial Bio Statement */}
           <p
             ref={bioRef}
             className="font-body-lg text-base sm:text-lg text-white/75 max-w-2xl font-normal leading-relaxed"
@@ -249,27 +285,24 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
             Computer Science Engineering student specializing in Artificial Intelligence and Machine Learning at SRM Institute of Science and Technology. Crafting production-ready web platforms, intelligent tools, and interactive digital interfaces.
           </p>
 
+          {/* 6. CTAs and Direct Channels Row */}
           <div ref={ctaRef} className="flex flex-wrap items-center gap-4 pt-4 sm:pt-6">
             <a
               href="#projects"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-bold tracking-wider uppercase shadow-[0_12px_28px_-6px_rgba(255,255,255,0.22)] hover:bg-[#E2E8F0] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,box-shadow] duration-200"
+              data-magnetic="true"
+              className="relative group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-bold tracking-wider uppercase shadow-[0_12px_28px_-6px_rgba(255,255,255,0.22)] hover:bg-[#E2E8F0] active:scale-[0.97] transition-all duration-300 overflow-hidden cursor-pointer"
             >
-              <span>Explore Projects</span>
-              <span className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-1">
-                arrow_forward
-              </span>
+              <span className="relative z-10">Explore Projects</span>
+              <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/10 to-transparent transition-transform duration-700 ease-out pointer-events-none" />
             </a>
 
             <a
               href="#about"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.04] border border-white/10 hover:border-white/25 backdrop-blur-2xl text-white font-label-mono-md text-xs tracking-wider uppercase hover:bg-white/[0.08] active:scale-[0.97] transition-[transform,border-color,background-color] duration-200"
+              data-magnetic="true"
+              className="inline-flex items-center gap-2.5 px-7 py-4 rounded-full bg-white/[0.04] border border-white/10 hover:border-white/25 backdrop-blur-2xl text-white font-label-mono-md text-xs tracking-wider uppercase hover:bg-white/[0.08] active:scale-[0.97] transition-all duration-300 cursor-pointer"
             >
-              <span
-                className="material-symbols-outlined text-[18px] transition-colors duration-500"
-                style={{ color: accentColor }}
-              >
-                person
-              </span>
+              <User className="w-4 h-4 transition-colors duration-500" style={{ color: accentColor }} />
               <span>About Me</span>
             </a>
 
@@ -280,32 +313,35 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 target="_blank"
                 rel="noreferrer"
                 title="GitHub @gameszoom325-cell"
-                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] hover:scale-[1.04] active:scale-[0.96] transition-[transform,border-color,background-color,color] duration-200"
+                data-magnetic="true"
+                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] active:scale-[0.96] transition-all duration-200"
               >
-                <span className="material-symbols-outlined text-[18px]">terminal</span>
+                <GithubIcon className="w-4 h-4" />
               </a>
               <a
                 href="https://www.linkedin.com/in/ayush-singh-705a63397"
                 target="_blank"
                 rel="noreferrer"
                 title="LinkedIn Profile"
-                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] hover:scale-[1.04] active:scale-[0.96] transition-[transform,border-color,background-color,color] duration-200"
+                data-magnetic="true"
+                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] active:scale-[0.96] transition-all duration-200"
               >
-                <span className="material-symbols-outlined text-[18px]">share</span>
+                <LinkedinIcon className="w-4 h-4" />
               </a>
               <a
                 href="mailto:090109ayush@gmail.com"
                 title="Email: 090109ayush@gmail.com"
-                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] hover:scale-[1.04] active:scale-[0.96] transition-[transform,border-color,background-color,color] duration-200"
+                data-magnetic="true"
+                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] active:scale-[0.96] transition-all duration-200"
               >
-                <span className="material-symbols-outlined text-[18px]">mail</span>
+                <Mail className="w-4 h-4" />
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Full-Bleed Architectural Telemetry Ribbon (Docked flush at fold) */}
+      {/* 7. Full-Bleed Architectural Telemetry Ribbon (Docked flush at fold) */}
       <div
         ref={telemetryRef}
         className="w-full border-t border-white/[0.08] bg-[#0A0A0E]/80 backdrop-blur-2xl z-20"
@@ -313,34 +349,39 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-5 grid grid-cols-2 md:grid-cols-4 gap-6 font-label-mono-sm">
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/40 uppercase tracking-widest">DEGREE</span>
-              <span className="text-white font-semibold text-xs tracking-wide">B.Tech CSE AI/ML</span>
+            <div>
+              <div className="text-[10px] text-white/40 uppercase tracking-widest">DEGREE</div>
+              <div className="text-xs text-white/90 font-medium tracking-wide">B.Tech CSE AI/ML</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 border-l border-white/[0.06] pl-4 sm:pl-6">
+
+          <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/40 uppercase tracking-widest">PROJECTS</span>
-              <span className="text-white font-semibold text-xs tracking-wide">06 Live Platforms</span>
+            <div>
+              <div className="text-[10px] text-white/40 uppercase tracking-widest">PROJECTS</div>
+              <div className="text-xs text-white/90 font-medium tracking-wide">06 Live Platforms</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 border-l border-white/[0.06] pl-4 sm:pl-6">
+
+          <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/40 uppercase tracking-widest">HACKATHONS</span>
-              <span className="text-white font-semibold text-xs tracking-wide">SIH 2026 &amp; Genie X</span>
+            <div>
+              <div className="text-[10px] text-white/40 uppercase tracking-widest">HACKATHONS</div>
+              <div className="text-xs text-white/90 font-medium tracking-wide">SIH 2026 &amp; Genie X</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 border-l border-white/[0.06] pl-4 sm:pl-6">
+
+          <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/40 uppercase tracking-widest">CORE STACK</span>
-              <span className="text-white font-semibold text-xs tracking-wide">React, Next.js, Python</span>
+            <div>
+              <div className="text-[10px] text-white/40 uppercase tracking-widest">CORE STACK</div>
+              <div className="text-xs text-white/90 font-medium tracking-wide truncate">
+                React, Next.js, Python, ML
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </header>
   );
 };

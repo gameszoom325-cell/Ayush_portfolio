@@ -1,8 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Layout, Terminal, Brain, Server } from 'lucide-react';
 import { skillTiers } from '../data/skills';
 import { ProjectTheme } from '../data/projects';
+
+const tierIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  web: Layout,
+  terminal: Terminal,
+  psychology: Brain,
+  deployed_code: Server,
+};
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,9 +126,10 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
                     {tier.tierNumber}
                   </span>
                   <div className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white transition-colors duration-200">
-                    <span className="material-symbols-outlined text-[20px]">
-                      {tier.icon}
-                    </span>
+                    {(() => {
+                      const IconComponent = tierIconMap[tier.icon] || Layout;
+                      return <IconComponent className="w-4 h-4" />;
+                    })()}
                   </div>
                 </div>
 

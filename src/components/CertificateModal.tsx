@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { X, ShieldCheck, ExternalLink, Code2 } from 'lucide-react';
 import { Achievement } from '../data/achievements';
 
 interface CertificateModalProps {
@@ -49,10 +50,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/15 active:scale-95 transition-[transform,background-color,color] duration-150 cursor-pointer"
+            className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/15 active:scale-95 transition-all duration-150 cursor-pointer"
             aria-label="Close dialog"
           >
-            <span className="material-symbols-outlined text-[20px]">close</span>
+            <X className="w-5 h-5" />
           </button>
         </div>
 
@@ -76,7 +77,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
         {/* Action Links */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 font-label-mono-sm text-xs">
           <div className="flex items-center gap-2 text-white/50">
-            <span className="material-symbols-outlined text-[16px] text-[#2dd4bf]">verified</span>
+            <ShieldCheck className="w-4 h-4 text-[#2dd4bf]" />
             <span>VERIFIED PROJECT RECORD • {achievement.year}</span>
           </div>
 
@@ -86,10 +87,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
                 href={achievement.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] active:scale-95 transition-[transform,background-color] duration-150"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] active:scale-95 transition-all duration-150"
               >
                 <span>Live Demo</span>
-                <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
             {achievement.githubUrl && (
@@ -97,10 +98,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
                 href={achievement.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/10 text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/15 active:scale-95 transition-[transform,background-color] duration-150"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/10 text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/15 active:scale-95 transition-all duration-150"
               >
                 <span>GitHub</span>
-                <span className="material-symbols-outlined text-[16px]">code</span>
+                <Code2 className="w-3.5 h-3.5" />
               </a>
             )}
           </div>

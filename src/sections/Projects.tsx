@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ExternalLink, ArrowUpRight, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, Project, ProjectTheme } from '../data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -31,17 +32,20 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
     const normX = (x / rect.width) * 2 - 1;
     const normY = (y / rect.height) * 2 - 1;
 
-    const rotX = -normY * 4.5;
-    const rotY = normX * 5.5;
+    // Award-winning 3D rotational tilt with tangible weight
+    const rotX = -normY * 8.5;
+    const rotY = normX * 9.5;
 
-    card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`;
+    card.style.transform = `perspective(1200px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
 
     if (imageRef.current) {
-      imageRef.current.style.transform = `translate3d(${(-normX * 6).toFixed(1)}px, ${(-normY * 5).toFixed(1)}px, 0) scale(1.02)`;
+      // Counter-parallax on image to generate holographic optical depth
+      imageRef.current.style.transform = `translate3d(${(-normX * 18).toFixed(1)}px, ${(-normY * 14).toFixed(1)}px, 0) scale(1.08)`;
     }
 
     if (sheenRef.current) {
-      sheenRef.current.style.background = `radial-gradient(circle at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.08) 0%, transparent 60%)`;
+      // Radial specular light glides across screen glass
+      sheenRef.current.style.background = `radial-gradient(circle 420px at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 45%, transparent 70%)`;
       sheenRef.current.style.opacity = '1';
     }
   };
@@ -49,7 +53,7 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
   const onMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     if (imageRef.current) {
       imageRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
     }
@@ -58,29 +62,38 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
     }
   };
 
+  const handleClick = () => {
+    const targetUrl = project.live && project.live !== project.github ? project.live : project.github;
+    if (targetUrl) {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className="w-full lg:w-7/12 relative perspective-container">
-      {/* Ambient Glow Halo */}
+      {/* Dynamic Ambient Glow Halo in Project Accent */}
       <div
-        className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-35 transition-all duration-700 pointer-events-none"
+        className="absolute -inset-4 sm:-inset-6 rounded-[3rem] blur-3xl opacity-35 transition-all duration-700 pointer-events-none"
         style={{
           background: `radial-gradient(circle, ${project.theme.accentColor} 0%, transparent 70%)`,
         }}
       />
 
-      {/* Screen Housing with 3D Tilt */}
+      {/* Screen Housing with 3D Holographic Tilt & Morphing Cursor Target */}
       <div
         ref={cardRef}
+        data-cursor="project"
+        onClick={handleClick}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className={`card-3d-target relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-all duration-500 ease-out cursor-pointer group ${
+        className={`card-3d-target relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-all duration-500 ease-out cursor-pointer group select-none ${
           isActive
             ? 'border-white/20 shadow-[0_30px_100px_-15px_rgba(0,0,0,0.95)] opacity-100'
             : 'border-white/10 opacity-60 scale-[0.98]'
         }`}
         style={{
           boxShadow: isActive
-            ? `0 30px 100px -15px rgba(0,0,0,0.95), 0 0 50px -10px ${project.theme.accentColor}25`
+            ? `0 35px 120px -15px rgba(0,0,0,0.95), 0 0 60px -10px ${project.theme.accentColor}30`
             : undefined,
         }}
       >
@@ -92,9 +105,11 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
           loading={idx < 2 ? 'eager' : 'lazy'}
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
+        
+        {/* Cinematic Vignette Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/80 via-transparent to-transparent pointer-events-none" />
 
-        {/* Dynamic Sheen Reflection */}
+        {/* Dynamic Specular Sheen Reflection */}
         <div
           ref={sheenRef}
           className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"
@@ -102,9 +117,10 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
         />
 
         {/* In-Screen Corner Marker */}
-        <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-white/80 font-label-mono-sm text-[11px] hidden sm:flex items-center gap-2">
+        <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-white/90 font-label-mono-sm text-[11px] hidden sm:flex items-center gap-2 shadow-lg">
           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: project.theme.accentColor }} />
           <span>CASE STUDY {project.num}</span>
+          <ExternalLink className="w-3 h-3 text-white/60" />
         </div>
       </div>
     </div>
@@ -247,8 +263,7 @@ export const Projects: React.FC<ProjectsProps> = ({
     updateActiveIndex(index);
     if (window.innerWidth >= 1024) {
       const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+      if (!section) return;
       const st = ScrollTrigger.getById(section.id) || ScrollTrigger.getAll().find((t) => t.trigger === section);
       if (st) {
         const targetProgress = index / (projects.length - 1);
@@ -286,8 +301,8 @@ export const Projects: React.FC<ProjectsProps> = ({
             className="w-1.5 h-1.5 rounded-full animate-ping"
             style={{ backgroundColor: accentColor }}
           />
-          <span className="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest hidden sm:inline">
-            FULL-VIEWPORT SHOWCASE
+          <span className="font-label-mono-sm text-xs text-white/50 uppercase tracking-widest hidden sm:inline">
+            SHOWCASE [ 0{activeIndex + 1} / 0{projects.length} ]
           </span>
         </div>
 
@@ -299,7 +314,7 @@ export const Projects: React.FC<ProjectsProps> = ({
               <button
                 key={project.id}
                 onClick={() => scrollToProject(idx)}
-                className={`px-3.5 py-1.5 rounded-full font-label-mono-sm text-xs whitespace-nowrap transition-colors duration-200 flex items-center gap-1.5 active:scale-95 ${
+                className={`btn-magnetic px-3.5 py-1.5 rounded-full font-label-mono-sm text-xs whitespace-nowrap transition-colors duration-200 flex items-center gap-1.5 active:scale-95 ${
                   isActive
                     ? 'border shadow-lg font-semibold'
                     : 'bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white'
@@ -356,11 +371,11 @@ export const Projects: React.FC<ProjectsProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-transparent to-[#070709] opacity-80" />
                 </div>
 
-                {/* 2. Integrated Case Study Presentation (Edge-to-Edge scale, NOT a small card box) */}
+                {/* 2. Integrated Case Study Presentation */}
                 <div className="w-full max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-14 z-10 py-4">
                   {/* Left Column: Project Editorial & Controls */}
                   <div className="w-full lg:w-5/12 flex flex-col justify-center space-y-5">
-                    {/* Ghost Numeric Outline */}
+                    {/* Ghost Numeric Outline with Parallax Drift */}
                     <div className="relative">
                       <span className="font-display-hero text-7xl sm:text-9xl font-extrabold text-white/[0.06] select-none block leading-none -mb-8 sm:-mb-12">
                         {project.num}
@@ -410,31 +425,31 @@ export const Projects: React.FC<ProjectsProps> = ({
                       ))}
                     </div>
 
-                    {/* Action Triggers */}
+                    {/* Action Triggers with Magnetic Button Sweep */}
                     <div className="flex flex-wrap items-center gap-4 pt-4">
                       {project.live && project.live !== project.github ? (
                         <a
                           href={project.live}
                           target="_blank"
                           rel="noreferrer"
-                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-[transform,background-color,box-shadow] duration-200 shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer"
+                          data-magnetic="true"
+                          className="relative group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#E2E8F0] shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer overflow-hidden transition-all duration-300"
                         >
-                          <span>Launch Live Demo</span>
-                          <span className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-0.5">
-                            open_in_new
-                          </span>
+                          <span className="relative z-10">Launch Live Demo</span>
+                          <ExternalLink className="w-3.5 h-3.5 relative z-10 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/10 to-transparent transition-transform duration-700 ease-out pointer-events-none" />
                         </a>
                       ) : (
                         <a
                           href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-[transform,background-color,box-shadow] duration-200 shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer"
+                          data-magnetic="true"
+                          className="relative group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#E2E8F0] shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer overflow-hidden transition-all duration-300"
                         >
-                          <span>Explore Project Code</span>
-                          <span className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-0.5">
-                            arrow_outward
-                          </span>
+                          <span className="relative z-10">Explore Project Code</span>
+                          <ArrowUpRight className="w-3.5 h-3.5 relative z-10 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/10 to-transparent transition-transform duration-700 ease-out pointer-events-none" />
                         </a>
                       )}
 
@@ -443,16 +458,17 @@ export const Projects: React.FC<ProjectsProps> = ({
                           href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-[transform,background-color,border-color] duration-200 active:scale-[0.97] cursor-pointer"
+                          data-magnetic="true"
+                          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.12] active:scale-[0.97] cursor-pointer transition-all duration-200"
                         >
-                          <span className="material-symbols-outlined text-[16px]">code</span>
+                          <Code2 className="w-3.5 h-3.5" />
                           <span>GitHub Repository</span>
                         </a>
                       )}
                     </div>
                   </div>
 
-                  {/* Right Column: Heroic Large Screenshot Frame with 3D Tilt */}
+                  {/* Right Column: Heroic Large Screenshot Frame with 3D Holographic Tilt */}
                   <ProjectCard3D project={project} isActive={isActive} idx={idx} />
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowUpRight, Eye } from 'lucide-react';
 import { achievementsList, Achievement, archiveMetrics } from '../data/achievements';
 import { ProjectTheme } from '../data/projects';
 import { CertificateModal } from '../components/CertificateModal';
@@ -175,9 +176,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
 
                 <h4 className="font-headline-sm text-xl font-bold text-white group-hover:text-white transition-colors flex items-center justify-between gap-2">
                   <span>{item.title}</span>
-                  <span className="material-symbols-outlined text-[16px] text-white/30 group-hover:text-white group-hover:translate-x-0.5 transition-[transform,color] duration-200">
-                    arrow_outward
-                  </span>
+                  <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                 </h4>
 
                 <p className="font-body-sm text-sm text-white/60 leading-relaxed line-clamp-2">
@@ -187,9 +186,9 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
 
               <div className="flex items-center justify-between pt-5 border-t border-white/[0.06] mt-5 font-label-mono-sm text-xs text-white/40">
                 <span className="truncate max-w-[200px] text-white/60">{item.badge}</span>
-                <span className="text-white/80 font-medium flex items-center gap-1 group-hover:text-white transition-colors">
+                <span className="text-white/80 font-medium flex items-center gap-1.5 group-hover:text-white transition-colors">
                   <span>View Details</span>
-                  <span className="material-symbols-outlined text-[14px]">visibility</span>
+                  <Eye className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
