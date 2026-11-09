@@ -19,6 +19,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
   const eyebrowRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const titleInnerRef = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLDivElement>(null);
   const bioRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -67,11 +68,11 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
           { scaleX: 1, duration: 0.7, ease: 'power2.inOut' },
           '-=0.4'
         )
-        // Step 1: Main Title - Lead element moves with strong editorial presence
+        // Step 1: Main Title - Masked upward reveal with strong editorial presence
         .fromTo(
-          titleRef.current,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 0.9, ease: 'power4.out' },
+          titleInnerRef.current,
+          { yPercent: 115, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 1.05, ease: 'power4.out' },
           '-=0.45'
         )
         // Step 2: Discipline Subtitle
@@ -223,7 +224,11 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
             ref={titleRef}
             className="font-display-hero text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] font-extrabold text-white tracking-[-0.035em] leading-[0.98] uppercase select-none"
           >
-            Ayush Singh
+            <span className="block overflow-hidden py-1">
+              <span ref={titleInnerRef} className="block will-change-transform">
+                Ayush Singh
+              </span>
+            </span>
           </h1>
 
           <div

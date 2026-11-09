@@ -92,9 +92,13 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
           </span>
         </div>
 
-        {/* Large Keynote Title */}
+        {/* Large Keynote Title with Masked Editorial Reveal */}
         <h2 className="font-display-hero text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tracking-[-0.035em] leading-[1.0] uppercase max-w-5xl">
-          Let’s Construct Something Extraordinary.
+          <span className="block overflow-hidden py-1">
+            <span className="block">
+              Let’s Construct Something Extraordinary.
+            </span>
+          </span>
         </h2>
 
         {/* Subtext */}

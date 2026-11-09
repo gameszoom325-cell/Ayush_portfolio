@@ -268,7 +268,11 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
                 ACADEMIC PROFILE &amp; SPECIALIZATION
               </span>
               <h2 className="font-display-hero text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1] mt-2">
-                Bridging Cognitive AI Models with Resilient Web Architecture.
+                <span className="block overflow-hidden py-0.5">
+                  <span className="block">
+                    Bridging Cognitive AI Models with Resilient Web Architecture.
+                  </span>
+                </span>
               </h2>
             </div>
 
