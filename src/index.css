@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Emil Kowalski Animation System Tokens */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-spring: cubic-bezier(0.34, 1.35, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-ui: 240ms;
+  --duration-enter: 650ms;
+}
+
 @layer base {
   html, body {
     margin: 0;
@@ -9,21 +19,22 @@
     background-color: #070709;
     color: #F5F5F7;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Hide scrollbar for clean cinematic presentation */
   ::-webkit-scrollbar {
     display: none;
   }
   
-  /* Hide scrollbar for IE, Edge and Firefox */
   * {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 }
 
-/* Noise grain filter */
+/* Fine architectural noise grain */
 .film-grain {
   background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0);
   background-size: 24px 24px;
@@ -49,4 +60,62 @@
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   vertical-align: middle;
+}
+
+/* Living Background Continuous Harmonic Breathing */
+@keyframes ambient-drift-1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate3d(2%, 3%, 0) scale(1.05);
+    opacity: 0.18;
+  }
+}
+
+@keyframes ambient-drift-2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.09;
+  }
+  50% {
+    transform: translate3d(-3%, -2%, 0) scale(1.04);
+    opacity: 0.14;
+  }
+}
+
+.animate-ambient-1 {
+  animation: ambient-drift-1 16s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-ambient-2 {
+  animation: ambient-drift-2 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* GPU Accelerated Perspective Card Utility */
+.perspective-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.card-3d-target {
+  transition: transform 450ms var(--ease-out), box-shadow 450ms var(--ease-out);
+  will-change: transform;
+}
+
+/* Accessibility: Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-ambient-1,
+  .animate-ambient-2 {
+    animation: none !important;
+  }
 }

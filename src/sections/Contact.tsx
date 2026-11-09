@@ -107,12 +107,12 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
           {/* Primary Mailto Action */}
           <a
             href={mailtoLink}
-            className="group flex items-center gap-3 px-9 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-[#C4C8D0] transition-all active:scale-95 cursor-pointer"
+            className="group flex items-center gap-3 px-9 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_35px_rgba(255,255,255,0.25)] hover:bg-[#C4C8D0] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,box-shadow] duration-200 cursor-pointer"
             title={`Compose email to ${email}`}
           >
             <span className="material-symbols-outlined text-[18px]">mail</span>
             <span>{email}</span>
-            <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5">
+            <span className="material-symbols-outlined text-[14px] transition-transform duration-200 group-hover:translate-x-0.5">
               arrow_outward
             </span>
           </a>
@@ -120,7 +120,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
           {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] transition-all active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
             title="Copy email to clipboard"
           >
             <span className="material-symbols-outlined text-[18px]">
@@ -134,7 +134,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             href={githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] transition-all active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
           >
             <span className="material-symbols-outlined text-[18px]">terminal</span>
             <span>GitHub Profile</span>
@@ -146,7 +146,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             href={linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] transition-all active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.14] hover:scale-[1.02] active:scale-[0.97] transition-[transform,background-color,border-color] duration-200 cursor-pointer"
           >
             <span className="material-symbols-outlined text-[18px]">share</span>
             <span>LinkedIn Profile</span>
@@ -157,7 +157,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
         {/* Social Connectivity Strip */}
         <div className="flex flex-wrap items-center justify-center gap-3 mt-16 pt-8 border-t border-white/[0.08] w-full max-w-2xl font-label-mono-sm text-xs">
           <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200 flex items-center gap-1.5"
             href={mailtoLink}
             title="Direct email dispatch"
           >
@@ -165,7 +165,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             <span>{email}</span>
           </a>
           <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
+            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200"
             href={githubUrl}
             target="_blank"
             rel="noreferrer"
@@ -173,7 +173,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             GITHUB: @gameszoom325-cell
           </a>
           <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
+            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-[color,border-color,background-color] duration-200"
             href={linkedinUrl}
             target="_blank"
             rel="noreferrer"

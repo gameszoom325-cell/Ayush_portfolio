@@ -10,6 +10,107 @@ interface ProjectsProps {
   onActiveProjectChange: (project: Project) => void;
 }
 
+interface ProjectCard3DProps {
+  project: Project;
+  isActive: boolean;
+  idx: number;
+}
+
+const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const sheenRef = useRef<HTMLDivElement>(null);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const normX = (x / rect.width) * 2 - 1;
+    const normY = (y / rect.height) * 2 - 1;
+
+    const rotX = -normY * 4.5;
+    const rotY = normX * 5.5;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`;
+
+    if (imageRef.current) {
+      imageRef.current.style.transform = `translate3d(${(-normX * 6).toFixed(1)}px, ${(-normY * 5).toFixed(1)}px, 0) scale(1.02)`;
+    }
+
+    if (sheenRef.current) {
+      sheenRef.current.style.background = `radial-gradient(circle at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.08) 0%, transparent 60%)`;
+      sheenRef.current.style.opacity = '1';
+    }
+  };
+
+  const onMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    if (imageRef.current) {
+      imageRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
+    }
+    if (sheenRef.current) {
+      sheenRef.current.style.opacity = '0';
+    }
+  };
+
+  return (
+    <div className="w-full lg:w-7/12 relative perspective-container">
+      {/* Ambient Glow Halo */}
+      <div
+        className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-35 transition-all duration-700 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, ${project.theme.accentColor} 0%, transparent 70%)`,
+        }}
+      />
+
+      {/* Screen Housing with 3D Tilt */}
+      <div
+        ref={cardRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className={`card-3d-target relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-all duration-500 ease-out cursor-pointer group ${
+          isActive
+            ? 'border-white/20 shadow-[0_30px_100px_-15px_rgba(0,0,0,0.95)] opacity-100'
+            : 'border-white/10 opacity-60 scale-[0.98]'
+        }`}
+        style={{
+          boxShadow: isActive
+            ? `0 30px 100px -15px rgba(0,0,0,0.95), 0 0 50px -10px ${project.theme.accentColor}25`
+            : undefined,
+        }}
+      >
+        <img
+          ref={imageRef}
+          src={project.image}
+          alt={project.name}
+          className="w-full h-full object-cover object-top will-change-transform transition-transform duration-500 ease-out"
+          loading={idx < 2 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
+
+        {/* Dynamic Sheen Reflection */}
+        <div
+          ref={sheenRef}
+          className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"
+          style={{ mixBlendMode: 'overlay' }}
+        />
+
+        {/* In-Screen Corner Marker */}
+        <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-white/80 font-label-mono-sm text-[11px] hidden sm:flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: project.theme.accentColor }} />
+          <span>CASE STUDY {project.num}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const Projects: React.FC<ProjectsProps> = ({
   activeTheme,
   onActiveProjectChange,
@@ -198,7 +299,7 @@ export const Projects: React.FC<ProjectsProps> = ({
               <button
                 key={project.id}
                 onClick={() => scrollToProject(idx)}
-                className={`px-3.5 py-1.5 rounded-full font-label-mono-sm text-xs whitespace-nowrap transition-all duration-300 flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 rounded-full font-label-mono-sm text-xs whitespace-nowrap transition-colors duration-200 flex items-center gap-1.5 active:scale-95 ${
                   isActive
                     ? 'border shadow-lg font-semibold'
                     : 'bg-white/[0.03] border border-white/[0.06] text-white/50 hover:text-white'
@@ -316,10 +417,10 @@ export const Projects: React.FC<ProjectsProps> = ({
                           href={project.live}
                           target="_blank"
                           rel="noreferrer"
-                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-95 cursor-pointer"
+                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-[transform,background-color,box-shadow] duration-200 shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer"
                         >
                           <span>Launch Live Demo</span>
-                          <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-0.5">
+                          <span className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-0.5">
                             open_in_new
                           </span>
                         </a>
@@ -328,10 +429,10 @@ export const Projects: React.FC<ProjectsProps> = ({
                           href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-95 cursor-pointer"
+                          className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-[transform,background-color,box-shadow] duration-200 shadow-[0_10px_25px_-5px_rgba(255,255,255,0.3)] active:scale-[0.97] cursor-pointer"
                         >
                           <span>Explore Project Code</span>
-                          <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-0.5">
+                          <span className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-0.5">
                             arrow_outward
                           </span>
                         </a>
@@ -342,7 +443,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                           href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-all active:scale-95 cursor-pointer"
+                          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] border border-white/[0.12] text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-[transform,background-color,border-color] duration-200 active:scale-[0.97] cursor-pointer"
                         >
                           <span className="material-symbols-outlined text-[16px]">code</span>
                           <span>GitHub Repository</span>
@@ -351,45 +452,8 @@ export const Projects: React.FC<ProjectsProps> = ({
                     </div>
                   </div>
 
-                  {/* Right Column: Heroic Large Screenshot Frame (Integrated into space) */}
-                  <div className="w-full lg:w-7/12 relative">
-                    {/* Ambient Glow Halo */}
-                    <div
-                      className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-40 transition-all duration-700 pointer-events-none"
-                      style={{
-                        background: `radial-gradient(circle, ${theme.accentColor} 0%, transparent 70%)`,
-                      }}
-                    />
-
-                    {/* Screen Housing */}
-                    <div
-                      className={`relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-all duration-700 ease-out group ${
-                        isActive
-                          ? 'border-white/20 shadow-[0_30px_100px_-15px_rgba(0,0,0,0.95)] scale-100 opacity-100'
-                          : 'border-white/10 opacity-60 scale-[0.98]'
-                      }`}
-                      style={{
-                        boxShadow: isActive
-                          ? `0 30px 100px -15px rgba(0,0,0,0.95), 0 0 50px -10px ${theme.accentColor}25`
-                          : undefined,
-                      }}
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.name}
-                        className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-105"
-                        loading={idx < 2 ? 'eager' : 'lazy'}
-                        decoding="async"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
-
-                      {/* In-Screen Corner Marker */}
-                      <div className="absolute bottom-4 right-4 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-white/80 font-label-mono-sm text-[11px] hidden sm:flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: theme.accentColor }} />
-                        <span>CASE STUDY {project.num}</span>
-                      </div>
-                    </div>
-                  </div>
+                  {/* Right Column: Heroic Large Screenshot Frame with 3D Tilt */}
+                  <ProjectCard3D project={project} isActive={isActive} idx={idx} />
                 </div>
               </div>
             );

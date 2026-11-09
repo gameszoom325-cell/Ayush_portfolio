@@ -24,9 +24,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
   if (!achievement) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div
-        className="relative w-full max-w-3xl rounded-[2.5rem] glass-dossier p-6 sm:p-8 md:p-10 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col gap-6 max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-3xl rounded-[2.5rem] glass-dossier p-6 sm:p-8 md:p-10 border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] flex flex-col gap-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 ease-out"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header with Close */}
@@ -46,7 +49,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/15 transition-all cursor-pointer"
+            className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/15 active:scale-95 transition-[transform,background-color,color] duration-150 cursor-pointer"
             aria-label="Close dialog"
           >
             <span className="material-symbols-outlined text-[20px]">close</span>
@@ -83,7 +86,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
                 href={achievement.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-label-mono-sm text-xs uppercase tracking-wider font-semibold hover:bg-[#C4C8D0] active:scale-95 transition-[transform,background-color] duration-150"
               >
                 <span>Live Demo</span>
                 <span className="material-symbols-outlined text-[16px]">open_in_new</span>
@@ -94,7 +97,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({ achievement,
                 href={achievement.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/10 text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/15 transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/10 text-white font-label-mono-sm text-xs uppercase tracking-wider hover:bg-white/15 active:scale-95 transition-[transform,background-color] duration-150"
               >
                 <span>GitHub</span>
                 <span className="material-symbols-outlined text-[16px]">code</span>

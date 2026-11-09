@@ -49,8 +49,28 @@ export const App: React.FC = () => {
       ScrollTrigger.refresh();
     }, 100);
 
+    // Global anchor click interception for smooth Lenis scrolling
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (href && href.startsWith('#') && href.length > 1) {
+        const el = document.querySelector(href);
+        if (el) {
+          e.preventDefault();
+          lenis.scrollTo(el as HTMLElement, {
+            offset: -30,
+            duration: 1.2,
+          });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
     return () => {
       clearTimeout(timer);
+      document.removeEventListener('click', handleAnchorClick);
       gsap.ticker.remove(tickerCb);
       lenis.destroy();
     };

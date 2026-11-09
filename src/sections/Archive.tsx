@@ -96,9 +96,9 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
-                className={`px-4 py-1.5 rounded-full font-label-mono-sm text-xs uppercase tracking-wider transition-all duration-300 ${
+                className={`px-4 py-1.5 rounded-full font-label-mono-sm text-xs uppercase tracking-wider transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.96] ${
                   isActive
-                    ? 'border shadow-md'
+                    ? 'border shadow-md font-semibold'
                     : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:text-white'
                 }`}
                 style={{
@@ -141,7 +141,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
             <div
               key={item.id}
               onClick={() => setSelectedAchievement(item)}
-              className="archive-item-card glass-dossier p-7 rounded-[2rem] flex flex-col justify-between transition-all duration-500 group cursor-pointer border border-white/[0.08] hover:border-white/25 hover:shadow-2xl hover:-translate-y-1"
+              className="archive-item-card glass-dossier p-7 rounded-[2rem] flex flex-col justify-between transition-[transform,border-color,box-shadow] duration-300 group cursor-pointer border border-white/[0.08] hover:border-white/25 hover:shadow-2xl hover:-translate-y-1 active:scale-[0.98]"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -175,7 +175,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
 
                 <h4 className="font-headline-sm text-xl font-bold text-white group-hover:text-white transition-colors flex items-center justify-between gap-2">
                   <span>{item.title}</span>
-                  <span className="material-symbols-outlined text-[16px] text-white/30 group-hover:text-white group-hover:translate-x-0.5 transition-all">
+                  <span className="material-symbols-outlined text-[16px] text-white/30 group-hover:text-white group-hover:translate-x-0.5 transition-[transform,color] duration-200">
                     arrow_outward
                   </span>
                 </h4>

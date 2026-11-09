@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const HeroShader: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -171,6 +172,7 @@ export const HeroShader: React.FC = () => {
     };
 
     animationFrameId = requestAnimationFrame(render);
+    setIsReady(true);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -182,7 +184,9 @@ export const HeroShader: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-70 mix-blend-screen"
+      className={`absolute inset-0 w-full h-full pointer-events-none mix-blend-screen transition-opacity duration-1000 ease-out ${
+        isReady ? 'opacity-65' : 'opacity-0'
+      }`}
       aria-hidden="true"
     />
   );
