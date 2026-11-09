@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projects, Project } from './data/projects';
 import { Navbar } from './components/Navbar';
 import { AmbientBackground } from './components/AmbientBackground';
-import { AIDesignArrival } from './components/AIDesignArrival';
+import { AIIntroSequence } from './components/AIIntroSequence';
 
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -62,9 +62,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-[#070709] text-[#F5F5F7] overflow-x-hidden film-grain selection:bg-[#44e2cd] selection:text-[#003731]">
-      {/* Cinematic AI Designer Arrival Sequence (Figma-style assembly of real homepage) */}
+      {/* Cinematic AI Intro Sequence: Autonomous AI Design Team Opening */}
       {isLoading && (
-        <AIDesignArrival onComplete={handleLoadingComplete} />
+        <AIIntroSequence onComplete={handleLoadingComplete} />
       )}
 
 

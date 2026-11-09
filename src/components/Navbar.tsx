@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
       >
         {/* Left: Minimal Titanium Logo */}
         <div className="flex items-center gap-3 min-w-max">
-          <a className="flex items-center gap-3 group" href="#overview">
+          <a data-intro="logo" className="flex items-center gap-3 group" href="#overview">
             <div
               className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 flex items-center justify-center font-headline-sm text-sm font-bold tracking-widest text-white group-hover:border-white/30 transition-all shadow-inner"
               style={{ borderColor: scrolled ? `${accentColor}40` : undefined }}
