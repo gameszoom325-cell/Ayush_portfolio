@@ -1,135 +1,100 @@
 export interface Achievement {
   id: string;
-  category: "cert" | "comp" | "course";
+  category: "hackathon" | "project" | "milestone";
   organization: string;
   badge: string;
-  badgeStyle: "gold" | "cyan" | "white" | "ruby";
   title: string;
   description: string;
   year: string;
-  verifiedHash: string;
-  previewImage?: string;
-  credentialUrl?: string;
+  previewImage: string;
+  liveUrl?: string;
+  githubUrl?: string;
 }
 
 export const archiveMetrics = {
-  certificates: "05+",
-  courses: "IIT Madras Certified",
-  competitions: "10+ Participated",
-  projects: "07+ Flagships",
+  hackathons: "03 Hackathons",
+  platforms: "06 Live Platforms",
+  status: "B.Tech CSE AI/ML",
+  institution: "SRM IST Chennai",
 };
 
 export const achievementsList: Achievement[] = [
   {
-    id: "iit-madras-dl",
-    category: "course",
-    organization: "NPTEL / IIT MADRAS",
-    badge: "ELITE + GOLD",
-    badgeStyle: "gold",
-    title: "Deep Learning Specialization",
+    id: "sih-landwatch",
+    category: "hackathon",
+    organization: "SMART INDIA HACKATHON 2026",
+    badge: "SIH 2026 • CHENNAI",
+    title: "LandWatch AI — Land Acquisition Monitoring",
     description:
-      "Comprehensive mathematical rigor covering Backpropagation, Convolutional Neural Networks, Sequence Modeling, Autoencoders, and Generative Adversarial Networks. Ranked among the top 1% nationally.",
-    year: "2024",
-    verifiedHash: "NPTEL-DL-9428",
-    previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://nptel.ac.in/",
+      "Engineered a predictive land acquisition intelligence platform for government and statutory officers to identify high-risk land delays early, explore cadastral GIS survey parcels, and take prompt action.",
+    year: "2026",
+    previewImage: "/projects/landwatch.jpeg",
+    liveUrl: "https://landwatch-tau.vercel.app",
+    githubUrl: "https://github.com/gameszoom325-cell/landwatch",
   },
   {
-    id: "hacksrm-24",
-    category: "comp",
-    organization: "HACKSRM '24",
-    badge: "BEST AI PROTOTYPE",
-    badgeStyle: "cyan",
-    title: "HackSRM Annual National Hackathon",
+    id: "genie-x-contract2action",
+    category: "hackathon",
+    organization: "GENIE X HUB HACKATHON",
+    badge: "PROJECT ECLIPSE • SRMIST VDP",
+    title: "Contract2Action AI — Contract Governance",
     description:
-      "Engineered an edge-based cognitive vision assistant within 36 straight hours. Awarded Best Prototype among 250+ collegiate teams for real-time inference latency and ergonomics.",
-    year: "2024",
-    verifiedHash: "SRM-HACK-881",
-    previewImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://srmist.edu.in",
+      "Built an enterprise contract intelligence and obligation execution gateway that converts contract obligations into tracked business tasks with human-in-the-loop approvals and audit trails.",
+    year: "2026",
+    previewImage: "/projects/contract2action.jpeg",
+    liveUrl: "https://busitech-dmop-nine.vercel.app/",
+    githubUrl: "https://github.com/gameszoom325-cell/busitech",
   },
   {
-    id: "sih-qualifier",
-    category: "comp",
-    organization: "MINISTRY OF EDUCATION",
-    badge: "INTERNAL RANK 1",
-    badgeStyle: "cyan",
-    title: "Smart India Hackathon (SIH) Qualifier",
+    id: "sih-smartfarmer",
+    category: "hackathon",
+    organization: "SMART INDIA HACKATHON (SIH #26032)",
+    badge: "POWERED BY eNAM",
+    title: "Smart Farmer Portal — APMC Mandi Scheduling",
     description:
-      "Led the internal university team designing a distributed anomaly detector for institutional energy smart grids, achieving first place out of 80+ university departmental teams.",
-    year: "2024",
-    verifiedHash: "GOV-SIH-041",
-    previewImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://sih.gov.in",
+      "Direct grain booking and zero-waiting APMC Mandi dock scheduling gateway. Built with an illiterate-friendly voice and icon-driven interface, instant gate token generation, and real-time yard sync.",
+    year: "2026",
+    previewImage: "/projects/smartfarmer.jpeg",
+    liveUrl: "https://smartfarmerportal.vercel.app",
+    githubUrl: "https://github.com/gameszoom325-cell/smartfarmerportal",
   },
   {
-    id: "stanford-ml",
-    category: "course",
-    organization: "DEEPLEARNING.AI / STANFORD",
-    badge: "DISTINCTION",
-    badgeStyle: "white",
-    title: "Machine Learning Specialization",
+    id: "shiftsync-platform",
+    category: "project",
+    organization: "CAMPUS & WORKFORCE SYSTEMS",
+    badge: "FULL-STACK PLATFORM",
+    title: "ShiftSync AI — Workforce & Campus Transparency",
     description:
-      "Supervised, Unsupervised learning algorithms, Recommender systems, and Deep Reinforcement Learning foundations instructed by Andrew Ng. Achieved 100% aggregate assessment score.",
-    year: "2024",
-    verifiedHash: "COURSERA-ML-772",
-    previewImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://coursera.org",
+      "Unified workforce and campus transparency web platform providing role-based portals for academic institutions and construction sites with attendance verification and skill passports.",
+    year: "2026",
+    previewImage: "/projects/shiftsync.jpeg",
+    liveUrl: "https://shiftsnc.vercel.app",
+    githubUrl: "https://github.com/gameszoom325-cell/Shiftsnc",
   },
   {
-    id: "aws-cloud-foundations",
-    category: "cert",
-    organization: "AMAZON WEB SERVICES",
-    badge: "SCHOLAR",
-    badgeStyle: "white",
-    title: "AWS Cloud Foundations",
+    id: "edutrack-portal",
+    category: "project",
+    organization: "EDTECH INFRASTRUCTURE",
+    badge: "ACADEMIC ERP",
+    title: "EduTrack Tuition Portal — Academic Session 2026–27",
     description:
-      "Elastic compute orchestration, S3 high-throughput pipelines, DynamoDB partitioning, and serverless compute triggers through AWS Lambda for distributed machine learning workflows.",
-    year: "2024",
-    verifiedHash: "AWS-CF-3091",
-    previewImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://aws.amazon.com",
+      "Class-wise study repository and student ERP for Classes 6 to 12. Facilitates role-based logins for students and teachers to access class notes, handouts, attendance records, and monthly fee ledgers.",
+    year: "2026",
+    previewImage: "/projects/edutrack.jpeg",
+    liveUrl: "https://tutionportal-omega.vercel.app",
+    githubUrl: "https://github.com/gameszoom325-cell/Edu-Std-Teach.Portal",
   },
   {
-    id: "code-enigma",
-    category: "comp",
-    organization: "SRM CODE ENIGMA",
-    badge: "GOLD MEDAL",
-    badgeStyle: "gold",
-    title: "Speed Algorithmic Contest",
+    id: "campuscash-copilot",
+    category: "project",
+    organization: "FINANCIAL AI COPILOT",
+    badge: "STUDENT FINANCE AI",
+    title: "CampusCash AI Copilot — Expense & Budget Manager",
     description:
-      "Secured 1st place in high-pressure competitive programming solving graph traversal, bitmask dynamic programming, and binary search trees under strict execution time limits.",
-    year: "2024",
-    verifiedHash: "SRM-CE-GOLD",
-    previewImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://srmist.edu.in",
-  },
-  {
-    id: "nvidia-dli",
-    category: "cert",
-    organization: "NVIDIA DEEP LEARNING INSTITUTE",
-    badge: "CERTIFIED",
-    badgeStyle: "cyan",
-    title: "Fundamentals of Deep Learning",
-    description:
-      "Hands-on competency in GPU-accelerated neural networks, transfer learning, data augmentation, and automated hyperparameter optimization using TensorRT and PyTorch.",
-    year: "2024",
-    verifiedHash: "NV-DLI-1049",
-    previewImage: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://www.nvidia.com/en-us/training/",
-  },
-  {
-    id: "gcp-cloud-genai",
-    category: "cert",
-    organization: "GOOGLE CLOUD",
-    badge: "RECOGNITION",
-    badgeStyle: "white",
-    title: "Cloud Computing & Generative AI Pathways",
-    description:
-      "Architectural grounding in Google Cloud infrastructure, BigQuery data pipelines, Vertex AI foundation models, vector search, and multimodal agentic reasoning systems.",
-    year: "2024",
-    verifiedHash: "GCP-GAI-503",
-    previewImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=800&auto=format&fit=crop",
-    credentialUrl: "https://cloud.google.com",
+      "Autonomous student expense tracking copilot with bill scanning (AI), voice logging, spending pattern detection, budget health scores, and predictive month-end balance analytics.",
+    year: "2026",
+    previewImage: "/projects/campuscash.jpeg",
+    liveUrl: "https://github.com/gameszoom325-cell/Expense-Manager",
+    githubUrl: "https://github.com/gameszoom325-cell/Expense-Manager",
   },
 ];

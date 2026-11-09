@@ -7,10 +7,9 @@ export interface EducationItem {
   location: string;
   status: string;
   statusType: "active" | "completed";
-  cgpaOrScore?: string;
   highlights: string[];
   description: string;
-  logoPlaceholder: string; // short badge / monogram or svg
+  logoPlaceholder: string;
   logoBg: string;
 }
 
@@ -20,40 +19,37 @@ export const educationHistory: EducationItem[] = [
     institution: "SRM Institute of Science and Technology",
     subheading: "Kattankulathur, Chennai, Tamil Nadu",
     degree: "B.Tech in Computer Science and Engineering (Artificial Intelligence & Machine Learning)",
-    timeline: "2024 — 2028 (Present • 1st Year)",
+    timeline: "2024 — 2028 (Present)",
     location: "CHENNAI, INDIA",
-    status: "ACTIVE COHORT",
+    status: "CURRENTLY ENROLLED",
     statusType: "active",
-    cgpaOrScore: "CGPA: 9.60 / 10.0",
     highlights: [
-      "CGPA: 9.60 / 10.0",
-      "Core Member: Artificial Intelligence & Machine Learning Society",
-      "Symposium Hackathon Finalist & Algorithmic Problem Solver",
-      "Research Focus: Tensor Algebra, High-Dimensional Latent Spaces & Edge Compute"
+      "B.Tech CSE with AI & ML Specialization",
+      "Active Hackathon Participant (Smart India Hackathon, Genie X Hub)",
+      "Full-Stack Web Development, Algorithm Design & Applied AI",
+      "Building Production Platforms with React, Next.js, and Python"
     ],
     description:
-      "Undergraduate study specializing in Artificial Intelligence and Machine Learning. Coursework and research delve into linear algebra for neural networks, distributed systems, high-dimensional vector representations, and low-latency computer vision pipelines.",
+      "Undergraduate study specializing in Artificial Intelligence and Machine Learning. Coursework and practical building focus on software engineering principles, web system design, database management, and machine learning implementations.",
     logoPlaceholder: "SRM",
-    logoBg: "from-[#44e2cd]/20 to-[#003731]/30",
+    logoBg: "from-[#2dd4bf]/20 to-[#0f766e]/30",
   },
   {
     id: "senior-secondary",
     institution: "Senior Secondary School",
     subheading: "Higher Secondary Certificate (PCM + Computer Science)",
-    degree: "Senior Secondary Science & Mathematics",
+    degree: "Senior Secondary Education (Science & Mathematics)",
     timeline: "2022 — 2024",
     location: "INDIA",
     status: "COMPLETED",
     statusType: "completed",
-    cgpaOrScore: "Top 1% Academic Distinction",
     highlights: [
-      "Informatics Olympiad State Round Qualifier",
-      "Top 1% Academic Distinction",
-      "Procedural 2D/3D graphics experiments in C++ with OpenGL",
-      "Excellence in Pure Mathematics & Physics"
+      "Physics, Chemistry, Pure Mathematics & Computer Science Track",
+      "Strong Foundations in Logic, Problem Solving & Object-Oriented Programming",
+      "Early Software & Algorithm Exploration"
     ],
     description:
-      "Rigorous preparation in Physics, Chemistry, and Advanced Mathematics alongside foundational computer science. Developed early algorithmic intuition, object-oriented software engineering principles, and procedural graphics engines.",
+      "Completed secondary education with rigorous coursework in Mathematics, Physics, Chemistry, and Computer Science. Cultivated foundational analytical thinking, problem-solving skills, and passion for software engineering.",
     logoPlaceholder: "SCH",
     logoBg: "from-white/10 to-white/5",
   },

@@ -7,14 +7,16 @@ interface ContactProps {
 
 export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
   const [copied, setCopied] = useState(false);
-  const email = 'ayush.singh@srmist.edu.in';
+  
+  // Easily editable contact details
+  const emailPlaceholder = "ayushsingh.work@example.com"; 
   const githubUrl = 'https://github.com/gameszoom325-cell';
   const linkedinUrl = 'https://www.linkedin.com/in/ayush-singh-705a63397';
 
-  const accentColor = activeTheme?.accentColor || '#44e2cd';
+  const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(email).then(() => {
+    navigator.clipboard.writeText(emailPlaceholder).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     });
@@ -23,11 +25,11 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
   return (
     <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 md:py-36 relative" id="contact">
       <div className="glass-dossier rounded-[3rem] p-8 md:p-20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] flex flex-col items-center text-center relative overflow-hidden border border-white/10">
-        {/* Deep Ambient Radial Glow Spot */}
+        {/* Deep Ambient Radial Glow */}
         <div
           className="absolute -top-32 left-1/2 -translate-x-1/2 w-[650px] h-[380px] rounded-full blur-[110px] pointer-events-none transition-all duration-1000"
           style={{
-            background: `radial-gradient(circle, ${activeTheme?.glowBurgundy || 'rgba(92,19,34,0.4)'} 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${activeTheme?.glowBurgundy || 'rgba(15,118,110,0.3)'} 0%, transparent 70%)`,
           }}
         />
 
@@ -41,7 +43,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             className="font-label-mono-sm text-xs uppercase tracking-[0.2em] font-semibold transition-colors duration-500"
             style={{ color: accentColor }}
           >
-            TRANSMISSION FREQUENCY OPEN
+            COMMUNICATION GATEWAY OPEN
           </span>
         </div>
 
@@ -52,12 +54,12 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
 
         {/* Subtext */}
         <p className="font-body-lg text-base sm:text-lg text-white/70 max-w-2xl mt-6 leading-relaxed relative z-10">
-          Always receptive to collaborative AI research experiments, ambitious software architecture, and high-performance digital projects.
+          Open to ambitious software architecture, full-stack web platforms, hackathon collaborations, and innovative technology exploration.
         </p>
 
-        {/* Three Primary Action Buttons: Email, GitHub, LinkedIn */}
+        {/* Three Action Buttons: Email, GitHub, LinkedIn */}
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4 relative z-10">
-          {/* Email Copy / Send Button */}
+          {/* Email Copy Button */}
           <button
             onClick={handleCopy}
             className="group flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-label-mono-md text-xs font-semibold uppercase tracking-wider shadow-[0_15px_30px_rgba(255,255,255,0.2)] hover:bg-[#C4C8D0] transition-all active:scale-95 cursor-pointer"
@@ -65,22 +67,8 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             <span className="material-symbols-outlined text-[18px]">
               {copied ? 'check_circle' : 'content_copy'}
             </span>
-            <span>{copied ? 'COPIED TO CLIPBOARD' : email}</span>
+            <span>{copied ? 'COPIED TO CLIPBOARD' : 'Copy Email Address'}</span>
           </button>
-
-          {/* Direct Dispatch */}
-          <a
-            href={`mailto:${email}`}
-            className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-all active:scale-95"
-          >
-            <span>Direct Dispatch</span>
-            <span
-              className="material-symbols-outlined text-[18px] transition-colors duration-500"
-              style={{ color: accentColor }}
-            >
-              send
-            </span>
-          </a>
 
           {/* GitHub Button */}
           <a
@@ -90,7 +78,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-all active:scale-95"
           >
             <span className="material-symbols-outlined text-[18px]">terminal</span>
-            <span>GitHub</span>
+            <span>GitHub Profile</span>
             <span className="material-symbols-outlined text-[14px] text-white/40">arrow_outward</span>
           </a>
 
@@ -102,7 +90,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             className="flex items-center gap-2 px-7 py-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-white font-label-mono-md text-xs uppercase tracking-wider hover:bg-white/[0.12] transition-all active:scale-95"
           >
             <span className="material-symbols-outlined text-[18px]">share</span>
-            <span>LinkedIn</span>
+            <span>LinkedIn Profile</span>
             <span className="material-symbols-outlined text-[14px] text-white/40">arrow_outward</span>
           </a>
         </div>
@@ -115,7 +103,7 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             target="_blank"
             rel="noreferrer"
           >
-            GITHUB
+            GITHUB: @gameszoom325-cell
           </a>
           <a
             className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
@@ -123,32 +111,11 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
             target="_blank"
             rel="noreferrer"
           >
-            LINKEDIN
+            LINKEDIN: Ayush Singh
           </a>
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
-            href="https://huggingface.co"
-            target="_blank"
-            rel="noreferrer"
-          >
-            HUGGINGFACE
-          </a>
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
-            href="https://x.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            X / TWITTER
-          </a>
-          <a
-            className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/70 hover:text-white hover:border-white/20 transition-all"
-            href="https://discord.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            DISCORD
-          </a>
+          <span className="px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/50">
+            SRM IST • CHENNAI, INDIA
+          </span>
         </div>
       </div>
     </section>

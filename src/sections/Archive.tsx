@@ -8,10 +8,10 @@ interface ArchiveProps {
 }
 
 export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'cert' | 'comp' | 'course'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'hackathon' | 'project'>('all');
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
 
-  const accentColor = activeTheme?.accentColor || '#44e2cd';
+  const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   const filteredItems = achievementsList.filter((item) => {
     if (activeFilter === 'all') return true;
@@ -20,9 +20,8 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
 
   const filterTabs = [
     { id: 'all', label: `All (${achievementsList.length})` },
-    { id: 'cert', label: 'Certifications' },
-    { id: 'comp', label: 'Competitions' },
-    { id: 'course', label: 'IIT Courses' },
+    { id: 'hackathon', label: 'Hackathons (SIH & Genie X)' },
+    { id: 'project', label: 'Deployed Platforms' },
   ] as const;
 
   return (
@@ -32,21 +31,21 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <span
-              className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500"
+              className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500 font-semibold"
               style={{ color: accentColor }}
             >
-              05 / MERIT ARCHIVE
+              05 / HACKATHONS &amp; PLATFORMS
             </span>
             <span
               className="w-1.5 h-1.5 rounded-full"
               style={{ backgroundColor: accentColor }}
             />
             <span className="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">
-              VERIFIED CREDENTIALS
+              VERIFIED PORTFOLIO RECORD
             </span>
           </div>
           <h2 className="font-headline-lg text-3xl sm:text-5xl font-bold text-white tracking-tight">
-            Accreditations &amp; Honors
+            Hackathons &amp; Engineering Archives
           </h2>
         </div>
 
@@ -79,20 +78,20 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
       {/* Metric Counters Banner */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 p-5 rounded-2xl glass-dossier">
         <div className="flex flex-col items-center text-center p-3">
-          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.certificates}</span>
-          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Certificates</span>
-        </div>
-        <div className="flex flex-col items-center text-center p-3 border-l border-white/10">
-          <span className="font-headline-sm text-2xl font-bold text-white">IIT</span>
-          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Course Certified</span>
-        </div>
-        <div className="flex flex-col items-center text-center p-3 border-l border-white/10">
-          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.competitions}</span>
+          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.hackathons}</span>
           <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Competitions</span>
         </div>
         <div className="flex flex-col items-center text-center p-3 border-l border-white/10">
-          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.projects}</span>
-          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Projects Engineered</span>
+          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.platforms}</span>
+          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Engineered Apps</span>
+        </div>
+        <div className="flex flex-col items-center text-center p-3 border-l border-white/10">
+          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.status}</span>
+          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">Specialization</span>
+        </div>
+        <div className="flex flex-col items-center text-center p-3 border-l border-white/10">
+          <span className="font-headline-sm text-2xl font-bold text-white">{archiveMetrics.institution}</span>
+          <span className="font-label-mono-sm text-xs text-white/50 uppercase mt-0.5">University</span>
         </div>
       </div>
 
@@ -108,21 +107,31 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span
-                    className="font-label-mono-sm text-xs uppercase tracking-widest font-semibold"
+                    className="font-label-mono-sm text-xs uppercase tracking-widest font-semibold truncate max-w-[200px]"
                     style={{ color: accentColor }}
                   >
                     {item.organization}
                   </span>
                   <span
-                    className="px-3 py-1 rounded-full font-label-mono-sm text-[11px] uppercase border"
+                    className="px-3 py-1 rounded-full font-label-mono-sm text-[11px] uppercase border shrink-0"
                     style={{
                       backgroundColor: `${accentColor}12`,
                       borderColor: `${accentColor}35`,
                       color: accentColor,
                     }}
                   >
-                    {item.badge}
+                    {item.year}
                   </span>
+                </div>
+
+                <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-black/60 border border-white/10 my-2">
+                  <img
+                    src={item.previewImage}
+                    alt={item.title}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070709]/70 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 <h4 className="font-headline-sm text-xl font-bold text-white group-hover:text-white transition-colors flex items-center justify-between gap-2">
@@ -132,15 +141,16 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
                   </span>
                 </h4>
 
-                <p className="font-body-sm text-sm text-white/60 leading-relaxed line-clamp-3">
+                <p className="font-body-sm text-sm text-white/60 leading-relaxed line-clamp-2">
                   {item.description}
                 </p>
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t border-white/[0.06] mt-6 font-label-mono-sm text-xs text-white/40">
-                <span>ISSUED: {item.year}</span>
-                <span className="text-white/80 font-medium truncate max-w-[150px]">
-                  #{item.verifiedHash}
+              <div className="flex items-center justify-between pt-5 border-t border-white/[0.06] mt-5 font-label-mono-sm text-xs text-white/40">
+                <span className="truncate max-w-[200px] text-white/60">{item.badge}</span>
+                <span className="text-white/80 font-medium flex items-center gap-1">
+                  <span>View Details</span>
+                  <span className="material-symbols-outlined text-[14px]">visibility</span>
                 </span>
               </div>
             </div>
@@ -148,7 +158,7 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
         })}
       </div>
 
-      {/* Certificate / Credential Modal */}
+      {/* Modal */}
       <CertificateModal
         achievement={selectedAchievement}
         onClose={() => setSelectedAchievement(null)}

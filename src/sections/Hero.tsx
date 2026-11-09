@@ -7,18 +7,18 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
-  const accentColor = activeTheme?.accentColor || '#44e2cd';
+  const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   return (
     <section
       className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-16 pb-24 md:pt-24 md:pb-36 flex flex-col justify-between relative overflow-hidden"
       id="overview"
     >
-      {/* Interactive WebGL Shader Canvas Background with Subtle Screen Blend */}
+      {/* Interactive WebGL Shader Canvas Background with Screen Blend */}
       <HeroShader />
 
       <div className="relative z-10 flex flex-col justify-between w-full h-full">
-        {/* Telemetry Status Bar */}
+        {/* Real Status Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12">
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg w-max">
             <span className="flex h-2 w-2 relative">
@@ -35,11 +35,11 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
               className="font-label-mono-sm text-xs uppercase tracking-widest font-semibold transition-colors duration-500"
               style={{ color: accentColor }}
             >
-              SRM IST 2024–2028
+              SRM IST CHENNAI
             </span>
             <span className="text-white/20 font-label-mono-sm text-xs">•</span>
             <span className="font-label-mono-sm text-xs uppercase text-white/70 tracking-wider">
-              1ST YEAR B.TECH CSE (AI &amp; ML)
+              B.TECH CSE (AI &amp; ML)
             </span>
           </div>
 
@@ -49,10 +49,9 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 className="material-symbols-outlined text-[15px] transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                satellite_alt
+                location_on
               </span>
-              <span className="text-white/80 tracking-wider">12.8230° N, 80.0444° E</span>
-              <span className="text-white/40">KATTANKULATHUR</span>
+              <span className="text-white/80 tracking-wider uppercase">CHENNAI, INDIA</span>
             </div>
             <div className="hidden sm:flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] px-3.5 py-1.5 rounded-full">
               <span
@@ -60,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 style={{ backgroundColor: accentColor }}
               />
               <span className="text-white/70 tracking-wider uppercase">
-                STATE: EXPLORING NEURAL LATENTS
+                STUDENT DEVELOPER &amp; BUILDER
               </span>
             </div>
           </div>
@@ -70,14 +69,14 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
         <div className="flex flex-col gap-6 py-6 md:py-10 max-w-5xl">
           <div className="flex items-center gap-4">
             <span
-              className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500"
+              className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500 font-semibold"
               style={{ color: accentColor }}
             >
-              [ DIGITAL ARTIFACT 01 ]
+              [ PERSONAL PORTFOLIO ]
             </span>
             <div className="h-[1px] w-24 bg-gradient-to-r from-white/20 to-transparent" />
             <span className="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">
-              SYSTEMS &amp; ARCHITECTURE
+              AI/ML &amp; WEB SYSTEMS
             </span>
           </div>
 
@@ -86,15 +85,15 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
           </h1>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-white/60 font-label-mono-md text-xs sm:text-sm uppercase tracking-wider pt-2">
-            <span className="text-white font-medium">AI/ML Practitioner</span>
+            <span className="text-white font-medium">B.Tech CSE AI/ML</span>
             <span className="text-white/20">/</span>
-            <span>Cognitive Systems Architect</span>
+            <span>Full-Stack Web Developer</span>
             <span className="text-white/20">/</span>
-            <span>Interactive Graphics</span>
+            <span>Creative Developer</span>
           </div>
 
           <p className="font-body-lg text-lg sm:text-xl text-white/70 max-w-3xl mt-3 font-normal leading-relaxed">
-            Engineering high-precision digital artifacts at the nexus of high-dimensional neural computation, robust micro-architectures, and kinetic sensory design.
+            Computer Science Engineering student specializing in Artificial Intelligence and Machine Learning at SRM Institute of Science and Technology, Chennai. Developing production-ready web platforms, intelligent tools, and interactive digital experiences.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-6">
@@ -116,12 +115,12 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 className="material-symbols-outlined text-[18px] transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                fingerprint
+                person
               </span>
-              <span>Inspect Dossier</span>
+              <span>About Me</span>
             </a>
 
-            {/* Social Direct Icons */}
+            {/* Direct Socials */}
             <div className="flex items-center gap-2 sm:ml-auto pt-4 sm:pt-0">
               <a
                 href="https://github.com/gameszoom325-cell"
@@ -142,17 +141,8 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
                 <span className="material-symbols-outlined text-[18px]">share</span>
               </a>
               <a
-                href="https://huggingface.co"
-                target="_blank"
-                rel="noreferrer"
-                title="HuggingFace Space"
-                className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all"
-              >
-                <span className="material-symbols-outlined text-[18px]">psychology</span>
-              </a>
-              <a
-                href="mailto:ayush.singh@srmist.edu.in"
-                title="Email Ayush Singh"
+                href="#contact"
+                title="Contact Section"
                 className="w-11 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/70 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all"
               >
                 <span className="material-symbols-outlined text-[18px]">mail</span>
@@ -161,70 +151,70 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme }) => {
           </div>
         </div>
 
-        {/* Metric Telemetry Ribbon */}
+        {/* Real Profile Telemetry Ribbon */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 glass-dossier rounded-3xl p-6 md:p-8">
           <div className="flex flex-col gap-1 border-r border-white/[0.06] pr-4">
             <span className="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">
-              ACADEMIC METRIC
+              DEGREE &amp; TRACK
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">9.60</span>
+              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">B.Tech</span>
               <span
                 className="font-label-mono-sm text-xs font-semibold transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                CGPA
+                CSE AI/ML
               </span>
             </div>
-            <span className="font-body-sm text-xs text-white/60">B.Tech CSE (AI &amp; ML)</span>
+            <span className="font-body-sm text-xs text-white/60">SRM IST, Chennai</span>
           </div>
 
           <div className="flex flex-col gap-1 md:border-r border-white/[0.06] pr-4">
             <span className="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">
-              PROJECT PRODUCTION
+              FEATURED PLATFORMS
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">07</span>
+              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">06</span>
               <span
                 className="font-label-mono-sm text-xs font-semibold transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                SYSTEMS
+                PROJECTS
               </span>
             </div>
-            <span className="font-body-sm text-xs text-white/60">4D Vision to Agentic Core</span>
+            <span className="font-body-sm text-xs text-white/60">Full-Stack &amp; AI Systems</span>
           </div>
 
           <div className="flex flex-col gap-1 border-r border-white/[0.06] pr-4 mt-4 md:mt-0">
             <span className="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">
-              CERTIFIED MERIT
+              HACKATHONS
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">05+</span>
+              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">SIH</span>
               <span
                 className="font-label-mono-sm text-xs font-semibold transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                ELITE
+                GENIE X
               </span>
             </div>
-            <span className="font-body-sm text-xs text-white/60">IIT Madras, Stanford, AWS</span>
+            <span className="font-body-sm text-xs text-white/60">Real-World Problem Solver</span>
           </div>
 
           <div className="flex flex-col gap-1 pr-4 mt-4 md:mt-0">
             <span className="font-label-mono-sm text-[11px] text-white/40 uppercase tracking-widest">
-              HARDWARE DISCIPLINE
+              PRIMARY STACK
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">RTX</span>
+              <span className="font-headline-sm text-2xl md:text-3xl font-bold text-white">React</span>
               <span
                 className="font-label-mono-sm text-xs font-semibold transition-colors duration-500"
                 style={{ color: accentColor }}
               >
-                CUDA
+                Next / TS
               </span>
             </div>
-            <span className="font-body-sm text-xs text-white/60">Low-Latency Tensor Pipelines</span>
+            <span className="font-body-sm text-xs text-white/60">Python, Tailwind, Node.js</span>
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll detection for navbar styling
+  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
@@ -40,37 +40,39 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
 
   const navLinks = [
     { label: 'Overview', href: '#overview' },
-    { label: 'Dossier', href: '#about' },
-    { label: 'Trajectory', href: '#trajectory' },
-    { label: 'Systems', href: '#projects' },
-    { label: 'Archive', href: '#archive' },
-    { label: 'Apparatus', href: '#stack' },
+    { label: 'About', href: '#about' },
+    { label: 'Education', href: '#trajectory' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Hackathons', href: '#archive' },
+    { label: 'Skills', href: '#stack' },
     { label: 'Contact', href: '#contact' },
   ];
 
-  const accentColor = activeTheme?.accentColor || '#44e2cd';
+  const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-12 py-4 transition-all duration-500">
       <div
-        className={`h-16 w-full max-w-7xl mx-auto rounded-full bg-[#0E0E12]/80 backdrop-blur-2xl border transition-all duration-300 px-4 sm:px-6 flex items-center justify-between gap-4 ${
-          scrolled ? 'border-white/15 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)]' : 'border-white/[0.08] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85)]'
+        className={`h-16 w-full max-w-7xl mx-auto rounded-full bg-[#0E0E12]/85 backdrop-blur-2xl border transition-all duration-300 px-4 sm:px-6 flex items-center justify-between gap-4 ${
+          scrolled
+            ? 'border-white/15 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.95)]'
+            : 'border-white/[0.08] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.85)]'
         }`}
       >
-        {/* Left: Brand Identity */}
+        {/* Left: Minimal Titanium Logo */}
         <div className="flex items-center gap-3 min-w-max">
           <a className="flex items-center gap-3 group" href="#overview">
             <div
-              className="w-8 h-8 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-xs font-label-mono-md tracking-tighter text-white group-hover:scale-105 transition-transform"
+              className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/15 flex items-center justify-center font-headline-sm text-sm font-bold tracking-widest text-white group-hover:border-white/30 transition-all shadow-inner"
               style={{ borderColor: scrolled ? `${accentColor}40` : undefined }}
             >
               AS
             </div>
             <div className="flex flex-col">
               <span className="font-headline-sm text-sm sm:text-base font-semibold text-white tracking-tight leading-none">
-                Ayush Singh
+                AYUSH SINGH
               </span>
-              <div className="hidden xl:flex items-center gap-2 mt-0.5">
+              <div className="hidden xl:flex items-center gap-2 mt-1">
                 <span className="relative flex h-1.5 w-1.5">
                   <span
                     className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
@@ -82,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
                   />
                 </span>
                 <span className="font-label-mono-sm text-[10px] text-white/50 uppercase tracking-widest">
-                  SRM IST 2024–2028 • COGNITIVE SYSTEMS
+                  SRM IST CHENNAI • B.TECH CSE AI/ML
                 </span>
               </div>
             </div>
@@ -102,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTheme }) => {
           ))}
         </nav>
 
-        {/* Right: IST Clock & Action CTA */}
+        {/* Right: IST Clock & Contact CTA */}
         <div className="flex items-center gap-3 min-w-max">
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.07]">
             <span

@@ -7,21 +7,21 @@ interface TrajectoryProps {
 }
 
 export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
-  const accentColor = activeTheme?.accentColor || '#44e2cd';
+  const accentColor = activeTheme?.accentColor || '#2dd4bf';
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 relative" id="trajectory">
       {/* Section Header */}
       <div className="flex items-center gap-4 mb-16">
         <span
-          className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500"
+          className="font-label-mono-md text-xs tracking-[0.2em] uppercase transition-colors duration-500 font-semibold"
           style={{ color: accentColor }}
         >
-          03 / TRAJECTORY
+          03 / EDUCATION
         </span>
         <div className="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent" />
         <span className="font-label-mono-sm text-xs text-white/40 uppercase tracking-widest">
-          ACADEMIC &amp; RESEARCH PATH
+          ACADEMIC TIMELINE
         </span>
       </div>
 
@@ -30,7 +30,7 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
         <div
           className="absolute left-2.5 sm:left-5 top-3 bottom-3 w-0.5 transition-all duration-1000"
           style={{
-            background: `linear-gradient(to bottom, ${accentColor}, #5C1322 70%, transparent 100%)`,
+            background: `linear-gradient(to bottom, ${accentColor}, rgba(255,255,255,0.1) 80%, transparent 100%)`,
           }}
         />
 
@@ -40,7 +40,7 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
             <div className="absolute -left-[27px] sm:-left-[39px] top-2 w-6 h-6 rounded-full bg-[#070709] border border-white/20 flex items-center justify-center transition-all group-hover:scale-110">
               <span
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
-                  item.statusType === 'active' ? 'shadow-lg animate-pulse' : 'bg-white/40'
+                  item.statusType === 'active' ? 'shadow-lg' : 'bg-white/40'
                 }`}
                 style={{
                   backgroundColor: item.statusType === 'active' ? accentColor : undefined,
@@ -55,7 +55,7 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
                 {/* Meta Header */}
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center gap-2.5">
-                    {/* Logo / Monogram placeholder */}
+                    {/* Logo Monogram */}
                     <div
                       className={`w-7 h-7 rounded-lg bg-gradient-to-br ${item.logoBg} border border-white/10 flex items-center justify-center font-label-mono-md text-[10px] font-bold text-white shadow-inner`}
                     >
