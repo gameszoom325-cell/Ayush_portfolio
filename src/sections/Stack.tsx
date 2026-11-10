@@ -59,15 +59,15 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
         grid.children,
         {
           opacity: 0,
-          y: 35,
-          scale: 0.98,
+          y: 45,
+          scale: 0.95,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          stagger: 0.08,
-          duration: 0.7,
+          stagger: 0.12,
+          duration: 0.85,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: grid,
@@ -84,14 +84,14 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
   return (
     <section
       ref={sectionRef}
-      className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center"
+      className="w-full min-h-screen py-24 md:py-36 relative flex flex-col justify-center select-none"
       id="stack"
     >
       {/* Background radial glow */}
       <div
-        className="absolute bottom-10 right-0 w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] rounded-full blur-[200px] pointer-events-none -z-10"
+        className="absolute bottom-10 right-0 w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] rounded-full blur-[200px] pointer-events-none -z-10 transition-colors duration-1000"
         style={{
-          background: `radial-gradient(circle, ${accentColor}10 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${accentColor}12 0%, transparent 70%)`,
         }}
       />
 
@@ -110,30 +110,36 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
           </span>
         </div>
 
-        {/* 4 Architectural Columns */}
+        {/* 4 Architectural Columns with Interactive Lift and Living Icons */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {skillTiers.map((tier) => (
             <div
               key={tier.id}
-              className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.08] hover:border-white/25 hover:bg-white/[0.035] hover:-translate-y-1 transition-[transform,border-color,background-color] duration-300 backdrop-blur-xl flex flex-col justify-between group shadow-xl"
+              className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.08] hover:border-white/25 hover:bg-white/[0.04] hover:-translate-y-2 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 backdrop-blur-xl flex flex-col justify-between group shadow-xl relative overflow-hidden"
             >
-              <div className="space-y-6">
+              {/* Subtle Ambient Hover Glow */}
+              <div
+                className="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"
+                style={{ backgroundColor: accentColor }}
+              />
+
+              <div className="space-y-6 relative z-10">
                 <div className="flex items-center justify-between">
                   <span
-                    className="font-label-mono-sm text-xs uppercase tracking-wider font-semibold"
+                    className="font-label-mono-sm text-xs uppercase tracking-wider font-semibold transition-colors duration-300"
                     style={{ color: accentColor }}
                   >
                     {tier.tierNumber}
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white transition-colors duration-200">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white group-hover:scale-110 group-hover:border-white/25 transition-all duration-300 shadow-sm">
                     {(() => {
                       const IconComponent = tierIconMap[tier.icon] || Layout;
-                      return <IconComponent className="w-4 h-4" />;
+                      return <IconComponent className="w-4 h-4 transition-transform duration-300 group-hover:rotate-6" />;
                     })()}
                   </div>
                 </div>
 
-                <h3 className="font-headline-sm text-2xl font-bold text-white tracking-tight">
+                <h3 className="font-headline-sm text-2xl font-bold text-white tracking-tight group-hover:text-white transition-colors duration-200">
                   {tier.title}
                 </h3>
 
@@ -141,19 +147,19 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
                   {tier.skills.map((skill, sIdx) => (
                     <div
                       key={sIdx}
-                      className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-white/20 hover:bg-white/[0.04] transition-[border-color,background-color] duration-200"
+                      className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-white/20 hover:bg-white/[0.06] hover:translate-x-1.5 transition-all duration-200 cursor-default"
                     >
                       <span className="text-white/90 font-medium">{skill.name}</span>
                       <span
-                        className={`font-label-mono-sm text-[10px] px-2.5 py-0.5 rounded-full transition-colors duration-200 ${
+                        className={`font-label-mono-sm text-[10px] px-2.5 py-0.5 rounded-full transition-all duration-200 ${
                           skill.tagHighlight
-                            ? 'border font-semibold'
+                            ? 'border font-semibold shadow-sm'
                             : 'text-white/40 bg-white/[0.04]'
                         }`}
                         style={{
                           color: skill.tagHighlight ? accentColor : undefined,
-                          borderColor: skill.tagHighlight ? `${accentColor}40` : undefined,
-                          backgroundColor: skill.tagHighlight ? `${accentColor}12` : undefined,
+                          borderColor: skill.tagHighlight ? `${accentColor}50` : undefined,
+                          backgroundColor: skill.tagHighlight ? `${accentColor}15` : undefined,
                         }}
                       >
                         {skill.tag}
@@ -163,9 +169,11 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
                 </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-white/[0.06] flex items-center justify-between font-label-mono-sm text-[11px] text-white/40">
+              <div className="pt-6 mt-6 border-t border-white/[0.06] flex items-center justify-between font-label-mono-sm text-[11px] text-white/40 relative z-10">
                 <span className="uppercase tracking-wider">SYSTEM TIER</span>
-                <span style={{ color: accentColor }}>ACTIVE</span>
+                <span className="font-semibold transition-colors duration-300" style={{ color: accentColor }}>
+                  ACTIVE
+                </span>
               </div>
             </div>
           ))}

@@ -8,7 +8,6 @@ import { Navbar } from './components/Navbar';
 import { AmbientBackground } from './components/AmbientBackground';
 import { CinematicIntro } from './components/CinematicIntro';
 import { MagneticCursor } from './components/MagneticCursor';
-import { ArchitecturalHUD } from './components/ArchitecturalHUD';
 
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
@@ -115,8 +114,6 @@ export const App: React.FC = () => {
       {/* 2. Premium Desktop Magnetic Cursor with Morphing States */}
       <MagneticCursor />
 
-      {/* 3. Signature Interaction: Architectural Blueprint Telemetry HUD */}
-      <ArchitecturalHUD activeTheme={activeProject.theme} />
 
       {/* 4. Living Atmosphere Background that Evolves Per-Section and Per-Project */}
       <AmbientBackground

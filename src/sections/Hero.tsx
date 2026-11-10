@@ -185,17 +185,6 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme, isIntroActive = false }
         <HeroShader />
       </div>
 
-      {/* Atmospheric Subtle Architectural Coordinate Crosshairs */}
-      <div className="absolute inset-0 z-[1] pointer-events-none">
-        <div className="absolute top-1/4 left-8 sm:left-16 text-white/[0.12] font-label-mono-sm text-[10px] tracking-widest hidden md:block">
-          SYS.LOC // 13.0827°N 80.2707°E
-        </div>
-        <div className="absolute top-1/3 right-8 sm:right-16 text-white/[0.12] font-label-mono-sm text-[10px] tracking-widest hidden md:block">
-          AI_KERNEL // LOADED
-        </div>
-        <div className="absolute top-1/2 left-6 w-3 h-[1px] bg-white/20 hidden md:block" />
-        <div className="absolute top-1/2 right-6 w-3 h-[1px] bg-white/20 hidden md:block" />
-      </div>
 
       {/* Main Content Area */}
       <div
