@@ -61,32 +61,55 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
         return;
       }
 
-      // 1. Header Line Expansion
+      const headlineSpans = [
+        headlineMask1Ref.current,
+        headlineMask2Ref.current,
+        headlineMask3Ref.current,
+      ].filter(Boolean);
+
+      // Unified cinematic sequence triggered precisely at top 75%
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      // 1. Header Line Expansion (0.9s, expo.out)
       if (headerLine) {
-        gsap.fromTo(
+        tl.fromTo(
           headerLine,
           { scaleX: 0, transformOrigin: 'left center' },
-          {
-            scaleX: 1,
-            duration: 0.9,
-            ease: 'expo.inOut',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          }
+          { scaleX: 1, duration: 0.9, ease: 'expo.out' }
         );
       }
 
-      // 2. Portrait Dossier 3D Perspective Entrance
-      gsap.fromTo(
+      // 2. Headings First: Masked Editorial Headline Reveal (1.25s, power4.out, stagger: 0.14s)
+      if (headlineSpans.length > 0) {
+        tl.fromTo(
+          headlineSpans,
+          { yPercent: 125, rotateX: 20, opacity: 0 },
+          {
+            yPercent: 0,
+            rotateX: 0,
+            opacity: 1,
+            duration: 1.25,
+            stagger: 0.14,
+            ease: 'power4.out',
+          },
+          '-=0.6'
+        );
+      }
+
+      // 3. 3D Portrait Dossier Perspective Entrance (1.1s, power3.out)
+      tl.fromTo(
         portrait,
         {
           opacity: 0,
-          y: 60,
+          y: 50,
           rotateY: -10,
-          scale: 0.94,
+          scale: 0.95,
           transformPerspective: 1000,
         },
         {
@@ -94,101 +117,58 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
           y: 0,
           rotateY: 0,
           scale: 1,
-          duration: 1.15,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 75%',
-            toggleActions: 'play none none none',
-          },
-        }
+          duration: 1.1,
+          ease: 'power3.out',
+        },
+        '-=0.9'
       );
 
-      // 3. Editorial Masked Headline Reveal
-      const headlineSpans = [
-        headlineMask1Ref.current,
-        headlineMask2Ref.current,
-        headlineMask3Ref.current,
-      ].filter(Boolean);
-
-      if (headlineSpans.length > 0) {
-        gsap.fromTo(
-          headlineSpans,
-          { yPercent: 120, rotateX: 20, opacity: 0 },
-          {
-            yPercent: 0,
-            rotateX: 0,
-            opacity: 1,
-            duration: 1.1,
-            stagger: 0.12,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: headlineSpans[0],
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
-      }
-
-      // 4. Bio Paragraphs Stagger
+      // 4. Paragraphs Second: Narrative Stagger (0.95s, power3.out, stagger: 0.12s)
       if (textBlock) {
-        gsap.fromTo(
+        tl.fromTo(
           textBlock.children,
           { opacity: 0, y: 25 },
           {
             opacity: 1,
             y: 0,
             stagger: 0.12,
-            duration: 0.85,
+            duration: 0.95,
             ease: 'power3.out',
-            scrollTrigger: {
-              trigger: textBlock,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          }
+          },
+          '-=0.7'
         );
       }
 
-      // 5. Capability Cards Stagger
+      // 5. Cards Last: Capability Dossier Cards (0.85s, power3.out, stagger: 0.1s)
       if (capabilities) {
-        gsap.fromTo(
+        tl.fromTo(
           capabilities.children,
-          { opacity: 0, y: 28, scale: 0.95 },
+          { opacity: 0, y: 30, scale: 0.96 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
             stagger: 0.1,
-            duration: 0.8,
-            ease: 'back.out(1.1)',
-            scrollTrigger: {
-              trigger: capabilities,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
+            duration: 0.85,
+            ease: 'power3.out',
+          },
+          '-=0.6'
         );
       }
 
-      // 6. Passions Cards Stagger
+      // 6. Passions Cards Row (0.8s, power3.out, stagger: 0.08s)
       if (passions) {
-        gsap.fromTo(
+        tl.fromTo(
           passions.children,
-          { opacity: 0, y: 20 },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
             stagger: 0.08,
-            duration: 0.7,
+            duration: 0.8,
             ease: 'power3.out',
-            scrollTrigger: {
-              trigger: passions,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          }
+          },
+          '-=0.5'
         );
       }
     }, section);
@@ -207,27 +187,56 @@ export const About: React.FC<AboutProps> = ({ activeTheme }) => {
     const normX = (x / rect.width) * 2 - 1;
     const normY = (y / rect.height) * 2 - 1;
 
-    frame.style.transform = `perspective(1000px) rotateX(${(-normY * 7.5).toFixed(2)}deg) rotateY(${(normX * 8.5).toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    gsap.to(frame, {
+      rotateX: -normY * 7.5,
+      rotateY: normX * 8.5,
+      scale: 1.02,
+      transformPerspective: 1000,
+      duration: 0.45,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    });
 
     if (cardImageRef.current) {
-      cardImageRef.current.style.transform = `translate3d(${(-normX * 12).toFixed(1)}px, ${(-normY * 10).toFixed(1)}px, 0) scale(1.05)`;
+      gsap.to(cardImageRef.current, {
+        x: -normX * 12,
+        y: -normY * 10,
+        scale: 1.05,
+        duration: 0.55,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
     }
 
     if (sheenRef.current) {
       sheenRef.current.style.background = `radial-gradient(circle 380px at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.14) 0%, transparent 65%)`;
-      sheenRef.current.style.opacity = '1';
+      gsap.to(sheenRef.current, { opacity: 1, duration: 0.3, overwrite: 'auto' });
     }
   };
 
   const onPortraitMouseLeave = () => {
     const frame = cardFrameRef.current;
     if (!frame) return;
-    frame.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    gsap.to(frame, {
+      rotateX: 0,
+      rotateY: 0,
+      scale: 1,
+      duration: 0.65,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
     if (cardImageRef.current) {
-      cardImageRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
+      gsap.to(cardImageRef.current, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: 0.65,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
     }
     if (sheenRef.current) {
-      sheenRef.current.style.opacity = '0';
+      gsap.to(sheenRef.current, { opacity: 0, duration: 0.4, overwrite: 'auto' });
     }
   };
 

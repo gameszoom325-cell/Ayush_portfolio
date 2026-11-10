@@ -20,34 +20,68 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
 
   const accentColor = activeTheme?.accentColor || '#2dd4bf';
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const statusBadgeRef = useRef<HTMLDivElement>(null);
+  const titleMaskRef = useRef<HTMLSpanElement>(null);
+  const subtextRef = useRef<HTMLParagraphElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
 
-  // GSAP ScrollTrigger entrance
+  // GSAP ScrollTrigger entrance with studio sequencing at top 75%
   useEffect(() => {
     const section = sectionRef.current;
-    const content = contentRef.current;
-    if (!section || !content) return;
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        content.children,
-        {
-          opacity: 0,
-          y: 40,
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          toggleActions: 'play none none none',
         },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.12,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 75%',
-            toggleActions: 'play none none none',
+      });
+
+      // 1. Status Beacon Arrives
+      tl.fromTo(
+        statusBadgeRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+      )
+        // 2. Headings First: Masked Keynote Title Reveal (1.25s, power4.out)
+        .fromTo(
+          titleMaskRef.current,
+          { yPercent: 125, rotateX: 18, opacity: 0 },
+          {
+            yPercent: 0,
+            rotateX: 0,
+            opacity: 1,
+            duration: 1.25,
+            ease: 'power4.out',
           },
-        }
-      );
+          '-=0.55'
+        )
+        // 3. Paragraphs Second: Subtext Narrative (0.9s, power3.out)
+        .fromTo(
+          subtextRef.current,
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          '-=0.75'
+        )
+        // 4. Buttons Last: Interactive Action Row Stagger (0.85s, power3.out, stagger: 0.1s)
+        .fromTo(
+          buttonsRef.current ? buttonsRef.current.children : [],
+          { opacity: 0, y: 20, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            stagger: 0.1,
+            ease: 'power3.out',
+          },
+          '-=0.6'
+        );
     }, section);
 
     return () => ctx.revert();
@@ -77,11 +111,10 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
       />
 
       <div
-        ref={contentRef}
         className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 z-10 flex flex-col items-center text-center"
       >
         {/* Transmission Status Badge */}
-        <div className="flex items-center gap-3 mb-8">
+        <div ref={statusBadgeRef} className="flex items-center gap-3 mb-8">
           <span
             className="w-2.5 h-2.5 rounded-full animate-ping"
             style={{ backgroundColor: accentColor }}
@@ -97,19 +130,19 @@ export const Contact: React.FC<ContactProps> = ({ activeTheme }) => {
         {/* Large Keynote Title with Masked Editorial Reveal */}
         <h2 className="font-display-hero text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tracking-[-0.035em] leading-[1.0] uppercase max-w-5xl">
           <span className="block overflow-hidden py-1">
-            <span className="block">
+            <span ref={titleMaskRef} className="block will-change-transform">
               Let’s Construct Something Extraordinary.
             </span>
           </span>
         </h2>
 
         {/* Subtext */}
-        <p className="font-body-lg text-base sm:text-xl text-white/75 max-w-2xl mt-6 leading-relaxed">
+        <p ref={subtextRef} className="font-body-lg text-base sm:text-xl text-white/75 max-w-2xl mt-6 leading-relaxed">
           Open to ambitious software engineering, full-stack platforms, hackathon collaborations, and innovative technology exploration.
         </p>
 
         {/* Action Buttons: Direct Mailto, Copy, GitHub, LinkedIn */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 w-full max-w-3xl">
+        <div ref={buttonsRef} className="mt-12 flex flex-wrap items-center justify-center gap-4 w-full max-w-3xl">
           {/* Primary Mailto Action */}
           <a
             href={mailtoLink}

@@ -32,86 +32,105 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme, isIntroActive = false }
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const ctx = gsap.context(() => {
-      if (prefersReducedMotion) {
-        gsap.set(
-          [
-            statusRef.current,
-            eyebrowRef.current,
-            lineRef.current,
-            titleMask1Ref.current,
-            titleMask2Ref.current,
-            subRef.current,
-            bioRef.current,
-            ctaRef.current ? ctaRef.current.children : [],
-            telemetryRef.current,
-          ],
-          { opacity: 1, y: 0, scaleX: 1, yPercent: 0, rotateX: 0 }
-        );
-        return;
+    const allElements = [
+      statusRef.current,
+      eyebrowRef.current,
+      lineRef.current,
+      titleMask1Ref.current,
+      titleMask2Ref.current,
+      subRef.current,
+      bioRef.current,
+      ctaRef.current ? ctaRef.current.children : [],
+      telemetryRef.current,
+    ];
+
+    if (prefersReducedMotion) {
+      gsap.set(allElements, { opacity: 1, y: 0, scaleX: 1, yPercent: 0, rotateX: 0 });
+      return;
+    }
+
+    if (isIntroActive) {
+      // Hold in pristine hidden state while intro overlay is active
+      gsap.set([statusRef.current, eyebrowRef.current, subRef.current, bioRef.current, telemetryRef.current], {
+        opacity: 0,
+        y: 28,
+      });
+      if (lineRef.current) {
+        gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left center' });
       }
+      gsap.set([titleMask1Ref.current, titleMask2Ref.current], {
+        yPercent: 125,
+        rotateX: 20,
+        opacity: 0,
+      });
+      if (ctaRef.current) {
+        gsap.set(ctaRef.current.children, { opacity: 0, y: 22, scale: 0.95 });
+      }
+      return;
+    }
 
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
 
-      // Step 0: Status Pill & Eyebrow Tag Bar arrive with crisp spring
+      // Order 1: Atmosphere & status pill arrive (pacing: 1.0s)
       tl.fromTo(
         statusRef.current,
-        { opacity: 0, y: 24, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 0.2 }
+        { opacity: 0, y: 28, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: 'power3.out', delay: 0.15 }
       )
         .fromTo(
           eyebrowRef.current,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          '-=0.6'
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          '-=0.75'
         )
         .fromTo(
           lineRef.current,
           { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 0.9, ease: 'expo.inOut' },
-          '-=0.5'
+          { scaleX: 1, duration: 1.1, ease: 'expo.out' },
+          '-=0.65'
         )
-        // Step 1: Main Title - Masked editorial upward wipe with slight perspective rotation
+        // Order 2: Main title reveals with masked typography (pacing: 1.35s)
         .fromTo(
           [titleMask1Ref.current, titleMask2Ref.current],
-          { yPercent: 125, rotateX: 25, opacity: 0 },
+          { yPercent: 125, rotateX: 20, opacity: 0 },
           {
             yPercent: 0,
             rotateX: 0,
             opacity: 1,
-            duration: 1.25,
-            stagger: 0.12,
+            duration: 1.35,
+            stagger: 0.15,
             ease: 'power4.out',
           },
-          '-=0.6'
+          '-=0.7'
         )
-        // Step 2: Discipline Subtitle
+        // Order 3: Subtitle appears (pacing: 1.0s)
         .fromTo(
           subRef.current,
           { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.8 },
-          '-=0.8'
+          { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' },
+          '-=0.85'
         )
-        // Step 3: Bio Statement
+        // Order 4: Description fades in (pacing: 1.0s)
         .fromTo(
           bioRef.current,
           { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.85 },
-          '-=0.65'
+          { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' },
+          '-=0.75'
         )
-        // Step 4: CTAs and Social Links Row with Staggered Emergence
+        // Order 5: Buttons animate last (pacing: 0.85s)
         .fromTo(
           ctaRef.current ? ctaRef.current.children : [],
           { opacity: 0, y: 20, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.08, ease: 'back.out(1.2)' },
-          '-=0.6'
+          { opacity: 1, y: 0, scale: 1, duration: 0.85, stagger: 0.1, ease: 'power3.out' },
+          '-=0.65'
         )
-        // Step 5: Architectural Telemetry Ribbon at Fold
+        // Order 6: Docked telemetry ribbon arrives
         .fromTo(
           telemetryRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.85 },
-          '-=0.4'
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          '-=0.5'
         );
 
       // Scroll-driven departure parallax
@@ -132,7 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme, isIntroActive = false }
     }, sectionRef.current || undefined);
 
     return () => ctx.revert();
-  }, []);
+  }, [isIntroActive]);
 
   // 2. Interactive Spatial Mouse Parallax (Low frequency luxury depth)
   useEffect(() => {
@@ -182,7 +201,7 @@ export const Hero: React.FC<HeroProps> = ({ activeTheme, isIntroActive = false }
     >
       {/* Dynamic Living WebGL Shader Background */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-85">
-        <HeroShader />
+        <HeroShader isIntroActive={isIntroActive} />
       </div>
 
 

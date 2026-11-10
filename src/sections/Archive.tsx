@@ -34,14 +34,15 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
   // Staggered reveal animation on scroll
   useEffect(() => {
     const grid = gridRef.current;
-    if (!grid) return;
+    const section = sectionRef.current;
+    if (!grid || !section) return;
 
     const cards = grid.querySelectorAll('.archive-item-card');
     gsap.fromTo(
       cards,
       {
         opacity: 0,
-        y: 35,
+        y: 40,
         scale: 0.97,
       },
       {
@@ -49,11 +50,11 @@ export const Archive: React.FC<ArchiveProps> = ({ activeTheme }) => {
         y: 0,
         scale: 1,
         stagger: 0.1,
-        duration: 0.7,
+        duration: 0.85,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: grid,
-          start: 'top 82%',
+          trigger: section,
+          start: 'top 75%',
           toggleActions: 'play none none none',
         },
       }

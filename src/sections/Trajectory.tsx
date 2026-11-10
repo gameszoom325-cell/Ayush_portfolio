@@ -38,18 +38,18 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
         return;
       }
 
-      // 0. Header Line Expansion
+      // 0. Header Line Expansion (0.9s, expo.out, top 75%)
       if (headerLine) {
         gsap.fromTo(
           headerLine,
           { scaleX: 0, transformOrigin: 'left center' },
           {
             scaleX: 1,
-            duration: 0.8,
-            ease: 'power2.inOut',
+            duration: 0.9,
+            ease: 'expo.out',
             scrollTrigger: {
               trigger: section,
-              start: 'top 80%',
+              start: 'top 75%',
               toggleActions: 'play none none none',
             },
           }
@@ -74,25 +74,25 @@ export const Trajectory: React.FC<TrajectoryProps> = ({ activeTheme }) => {
         );
       }
 
-      // 2. Animate each education dossier card with a smooth reveal
+      // 2. Animate each education dossier card with studio mass (0.95s, power3.out, top 75%)
       const cards = cardsContainer.querySelectorAll('.education-card');
       gsap.fromTo(
         cards,
         {
           opacity: 0,
-          y: 40,
-          scale: 0.98,
+          y: 45,
+          scale: 0.97,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          stagger: 0.15,
-          duration: 0.8,
+          stagger: 0.18,
+          duration: 0.95,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: cardsContainer,
-            start: 'top 80%',
+            trigger: section,
+            start: 'top 75%',
             toggleActions: 'play none none none',
           },
         }

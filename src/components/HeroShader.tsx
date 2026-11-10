@@ -1,8 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export const HeroShader: React.FC = () => {
+interface HeroShaderProps {
+  isIntroActive?: boolean;
+}
+
+export const HeroShader: React.FC<HeroShaderProps> = ({ isIntroActive = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isReady, setIsReady] = useState(false);
+  const isIntroActiveRef = useRef(isIntroActive);
+
+  useEffect(() => {
+    isIntroActiveRef.current = isIntroActive;
+  }, [isIntroActive]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -171,16 +180,22 @@ export const HeroShader: React.FC = () => {
     }
 
     let animationFrameId: number;
-    const startTime = performance.now();
     let wakeVal = prefersReducedMotion ? 1.0 : 0.0;
+    let introDoneTime: number | null = null;
 
     const render = (now: number) => {
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(program);
 
-      // Smooth wake-up transition over ~1.8s
-      if (wakeVal < 1.0) {
-        wakeVal = Math.min(1.0, (now - startTime) / 1800);
+      // Smooth atmospheric wake-up transition when intro lifts
+      if (prefersReducedMotion) {
+        wakeVal = 1.0;
+      } else if (!isIntroActiveRef.current) {
+        if (introDoneTime === null) introDoneTime = now;
+        const elapsed = (now - introDoneTime) / 1800;
+        wakeVal = Math.min(1.0, wakeVal + (1.0 - wakeVal) * 0.025 + Math.min(0.015, elapsed * 0.01));
+      } else {
+        wakeVal = 0.0;
       }
 
       currentMouse.x += (targetMouse.x - currentMouse.x) * 0.06;

@@ -32,33 +32,61 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
     const normX = (x / rect.width) * 2 - 1;
     const normY = (y / rect.height) * 2 - 1;
 
-    // Award-winning 3D rotational tilt with tangible weight
-    const rotX = -normY * 8.5;
-    const rotY = normX * 9.5;
+    // Physical studio-grade 3D tilt with smooth damping and momentum
+    const rotX = -normY * 8.0;
+    const rotY = normX * 9.0;
 
-    card.style.transform = `perspective(1200px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
+    gsap.to(card, {
+      rotateX: rotX,
+      rotateY: rotY,
+      scale: 1.025,
+      transformPerspective: 1200,
+      duration: 0.45,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    });
 
     if (imageRef.current) {
       // Counter-parallax on image to generate holographic optical depth
-      imageRef.current.style.transform = `translate3d(${(-normX * 18).toFixed(1)}px, ${(-normY * 14).toFixed(1)}px, 0) scale(1.08)`;
+      gsap.to(imageRef.current, {
+        x: -normX * 16,
+        y: -normY * 12,
+        scale: 1.06,
+        duration: 0.55,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
     }
 
     if (sheenRef.current) {
-      // Radial specular light glides across screen glass
       sheenRef.current.style.background = `radial-gradient(circle 420px at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 45%, transparent 70%)`;
-      sheenRef.current.style.opacity = '1';
+      gsap.to(sheenRef.current, { opacity: 1, duration: 0.3, overwrite: 'auto' });
     }
   };
 
   const onMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
-    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      scale: 1,
+      duration: 0.65,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
     if (imageRef.current) {
-      imageRef.current.style.transform = 'translate3d(0, 0, 0) scale(1)';
+      gsap.to(imageRef.current, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: 0.65,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
     }
     if (sheenRef.current) {
-      sheenRef.current.style.opacity = '0';
+      gsap.to(sheenRef.current, { opacity: 0, duration: 0.4, overwrite: 'auto' });
     }
   };
 
@@ -86,12 +114,13 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
         onClick={handleClick}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className={`card-3d-target relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-all duration-500 ease-out cursor-pointer group select-none ${
+        className={`card-3d-target relative aspect-[16/10] rounded-2xl sm:rounded-[2rem] overflow-hidden bg-[#0A0A0E] border transition-[border-color,opacity,box-shadow] duration-500 ease-out cursor-pointer group select-none ${
           isActive
             ? 'border-white/20 shadow-[0_30px_100px_-15px_rgba(0,0,0,0.95)] opacity-100'
             : 'border-white/10 opacity-60 scale-[0.98]'
         }`}
         style={{
+          transformStyle: 'preserve-3d',
           boxShadow: isActive
             ? `0 35px 120px -15px rgba(0,0,0,0.95), 0 0 60px -10px ${project.theme.accentColor}30`
             : undefined,
@@ -101,7 +130,7 @@ const ProjectCard3D: React.FC<ProjectCard3DProps> = ({ project, isActive, idx })
           ref={imageRef}
           src={project.image}
           alt={project.name}
-          className="w-full h-full object-cover object-top will-change-transform transition-transform duration-500 ease-out"
+          className="w-full h-full object-cover object-top will-change-transform"
           loading={idx < 2 ? 'eager' : 'lazy'}
           decoding="async"
         />

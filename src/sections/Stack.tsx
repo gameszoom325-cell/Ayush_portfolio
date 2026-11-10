@@ -38,40 +38,42 @@ export const Stack: React.FC<StackProps> = ({ activeTheme }) => {
         return;
       }
 
+      // Header Line Expansion (0.9s, expo.out, top 75%)
       if (headerLine) {
         gsap.fromTo(
           headerLine,
           { scaleX: 0, transformOrigin: 'left center' },
           {
             scaleX: 1,
-            duration: 0.8,
-            ease: 'power2.inOut',
+            duration: 0.9,
+            ease: 'expo.out',
             scrollTrigger: {
               trigger: section,
-              start: 'top 80%',
+              start: 'top 75%',
               toggleActions: 'play none none none',
             },
           }
         );
       }
 
+      // 4 Engineering Tiers Column Stagger (0.95s, power3.out, top 75%)
       gsap.fromTo(
         grid.children,
         {
           opacity: 0,
           y: 45,
-          scale: 0.95,
+          scale: 0.96,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          stagger: 0.12,
-          duration: 0.85,
+          stagger: 0.14,
+          duration: 0.95,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: grid,
-            start: 'top 80%',
+            trigger: section,
+            start: 'top 75%',
             toggleActions: 'play none none none',
           },
         }
